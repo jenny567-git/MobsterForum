@@ -360,3 +360,9 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+node_modules
+.DS_Store
+dist
+dist-ssr
+*.local
