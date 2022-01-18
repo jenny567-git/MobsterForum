@@ -14,12 +14,12 @@ namespace mobster_backend.Models
         public Admin Admin { get; set; }
 
         public virtual ICollection<User> FamilyMembers { get; set; }
-        public virtual ICollection<Thread> Threads{ get; set; }
+        //public virtual ICollection<Thread> Threads{ get; set; }
 
         public Family()
         {
             FamilyMembers = new HashSet<User>();
-            Threads = new HashSet<Thread>();
+            //Threads = new HashSet<Thread>();
         }
     }
 }
