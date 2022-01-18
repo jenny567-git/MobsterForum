@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using mobster_backend.Interfaces;
-using mobster_backend.Models;
 using mobster_backend.ViewModels.Create;
 using System;
 using System.Collections.Generic;
@@ -12,21 +11,21 @@ namespace mobster_backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FamilyController : ControllerBase
+    public class UserController : ControllerBase
     {
-        private readonly IFamilyService familyService;
+        private readonly IUserService userService;
 
-        public FamilyController(IFamilyService familyService)
+        public UserController(IUserService userService)
         {
-            this.familyService = familyService;
+            this.userService = userService;
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddFamilyAsync(SetFamilyViewModel model)
+        public async Task<IActionResult> AddUserAsync(SetUserViewModel model)
         {
             try
             {
-                await familyService.AddFamily(model);
+                await userService.AddUser(model);
             }
             catch (Exception e)
             {

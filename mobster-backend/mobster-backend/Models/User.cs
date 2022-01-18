@@ -6,17 +6,20 @@ namespace mobster_backend.Models
     public class User
     {
         public Guid Id { get; set; } //auth0Id
-        public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
-        public bool IsActive { get; set; }
-        public bool IsBanned { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime UpdatedAt { get; set; } = DateTime.Now;
+        public bool IsActive { get; set; } = true;
+        public bool IsBanned { get; set; } = false;
 
-        public virtual ICollection<Family> Families { get; set; }
-
+        public virtual ICollection<Family> Families { get; set; } = new HashSet<Family>();
 
         public User()
         {
-            Families = new HashSet<Family>();
+        }
+
+        public User(Guid id)
+        {
+            this.Id = id;
         }
     }
 

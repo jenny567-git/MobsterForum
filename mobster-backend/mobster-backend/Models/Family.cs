@@ -8,18 +8,19 @@ namespace mobster_backend.Models
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public DateTime AddedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
-        public int MemberCount { get; set; }
+        public DateTime AddedAt { get; set; } = DateTime.Now;
+        public DateTime UpdatedAt { get; set; } = DateTime.Now;
+        public int MemberCount { get; set; } = 1;
+        
+        //navigation property only
         public Admin Admin { get; set; }
+        public virtual ICollection<User> FamilyMembers { get; set; } = new HashSet<User>();
+        public virtual ICollection<Thread> Threads { get; set; } = new HashSet<Thread>();
 
-        public virtual ICollection<User> FamilyMembers { get; set; }
-        //public virtual ICollection<Thread> Threads{ get; set; }
-
-        public Family()
+        public Family(string name, string description)
         {
-            FamilyMembers = new HashSet<User>();
-            //Threads = new HashSet<Thread>();
+            this.Name = name;
+            this.Description = description;
         }
     }
 }
