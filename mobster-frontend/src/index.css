@@ -2,6 +2,73 @@ body {
 	margin: 0;
 	background-color: #313131;
 }
+/* Home Page */
+.home {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+}
+/* MyFamilies component*/
+
+.my-families {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	width: 20%;
+	background-color: #414141;
+	margin-top: 2rem;
+	margin-left: 2rem;
+	border-radius: 1rem;
+}
+.my-families h3 {
+	align-self: center;
+	font-size: 2rem;
+	color: whitesmoke;
+	border-bottom: 0.2rem solid #ec625f;
+}
+.my-families ul {
+	list-style-type: none;
+	font-size: 1.5rem;
+}
+.my-families li {
+	margin-bottom: 1rem;
+	color: whitesmoke;
+}
+.my-families li:hover {
+	color: #ec625f;
+	cursor: pointer;
+}
+
+/* MostPopularFamilies component*/
+
+.mp-families {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	width: 20%;
+	background-color: #414141;
+	margin-top: 2rem;
+	margin-right: 2rem;
+	border-radius: 1rem;
+}
+.mp-families h3 {
+	align-self: center;
+	font-size: 2rem;
+	color: whitesmoke;
+	border-bottom: 0.2rem solid #ec625f;
+}
+.mp-families ul {
+	list-style-type: none;
+	font-size: 1.5rem;
+}
+.mp-families li {
+	margin-bottom: 1rem;
+	color: whitesmoke;
+}
+.mp-families li:hover {
+	color: #ec625f;
+	cursor: pointer;
+}
 /* Header Component*/
 .header {
 	width: 100%;
@@ -14,13 +81,14 @@ body {
 	border-bottom: 0.2rem solid #ec625f;
 }
 .search-bar {
-	width: 34%;
+	width: 33%;
 }
 .sign-in {
 	display: flex;
 	flex-direction: row;
 	width: 33%;
 	justify-content: flex-end;
+	margin-right: 2rem;
 }
 .sign-in button {
 	border: none;
@@ -28,7 +96,7 @@ body {
 	color: #fff;
 	font-weight: bold;
 	font-size: 1rem;
-	margin-right: 2rem;
+	margin-left: 2rem;
 	text-align: center;
 	text-decoration: none;
 	cursor: pointer;
@@ -70,4 +138,33 @@ body {
 	border-radius: 0 5px 5px 0;
 	cursor: pointer;
 	font-size: 20px;
+}
+
+/* AddThread component*/
+
+.add-thread {
+	display: flex;
+	flex-direction: row;
+	width: 60%;
+	margin-top: 2rem;
+	justify-content: center;
+	align-self: flex-start;
+	align-items: center;
+}
+.add-thread img {
+	border-radius: 50%;
+	width: 4rem;
+	height: 4rem;
+	margin-right: 2rem;
+}
+.add-thread textarea {
+	resize: none;
+	border: none;
+	overflow: auto;
+	outline: none;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+	font-size: 1rem;
+	background-color: whitesmoke;
 }
