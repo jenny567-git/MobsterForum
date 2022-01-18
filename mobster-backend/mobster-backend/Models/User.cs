@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace mobster_backend.Models
 {
@@ -9,5 +10,14 @@ namespace mobster_backend.Models
         public DateTime UpdatedAt { get; set; }
         public bool IsActive { get; set; }
         public bool IsBanned { get; set; }
+
+        public virtual ICollection<Family> Families { get; set; }
+
+
+        public User()
+        {
+            Families = new HashSet<Family>();
+        }
     }
+
 }
