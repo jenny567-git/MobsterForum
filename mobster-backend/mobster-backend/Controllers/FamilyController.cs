@@ -33,7 +33,141 @@ namespace mobster_backend.Controllers
                 return StatusCode(500, e.Message);
             }
 
+            return StatusCode(201);
+        }
+        
+        [HttpPost("/addMember/")]
+        public async Task<IActionResult> AddFamilyMemberAsync(Guid familyId, SetUserViewModel model)
+        {
+            try
+            {
+                await familyService.AddFamilyMember(familyId, model);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+
+            return StatusCode(201);
+        }
+        
+        [HttpPost("/addMembers/")]
+        public async Task<IActionResult> AddFamilyMembersAsync(Guid familyId, IEnumerable<SetUserViewModel> models)
+        {
+            try
+            {
+                await familyService.AddFamilyMembers(familyId, models);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+
+            return StatusCode(201);
+        }
+        
+        [HttpGet]
+        public async Task<IActionResult> GetFamiliesAsync()
+        {
+            try
+            {
+                var families = await familyService.GetFamilies();
+                return Ok(families);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+
+        }
+        
+        [HttpGet("{familyId}")]
+        public async Task<IActionResult> GetFamilyAsync(Guid familyId)
+        {
+            try
+            {
+                var family = await familyService.GetFamily(familyId);
+                return Ok(family);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+
+        }
+        
+        [HttpGet("{familyId}/members")]
+        public async Task<IActionResult> GetFamilyMembersAsync(Guid familyId)
+        {
+            try
+            {
+                var members = await familyService.GetFamilyMembers(familyId);
+                return Ok(members);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+        
+        [HttpDelete("/removeUser/")]
+        public async Task<IActionResult> RemoveUserFromFamilyAsync(Guid userId, Guid familyId)
+        {
+            try
+            {
+                await familyService.RemoveUserFromFamily(userId, familyId);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+
             return Ok();
+        }
+        
+        [HttpDelete("/removeUsers/")]
+        public async Task<IActionResult> RemoveUsersFromFamilyAsync(IEnumerable<Guid> userIds, Guid familyId)
+        {
+            try
+            {
+                await familyService.RemoveUsersFromFamily(userIds, familyId);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+
+            return Ok();
+        }
+        
+        [HttpDelete]
+        public async Task<IActionResult> DeleteFamilyAsync(Guid familyId)
+        {
+            try
+            {
+                await familyService.DeleteFamily(familyId);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+
+            return Ok();
+        }
+        
+        [HttpPut]
+        public async Task<IActionResult> UpdateFamilyAsync(Guid familyId, SetFamilyViewModel model)
+        {
+            try
+            {
+                var family = await familyService.UpdateFamily(familyId, model);
+                return Ok(family);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+
         }
     }
 }

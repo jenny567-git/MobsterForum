@@ -12,9 +12,20 @@ namespace mobster_backend.Interfaces
         Task AddFamily(SetFamilyViewModel model);
         Task<IEnumerable<Family>> GetFamilies();
         Task<Family> GetFamily(Guid id);
-        Task<IEnumerable<Family>> UpdateFamilies();
-        Task DeleteFamily();
-        Task RemoveUserFromFamily();
+        Task<IEnumerable<User>> GetFamilyMembers(Guid familyId);
+        Task AddFamilyMember(Guid familyId, SetUserViewModel model);
+        Task AddFamilyMembers(Guid familyId, IEnumerable<SetUserViewModel> models);
+        
+        Task<Family> UpdateFamily(Guid familyId, SetFamilyViewModel model);
+        
+        /// <summary>
+        /// Only if admin or site admin
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task DeleteFamily(Guid id);
+        Task RemoveUserFromFamily(Guid userId, Guid familyId);
+        Task RemoveUsersFromFamily(IEnumerable<Guid> userIds, Guid familyId);
 
     }
 }
