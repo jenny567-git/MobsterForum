@@ -26,6 +26,7 @@ namespace mobster_backend
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<MobsterContext>(options => options.UseSqlServer(connectionString));
             services.AddTransient<IFamilyService, FamilyService>();
+            services.AddTransient<IThreadService, ThreadService>();
             services.AddTransient<IUserService, UserService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
