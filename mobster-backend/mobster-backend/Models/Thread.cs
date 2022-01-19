@@ -5,6 +5,7 @@ namespace mobster_backend.Models
 {
     public class Thread
     {
+        //hej
         public Guid Id { get; set; }
         public Guid FamilyId { get; set; }
         public string Title { get; set; }
