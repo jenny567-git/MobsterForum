@@ -12,5 +12,14 @@ namespace mobster_backend.Models
 
         public virtual User User { get; set; }
         public virtual Family Family { get; set; }
+
+        public Admin(Guid userId, Guid familyId)
+        {
+            this.UserId = userId;
+            this.FamilyId = familyId;
+            UpdatedAt = DateTime.Now;
+            CreatedAt = DateTime.Now;
+        }
     }
+
 }

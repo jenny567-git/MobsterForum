@@ -6,6 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using mobster_backend.Database;
+using mobster_backend.Interfaces;
+using mobster_backend.Services;
 
 namespace mobster_backend
 {
@@ -23,6 +25,8 @@ namespace mobster_backend
         {
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<MobsterContext>(options => options.UseSqlServer(connectionString));
+            services.AddTransient<IFamilyService, FamilyService>();
+            services.AddTransient<IUserService, UserService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

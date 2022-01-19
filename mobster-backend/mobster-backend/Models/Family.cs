@@ -11,15 +11,21 @@ namespace mobster_backend.Models
         public DateTime AddedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public int MemberCount { get; set; }
+        
+        //navigation property only
         public Admin Admin { get; set; }
+        public virtual ICollection<User> FamilyMembers { get; set; } 
+        public virtual ICollection<Thread> Threads { get; set; }
 
-        public virtual ICollection<User> FamilyMembers { get; set; }
-        public virtual ICollection<Thread> Threads{ get; set; }
-
-        public Family()
+        public Family(string name, string description)
         {
-            FamilyMembers = new HashSet<User>();
+            this.Name = name;
+            this.Description = description;
+            AddedAt = DateTime.Now;
+            UpdatedAt = DateTime.Now;
+            MemberCount = 1;
             Threads = new HashSet<Thread>();
+            FamilyMembers = new HashSet<User>();
         }
     }
 }
