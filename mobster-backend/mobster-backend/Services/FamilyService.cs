@@ -28,7 +28,7 @@ namespace mobster_backend.Services
             context.Families.Add(family);
             
             //create admin
-            var admin = new Admin(model.AdminId, family.Id);
+            var admin = new Admin(model.AdminId, family.FamilyId);
 
             context.Admins.Add(admin);
 
