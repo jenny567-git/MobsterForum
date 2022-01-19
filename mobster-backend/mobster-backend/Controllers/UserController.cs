@@ -32,7 +32,7 @@ namespace mobster_backend.Controllers
                 return StatusCode(500, e.Message);
             }
 
-            return Ok();
+            return StatusCode(201);
         }
     }
 }
