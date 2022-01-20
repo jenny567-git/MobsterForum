@@ -8,6 +8,6 @@ namespace mobster_backend.Interfaces
 {
     public interface IUserService
     {
-        Task AddUser(SetUserDto model);
+        Task AddUser(Guid userId);
     }
 }

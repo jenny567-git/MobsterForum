@@ -24,11 +24,18 @@ namespace mobster_backend
         public void ConfigureServices(IServiceCollection services)
         {
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            //in memory database for testing
+            //services.AddDbContext<MobsterContext>(opt => opt.UseInMemoryDatabase("Mobster.Test"));
+
+            //real database
             services.AddDbContext<MobsterContext>(options => options.UseSqlServer(connectionString));
-            services.AddTransient<IFamilyService, FamilyService>();
             services.AddTransient<IThreadService, ThreadService>();
+            services.AddTransient<IFamilyService, FamilyService>();
             services.AddTransient<IUserService, UserService>();
-            services.AddControllers();
+            services.AddTransient<IBlockService, BlockService>();
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "mobster_backend", Version = "v1" });
