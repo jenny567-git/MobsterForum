@@ -5,7 +5,7 @@ namespace mobster_backend.Models
 {
     public class User
     {
-        public Guid Id { get; set; } //auth0Id
+        public Guid UserId { get; set; } //auth0Id
         public DateTime CreatedAt { get; set; } 
         public DateTime UpdatedAt { get; set; }
         public bool IsActive { get; set; } = true;
@@ -19,7 +19,7 @@ namespace mobster_backend.Models
 
         public User(Guid id)
         {
-            this.Id = id;
+            this.UserId = id;
             CreatedAt = DateTime.Now;
             UpdatedAt = DateTime.Now;
             Families = new HashSet<Family>();

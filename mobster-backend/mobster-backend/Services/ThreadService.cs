@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using mobster_backend.Database;
+using mobster_backend.DTOs.Read;
+using mobster_backend.DTOs.Write;
 using mobster_backend.Exceptions;
+using mobster_backend.Extensions;
 using mobster_backend.Interfaces;
 using mobster_backend.Models;
-using mobster_backend.ViewModels.Create;
-using mobster_backend.ViewModels.Update;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace mobster_backend.Services
         {
             this.context = context;
         }
-        public async Task AddThread(SetThreadViewModel model)
+        public async Task AddThread(SetThreadDto model)
         {
             var thread = new Thread(model.Title, model.Content, model.FamilyId, model.AuthorId);
 
@@ -28,9 +29,9 @@ namespace mobster_backend.Services
             await context.SaveChangesAsync();
         }
 
-        public async Task UpdateThread(Guid threadId, SetThreadViewModel model)
+        public async Task UpdateThread(Guid threadId, SetThreadDto model)
         {
-            var thread = await context.Threads.FirstOrDefaultAsync(t => t.Id == threadId);
+            var thread = await context.Threads.FirstOrDefaultAsync(t => t.ThreadId == threadId);
 
             if (thread == null)
             {
@@ -49,7 +50,7 @@ namespace mobster_backend.Services
         public async Task DeleteThread(Guid threadId)
         {
             var thread = await context.Threads
-                .FirstOrDefaultAsync(t => t.Id == threadId);
+                .FirstOrDefaultAsync(t => t.ThreadId == threadId);
 
             if (thread == null)
             {
@@ -62,10 +63,13 @@ namespace mobster_backend.Services
             }
         }
 
-        public async Task<Thread> GetThread(Guid threadId)
+        public async Task<ThreadDto> GetThread(Guid threadId)
         {
             var thread = await context.Threads
-                .FirstOrDefaultAsync(t => t.Id == threadId);
+                //.Include(t => t.Family)
+                //.Include(t => t.Author)
+                //.Include(t => t.Posts)
+                .FirstOrDefaultAsync(t => t.ThreadId == threadId);
 
             if (thread == null)
             {
@@ -73,14 +77,16 @@ namespace mobster_backend.Services
             }
             else
             {
-                //create Vm
-                return thread;
+                return thread.ToThreadDto();
             }
         }
 
-        public async Task<IEnumerable<Thread>> GetThreadsByFamilyId(Guid familyId)
+        public async Task<IEnumerable<ThreadDto>> GetThreadsByFamilyId(Guid familyId)
         {
             var threads = await context.Threads
+                //.Include(t => t.Family)
+                //.Include(t => t.Author)
+                //.Include(t => t.Posts)
                 .Where(f => f.FamilyId == familyId)
                 .ToListAsync();
 
@@ -90,7 +96,7 @@ namespace mobster_backend.Services
             }
             else
             {
-                return threads;
+                return threads.ToThreadDtos();
             }
         }
 

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace mobster_backend.ViewModels.Create
+namespace mobster_backend.DTOs.Write
 {
-    public class SetFamilyViewModel
+    public class SetFamilyDto
     {
         public string Name { get; set; }
         public string Description { get; set; }

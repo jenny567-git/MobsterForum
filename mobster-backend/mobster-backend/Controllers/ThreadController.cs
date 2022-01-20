@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using mobster_backend.DTOs.Write;
 using mobster_backend.Exceptions;
 using mobster_backend.Interfaces;
-using mobster_backend.ViewModels.Create;
 using System;
 using System.Threading.Tasks;
 
@@ -72,7 +72,7 @@ namespace mobster_backend.Controllers
         /// <param name="model">The viewmodel used to represent the thread entity</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> AddThread(SetThreadViewModel model)
+        public async Task<IActionResult> AddThread(SetThreadDto model)
         {
             try
             {
@@ -97,7 +97,7 @@ namespace mobster_backend.Controllers
         /// <param name="model">The viewmodel used to represent the thread entity</param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IActionResult> UpdateThread(Guid id, SetThreadViewModel model)
+        public async Task<IActionResult> UpdateThread(Guid id, SetThreadDto model)
         {
             try
             {

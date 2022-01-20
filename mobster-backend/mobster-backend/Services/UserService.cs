@@ -1,7 +1,7 @@
 ﻿using mobster_backend.Database;
+using mobster_backend.DTOs.Write;
 using mobster_backend.Interfaces;
 using mobster_backend.Models;
-using mobster_backend.ViewModels.Create;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +18,7 @@ namespace mobster_backend.Services
             this.context = context;
         }
 
-        public async Task AddUser(SetUserViewModel model)
+        public async Task AddUser(SetUserDto model)
         {
             var user = new User(model.Id);
             context.Users.Add(user);

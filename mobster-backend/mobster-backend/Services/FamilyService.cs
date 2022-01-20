@@ -1,7 +1,7 @@
 ﻿using mobster_backend.Database;
+using mobster_backend.DTOs.Write;
 using mobster_backend.Interfaces;
 using mobster_backend.Models;
-using mobster_backend.ViewModels.Create;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +17,7 @@ namespace mobster_backend.Services
             this.context = context;
         }
        
-        public async Task AddFamily(SetFamilyViewModel model)
+        public async Task AddFamily(SetFamilyDto model)
         {
             //create family
             var family = new Family(model.Name, model.Description);

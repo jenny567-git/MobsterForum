@@ -1,6 +1,6 @@
-﻿using mobster_backend.Models;
-using mobster_backend.ViewModels.Create;
-using mobster_backend.ViewModels.Update;
+﻿using mobster_backend.DTOs.Read;
+using mobster_backend.DTOs.Write;
+using mobster_backend.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -9,10 +9,10 @@ namespace mobster_backend.Interfaces
 {
     public interface IThreadService
     {
-        Task AddThread(SetThreadViewModel model);
-        Task<IEnumerable<Thread>> GetThreadsByFamilyId(Guid familyId);
-        Task<Thread> GetThread(Guid threadId);
-        Task UpdateThread(Guid threadId, SetThreadViewModel model);
+        Task AddThread(SetThreadDto model);
+        Task<IEnumerable<ThreadDto>> GetThreadsByFamilyId(Guid familyId);
+        Task<ThreadDto> GetThread(Guid threadId);
+        Task UpdateThread(Guid threadId, SetThreadDto model);
         Task DeleteThread(Guid threadId);
     }
 }
