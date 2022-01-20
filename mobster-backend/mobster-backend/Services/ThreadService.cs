@@ -66,8 +66,9 @@ namespace mobster_backend.Services
         public async Task<ThreadDto> GetThread(Guid threadId)
         {
             var thread = await context.Threads
-                //.Include(t => t.Family)
-                //.Include(t => t.Author)
+                .Include(t => t.Family)
+                .ThenInclude(f => f.Admin)
+                .Include(t => t.Author)
                 //.Include(t => t.Posts)
                 .FirstOrDefaultAsync(t => t.ThreadId == threadId);
 
@@ -84,8 +85,9 @@ namespace mobster_backend.Services
         public async Task<IEnumerable<ThreadDto>> GetThreadsByFamilyId(Guid familyId)
         {
             var threads = await context.Threads
-                //.Include(t => t.Family)
-                //.Include(t => t.Author)
+                .Include(t => t.Family)
+                .ThenInclude(f => f.Admin)
+                .Include(t => t.Author)
                 //.Include(t => t.Posts)
                 .Where(f => f.FamilyId == familyId)
                 .ToListAsync();

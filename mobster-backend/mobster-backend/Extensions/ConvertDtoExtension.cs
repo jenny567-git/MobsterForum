@@ -21,8 +21,8 @@ namespace mobster_backend.Extensions
             return new ThreadDto
             {
                 ThreadId = thread.ThreadId,
-                Family = thread.Family,
-                Author = thread.Author,
+                Family = thread.Family.ToFamilyDto(),
+                Author = thread.Author.ToUserDto(),
                 Title = thread.Title,
                 Content = thread.Content,
                 CreatedAt = thread.CreatedAt,
