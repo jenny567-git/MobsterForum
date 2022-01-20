@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using mobster_backend.Database;
+using mobster_backend.DTOs.Write;
 using mobster_backend.Interfaces;
 using mobster_backend.Models;
 using mobster_backend.ViewModels.Create;
@@ -18,7 +19,7 @@ namespace mobster_backend.Services
             this.context = context;
         }
        
-        public async Task AddFamily(SetFamilyViewModel model)
+        public async Task AddFamily(SetFamilyDto model)
         {
             //create family
             var family = new Family(model.Name, model.Description);
@@ -29,7 +30,7 @@ namespace mobster_backend.Services
             context.Families.Add(family);
             
             //create admin
-            var admin = new Admin(model.AdminId, family.Id);
+            var admin = new Admin(model.AdminId, family.FamilyId);
 
             context.Admins.Add(admin);
 
@@ -38,7 +39,7 @@ namespace mobster_backend.Services
 
         public async Task AddFamilyMember(Guid familyId, Guid userId)
         {
-            var family = await context.Families.Include(f => f.FamilyMembers).FirstOrDefaultAsync(f => f.Id == familyId);
+            var family = await context.Families.Include(f => f.FamilyMembers).FirstOrDefaultAsync(f => f.FamilyId == familyId);
             var user = await context.Users.FindAsync(userId);
             
             family.FamilyMembers.Add(user);
@@ -48,7 +49,7 @@ namespace mobster_backend.Services
 
         public async Task AddFamilyMembers(Guid familyId, IEnumerable<Guid> userIds)
         {
-            var family = await context.Families.Include(f => f.FamilyMembers).FirstOrDefaultAsync(f => f.Id == familyId);
+            var family = await context.Families.Include(f => f.FamilyMembers).FirstOrDefaultAsync(f => f.FamilyId == familyId);
             
             foreach (var userId in userIds)
             {
@@ -74,7 +75,7 @@ namespace mobster_backend.Services
         {
             var family = await context.Families
                 .Include(fm => fm.FamilyMembers)
-                .FirstOrDefaultAsync(f => f.Id == familyId);
+                .FirstOrDefaultAsync(f => f.FamilyId == familyId);
             
             return family.FamilyMembers.ToList();
         }
@@ -84,7 +85,7 @@ namespace mobster_backend.Services
             var user = await context.Users.FindAsync(userId);
             var family = await context.Families
                 .Include(f => f.FamilyMembers)
-                .FirstOrDefaultAsync(f => f.Id == familyId);
+                .FirstOrDefaultAsync(f => f.FamilyId == familyId);
             family.FamilyMembers.Remove(user);
 
             //check if user is admin
@@ -99,10 +100,10 @@ namespace mobster_backend.Services
         {
             var family = await context.Families
                 .Include(f => f.FamilyMembers)
-                .FirstOrDefaultAsync(f => f.Id == familyId);
+                .FirstOrDefaultAsync(f => f.FamilyId == familyId);
 
             foreach (var id in userIds)
-            {
+        {
                 var user = await context.Users.FindAsync(id);
                 family.FamilyMembers.Remove(user);
             }
@@ -114,7 +115,7 @@ namespace mobster_backend.Services
         {
             var family = await context.Families
                 .Include(a => a.Admin)
-                .FirstOrDefaultAsync(f => f.Id == familyId);
+                .FirstOrDefaultAsync(f => f.FamilyId == familyId);
             
             family.Description = model.Description;
             family.UpdatedAt = DateTime.Now;
@@ -125,14 +126,14 @@ namespace mobster_backend.Services
                 //check if new admin is a member of the family
                 var newAdmin = await context.Users.FindAsync(model.AdminId);
                 if (!family.FamilyMembers.Contains(newAdmin))
-                {
+        {
                     throw new ArgumentException();
                 }
 
-                var admin = await context.Admins.FirstOrDefaultAsync(a => a.UserId == family.Admin.UserId && a.FamilyId == family.Id);
+                var admin = await context.Admins.FirstOrDefaultAsync(a => a.UserId == family.Admin.UserId && a.FamilyId == family.FamilyId);
                 admin.UserId = model.AdminId;
                 admin.UpdatedAt = DateTime.Now;
-            }
+        }
 
             await context.SaveChangesAsync();
 

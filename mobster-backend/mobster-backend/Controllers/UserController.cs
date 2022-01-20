@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using mobster_backend.DTOs.Write;
 using mobster_backend.Interfaces;
-using mobster_backend.ViewModels.Create;
 using System;
 using System.Collections.Generic;
 using System.Linq;

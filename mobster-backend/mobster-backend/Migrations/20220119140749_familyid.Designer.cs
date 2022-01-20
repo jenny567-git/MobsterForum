@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using mobster_backend.Database;
 
@@ -11,9 +12,10 @@ using mobster_backend.Database;
 namespace mobster_backend.Migrations
 {
     [DbContext(typeof(MobsterContext))]
-    partial class MobsterContextModelSnapshot : ModelSnapshot
+    [Migration("20220119140749_familyid")]
+    partial class familyid
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,19 +30,19 @@ namespace mobster_backend.Migrations
                     b.Property<Guid>("FamiliesFamilyId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("FamilyMembersUserId")
+                    b.Property<Guid>("FamilyMembersId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("FamiliesFamilyId", "FamilyMembersUserId");
+                    b.HasKey("FamiliesFamilyId", "FamilyMembersId");
 
-                    b.HasIndex("FamilyMembersUserId");
+                    b.HasIndex("FamilyMembersId");
 
                     b.ToTable("FamilyUser", "forum");
                 });
 
             modelBuilder.Entity("mobster_backend.Models.Admin", b =>
                 {
-                    b.Property<Guid>("AdminId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -56,7 +58,7 @@ namespace mobster_backend.Migrations
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("AdminId");
+                    b.HasKey("Id");
 
                     b.HasIndex("FamilyId")
                         .IsUnique();
@@ -68,7 +70,7 @@ namespace mobster_backend.Migrations
 
             modelBuilder.Entity("mobster_backend.Models.BlockedMember", b =>
                 {
-                    b.Property<Guid>("BlockedMemberId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -84,7 +86,7 @@ namespace mobster_backend.Migrations
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("BlockedMemberId");
+                    b.HasKey("Id");
 
                     b.HasIndex("FamilyId");
 
@@ -121,11 +123,11 @@ namespace mobster_backend.Migrations
 
             modelBuilder.Entity("mobster_backend.Models.Post", b =>
                 {
-                    b.Property<Guid>("PostId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("AuthorUserId")
+                    b.Property<Guid?>("AuthorId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Content")
@@ -140,9 +142,9 @@ namespace mobster_backend.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("PostId");
+                    b.HasKey("Id");
 
-                    b.HasIndex("AuthorUserId");
+                    b.HasIndex("AuthorId");
 
                     b.HasIndex("ThreadId");
 
@@ -151,7 +153,7 @@ namespace mobster_backend.Migrations
 
             modelBuilder.Entity("mobster_backend.Models.Thread", b =>
                 {
-                    b.Property<Guid>("ThreadId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -173,7 +175,7 @@ namespace mobster_backend.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("ThreadId");
+                    b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
 
@@ -184,7 +186,7 @@ namespace mobster_backend.Migrations
 
             modelBuilder.Entity("mobster_backend.Models.User", b =>
                 {
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -200,7 +202,7 @@ namespace mobster_backend.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("UserId");
+                    b.HasKey("Id");
 
                     b.ToTable("Users", "forum");
                 });
@@ -215,7 +217,7 @@ namespace mobster_backend.Migrations
 
                     b.HasOne("mobster_backend.Models.User", null)
                         .WithMany()
-                        .HasForeignKey("FamilyMembersUserId")
+                        .HasForeignKey("FamilyMembersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -262,7 +264,7 @@ namespace mobster_backend.Migrations
                 {
                     b.HasOne("mobster_backend.Models.User", "Author")
                         .WithMany()
-                        .HasForeignKey("AuthorUserId");
+                        .HasForeignKey("AuthorId");
 
                     b.HasOne("mobster_backend.Models.Thread", "Thread")
                         .WithMany("Posts")

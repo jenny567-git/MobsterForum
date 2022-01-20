@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using mobster_backend.DTOs.Write;
 using mobster_backend.Interfaces;
 using mobster_backend.Models;
 using mobster_backend.ViewModels.Create;
@@ -22,7 +23,7 @@ namespace mobster_backend.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddFamilyAsync(SetFamilyViewModel model)
+        public async Task<IActionResult> AddFamilyAsync(SetFamilyDto model)
         {
             try
             {
@@ -109,7 +110,7 @@ namespace mobster_backend.Controllers
                 return StatusCode(500, e.Message);
             }
         }
-        
+
         [HttpDelete("/removeUser/")]
         public async Task<IActionResult> RemoveUserFromFamilyAsync(Guid familyId, Guid userId)
         {

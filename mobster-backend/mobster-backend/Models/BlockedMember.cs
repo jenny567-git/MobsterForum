@@ -4,7 +4,7 @@ namespace mobster_backend.Models
 {
     public class BlockedMember
     {
-        public Guid Id { get; set; }
+        public Guid BlockedMemberId { get; set; }
         public Guid FamilyId { get; set; }
         public Guid UserId { get; set; }
         public string Description { get; set; }

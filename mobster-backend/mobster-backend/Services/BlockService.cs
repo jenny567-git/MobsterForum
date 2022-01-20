@@ -18,7 +18,7 @@ namespace mobster_backend.Services
         public async Task BlockUserFromFamily(SetBlockedMemberViewModel model)
         {
             var user = await context.Users.FindAsync(model.UserId);
-            var family = await context.Families.Include(f => f.FamilyMembers).FirstOrDefaultAsync(f => f.Id == model.FamilyId);
+            var family = await context.Families.Include(f => f.FamilyMembers).FirstOrDefaultAsync(f => f.FamilyId == model.FamilyId);
             
             if (family.FamilyMembers.Contains(user))
             {
