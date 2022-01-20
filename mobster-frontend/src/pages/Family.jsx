@@ -19,7 +19,14 @@ const Family = () => {
     }
 
     const toMembers = () => {
-        
+        //test to manipulate context
+        updateContext(prevState => ({
+            family:{
+                ...prevState.family,
+                memberCount: 1
+            }
+        }))
+        console.log(context.family.memberCount);
     }
 
     return (
