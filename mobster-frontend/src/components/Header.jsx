@@ -17,7 +17,7 @@ function Header() {
             <div className="sign-in">
                 <LoginButton />
                 
-                <button type="button" >Register</button>
+            
             </div>
         </div>
     )
