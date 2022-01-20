@@ -17,6 +17,7 @@ const EditFamily = () => {
             <input type="text" value={context.family.description} onChange={testChange}/>
             <p>Current admin:</p>
             <input type="text" value={context.family.admin} onChange={testChange}/>
+            <p>- Hämta alla family members och ha current admin som current selected</p>
             <button>Save</button>
         </div>
     )

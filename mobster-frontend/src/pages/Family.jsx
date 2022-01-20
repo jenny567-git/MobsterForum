@@ -7,7 +7,6 @@ import EditFamily from '../components/FamilyComponents/EditFamily';
 const Family = () => {
     const [context, updateContext] = useContext(Context)
     const [isEditing, setIsEditing] = useState(false)
-
     let navigate = useNavigate();
 
     const toInviteLink = () => {
@@ -18,15 +17,16 @@ const Family = () => {
         isEditing ? setIsEditing(false) : setIsEditing(true);
     }
 
+    //working
     const toMembers = () => {
         //test to manipulate context
-        updateContext(prevState => ({
-            family:{
-                ...prevState.family,
-                memberCount: 1
-            }
-        }))
-        console.log(context.family.memberCount);
+        let family = {
+        ...context.family
+        };
+        family.memberCount = -10
+        updateContext({
+            family: family
+        })
     }
 
     return (
