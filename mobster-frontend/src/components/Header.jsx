@@ -1,6 +1,8 @@
 import React from 'react'
 import SearchBar from './SearchBar'
 import logo from '../assets/Mobster-logo.png'
+import LoginButton from './LoginButton'
+
 
 function Header() {
     return (
@@ -10,9 +12,11 @@ function Header() {
             </div>
             <div className="search-bar">
                 <SearchBar></SearchBar>
+            
             </div>
             <div className="sign-in">
-                <button type="button" >Sign In</button>
+                <LoginButton />
+                
                 <button type="button" >Register</button>
             </div>
         </div>
