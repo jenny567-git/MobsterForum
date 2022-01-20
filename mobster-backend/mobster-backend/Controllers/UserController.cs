@@ -21,11 +21,11 @@ namespace mobster_backend.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddUserAsync(SetUserViewModel model)
+        public async Task<IActionResult> AddUserAsync(Guid userId)
         {
             try
             {
-                await userService.AddUser(model);
+                await userService.AddUser(userId);
             }
             catch (Exception e)
             {

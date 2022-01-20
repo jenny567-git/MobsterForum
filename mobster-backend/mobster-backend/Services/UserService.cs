@@ -18,9 +18,9 @@ namespace mobster_backend.Services
             this.context = context;
         }
 
-        public async Task AddUser(SetUserViewModel model)
+        public async Task AddUser(Guid userId)
         {
-            var user = new User(model.Id);
+            var user = new User(userId);
             context.Users.Add(user);
             await context.SaveChangesAsync();
         }

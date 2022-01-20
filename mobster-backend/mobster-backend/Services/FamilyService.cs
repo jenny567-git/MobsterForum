@@ -42,8 +42,7 @@ namespace mobster_backend.Services
             var user = await context.Users.FindAsync(userId);
             
             family.FamilyMembers.Add(user);
-            //checked, works
-            family.MemberCount++;
+            family.MemberCount = family.FamilyMembers.Count;
             await context.SaveChangesAsync();
         }
 
@@ -56,8 +55,7 @@ namespace mobster_backend.Services
                 var newMember = await context.Users.FindAsync(userId);
                 family.FamilyMembers.Add(newMember);
             }
-            //TODO: check if it works
-            family.MemberCount += userIds.Count();
+            family.MemberCount = family.FamilyMembers.Count;
 
             await context.SaveChangesAsync();
         }
@@ -69,7 +67,7 @@ namespace mobster_backend.Services
 
         public async Task<Family> GetFamily(Guid familyId)
         {
-            return await context.Families.FindAsync(id);
+            return await context.Families.FindAsync(familyId);
         }
 
         public async Task<IEnumerable<User>> GetFamilyMembers(Guid familyId)
@@ -83,28 +81,32 @@ namespace mobster_backend.Services
 
         public async Task RemoveUserFromFamily(Guid familyId, Guid userId)
         {
-            //TODO: check if user is admin
             var user = await context.Users.FindAsync(userId);
             var family = await context.Families
                 .Include(f => f.FamilyMembers)
                 .FirstOrDefaultAsync(f => f.Id == familyId);
             family.FamilyMembers.Remove(user);
-            //TODO: check = -1
-            family.MemberCount--;
+
+            //check if user is admin
+            var admin = await context.Admins.FirstOrDefaultAsync(a => a.UserId == userId && a.FamilyId == familyId);
+            if (admin != null) context.Admins.Remove(admin);
+            
+            family.MemberCount = family.FamilyMembers.Count;
             await context.SaveChangesAsync();
         }
 
         public async Task RemoveUsersFromFamily(Guid familyId, IEnumerable<Guid> userIds)
         {
-            var family = await context.Families.FindAsync(familyId);
+            var family = await context.Families
+                .Include(f => f.FamilyMembers)
+                .FirstOrDefaultAsync(f => f.Id == familyId);
 
             foreach (var id in userIds)
             {
                 var user = await context.Users.FindAsync(id);
                 family.FamilyMembers.Remove(user);
             }
-            //TODO: check
-            family.MemberCount -= userIds.Count();
+            family.MemberCount = family.FamilyMembers.Count;
             await context.SaveChangesAsync();
         }
 
@@ -116,11 +118,17 @@ namespace mobster_backend.Services
             
             family.Description = model.Description;
             family.UpdatedAt = DateTime.Now;
-            
+
             //update admin
             if (family.Admin.UserId != model.AdminId)
             {
-                //TODO: check if new admin is a member of the family
+                //check if new admin is a member of the family
+                var newAdmin = await context.Users.FindAsync(model.AdminId);
+                if (!family.FamilyMembers.Contains(newAdmin))
+                {
+                    throw new ArgumentException();
+                }
+
                 var admin = await context.Admins.FirstOrDefaultAsync(a => a.UserId == family.Admin.UserId && a.FamilyId == family.Id);
                 admin.UserId = model.AdminId;
                 admin.UpdatedAt = DateTime.Now;
@@ -130,10 +138,11 @@ namespace mobster_backend.Services
 
             return family;
         }
-        public Task DeleteFamily(Guid familyId)
+        public async Task DeleteFamily(Guid familyId)
         {
-            //TODO: implement
-            throw new NotImplementedException();
+            var family = await context.Families.FindAsync(familyId);
+            context.Families.Remove(family);
+            await context.SaveChangesAsync();
         }
     }
 }

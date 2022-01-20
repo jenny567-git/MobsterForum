@@ -115,7 +115,7 @@ namespace mobster_backend.Controllers
         {
             try
             {
-                await familyService.RemoveUserFromFamily(userId, familyId);
+                await familyService.RemoveUserFromFamily(familyId, userId);
             }
             catch (Exception e)
             {
