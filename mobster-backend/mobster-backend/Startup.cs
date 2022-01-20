@@ -26,9 +26,9 @@ namespace mobster_backend
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
             //in memory database for testing
             //services.AddDbContext<MobsterContext>(opt => opt.UseInMemoryDatabase("Mobster.Test"));
-            
+
             //real database
-            //services.AddDbContext<MobsterContext>(options => options.UseSqlServer(connectionString));
+            services.AddDbContext<MobsterContext>(options => options.UseSqlServer(connectionString));
             services.AddTransient<IFamilyService, FamilyService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IBlockService, BlockService>();

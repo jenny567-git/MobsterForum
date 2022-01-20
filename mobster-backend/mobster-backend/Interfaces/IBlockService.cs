@@ -8,7 +8,7 @@ namespace mobster_backend.Interfaces
     {
         Task BlockUserFromFamily(SetBlockedMemberViewModel model);
 
-        Task RemoveBlockedUserFromFamily(SetBlockedMemberViewModel model);
+        Task RemoveBlockedUserFromFamily(Guid userId, Guid familyId);
 
     }
 }

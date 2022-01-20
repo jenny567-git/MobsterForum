@@ -37,11 +37,11 @@ namespace mobster_backend.Controllers
         }
         
         [HttpPost("/addMember/")]
-        public async Task<IActionResult> AddFamilyMemberAsync(Guid familyId, SetUserViewModel model)
+        public async Task<IActionResult> AddFamilyMemberAsync(Guid familyId, Guid userId)
         {
             try
             {
-                await familyService.AddFamilyMember(familyId, model);
+                await familyService.AddFamilyMember(familyId, userId);
             }
             catch (Exception e)
             {
@@ -52,11 +52,11 @@ namespace mobster_backend.Controllers
         }
         
         [HttpPost("/addMembers/")]
-        public async Task<IActionResult> AddFamilyMembersAsync(Guid familyId, IEnumerable<SetUserViewModel> models)
+        public async Task<IActionResult> AddFamilyMembersAsync(Guid familyId, IEnumerable<Guid> userIds)
         {
             try
             {
-                await familyService.AddFamilyMembers(familyId, models);
+                await familyService.AddFamilyMembers(familyId, userIds);
             }
             catch (Exception e)
             {
@@ -111,7 +111,7 @@ namespace mobster_backend.Controllers
         }
         
         [HttpDelete("/removeUser/")]
-        public async Task<IActionResult> RemoveUserFromFamilyAsync(Guid userId, Guid familyId)
+        public async Task<IActionResult> RemoveUserFromFamilyAsync(Guid familyId, Guid userId)
         {
             try
             {
@@ -126,11 +126,11 @@ namespace mobster_backend.Controllers
         }
         
         [HttpDelete("/removeUsers/")]
-        public async Task<IActionResult> RemoveUsersFromFamilyAsync(IEnumerable<Guid> userIds, Guid familyId)
+        public async Task<IActionResult> RemoveUsersFromFamilyAsync(Guid familyId, IEnumerable<Guid> userIds)
         {
             try
             {
-                await familyService.RemoveUsersFromFamily(userIds, familyId);
+                await familyService.RemoveUsersFromFamily(familyId, userIds);
             }
             catch (Exception e)
             {

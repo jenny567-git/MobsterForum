@@ -23,6 +23,7 @@ namespace mobster_backend.Services
             if (family.FamilyMembers.Contains(user))
             {
                 family.FamilyMembers.Remove(user);
+                //checked, works
                 family.MemberCount -= 1;
             }
             
@@ -33,9 +34,9 @@ namespace mobster_backend.Services
             await context.SaveChangesAsync();
         }
 
-        public async Task RemoveBlockedUserFromFamily(SetBlockedMemberViewModel model)
+        public async Task RemoveBlockedUserFromFamily(Guid userId, Guid familyId)
         {
-            var blockedMember = await context.BlockedMembers.FirstOrDefaultAsync(u => u.UserId == model.UserId && u.FamilyId == model.FamilyId);
+            var blockedMember = await context.BlockedMembers.FirstOrDefaultAsync(u => u.UserId == userId && u.FamilyId == familyId);
             context.BlockedMembers.Remove(blockedMember);
             await context.SaveChangesAsync();
         }
