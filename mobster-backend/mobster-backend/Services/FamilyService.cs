@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using mobster_backend.Database;
+using mobster_backend.DTOs.Read;
 using mobster_backend.DTOs.Write;
+using mobster_backend.Extensions;
 using mobster_backend.Interfaces;
 using mobster_backend.Models;
-using mobster_backend.ViewModels.Create;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,23 +62,25 @@ namespace mobster_backend.Services
             await context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Family>> GetFamilies()
+        public async Task<IEnumerable<FamilyDto>> GetFamilies()
         {
-            return await context.Families.Include(f => f.Admin).ToListAsync();
+            var families = await context.Families.Include(f => f.Admin).ToListAsync();
+            return families.ToFamilyDtos();
         }
 
-        public async Task<Family> GetFamily(Guid familyId)
+        public async Task<FamilyDto> GetFamily(Guid familyId)
         {
-            return await context.Families.FindAsync(familyId);
+            var family = await context.Families.FindAsync(familyId);
+            return family.ToFamilyDto();
         }
 
-        public async Task<IEnumerable<User>> GetFamilyMembers(Guid familyId)
+        public async Task<IEnumerable<UserDto>> GetFamilyMembers(Guid familyId)
         {
             var family = await context.Families
                 .Include(fm => fm.FamilyMembers)
                 .FirstOrDefaultAsync(f => f.FamilyId == familyId);
             
-            return family.FamilyMembers.ToList();
+            return family.FamilyMembers.ToList().ToUserDtos();
         }
 
         public async Task RemoveUserFromFamily(Guid familyId, Guid userId)
@@ -111,7 +114,7 @@ namespace mobster_backend.Services
             await context.SaveChangesAsync();
         }
 
-        public async Task<Family> UpdateFamily(Guid familyId, SetFamilyViewModel model)
+        public async Task<FamilyDto> UpdateFamily(Guid familyId, SetFamilyDto model)
         {
             var family = await context.Families
                 .Include(a => a.Admin)
@@ -137,7 +140,7 @@ namespace mobster_backend.Services
 
             await context.SaveChangesAsync();
 
-            return family;
+            return family.ToFamilyDto();
         }
         public async Task DeleteFamily(Guid familyId)
         {

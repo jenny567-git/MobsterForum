@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using mobster_backend.Database;
+using mobster_backend.DTOs.Write;
 using mobster_backend.Interfaces;
 using mobster_backend.Models;
-using mobster_backend.ViewModels.Create;
 using System;
 using System.Threading.Tasks;
 
@@ -15,7 +15,7 @@ namespace mobster_backend.Services
         {
             this.context = context;
         }
-        public async Task BlockUserFromFamily(SetBlockedMemberViewModel model)
+        public async Task BlockUserFromFamily(SetBlockedMemberDto model)
         {
             var user = await context.Users.FindAsync(model.UserId);
             var family = await context.Families.Include(f => f.FamilyMembers).FirstOrDefaultAsync(f => f.FamilyId == model.FamilyId);

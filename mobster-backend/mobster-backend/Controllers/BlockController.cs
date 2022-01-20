@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using mobster_backend.DTOs.Write;
 using mobster_backend.Interfaces;
-using mobster_backend.ViewModels.Create;
 using System;
 using System.Threading.Tasks;
 
@@ -19,7 +18,7 @@ namespace mobster_backend.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> BlockUserFromFamilyAsync(SetBlockedMemberViewModel model)
+        public async Task<IActionResult> BlockUserFromFamilyAsync(SetBlockedMemberDto model)
         {
             try
             {

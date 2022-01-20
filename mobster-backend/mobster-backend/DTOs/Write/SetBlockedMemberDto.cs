@@ -1,12 +1,11 @@
 ﻿using System;
 
-namespace mobster_backend.ViewModels.Create
+namespace mobster_backend.DTOs.Write
 {
-    public class SetBlockedMemberViewModel
+    public class SetBlockedMemberDto
     {
         public Guid FamilyId { get; set; }
         public Guid UserId { get; set; }
         public string Description { get; set; }
-
     }
 }

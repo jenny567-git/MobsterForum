@@ -1,12 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using mobster_backend.DTOs.Write;
 using mobster_backend.Interfaces;
-using mobster_backend.Models;
-using mobster_backend.ViewModels.Create;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace mobster_backend.Controllers
@@ -157,7 +153,7 @@ namespace mobster_backend.Controllers
         }
         
         [HttpPut]
-        public async Task<IActionResult> UpdateFamilyAsync(Guid familyId, SetFamilyViewModel model)
+        public async Task<IActionResult> UpdateFamilyAsync(Guid familyId, SetFamilyDto model)
         {
             try
             {

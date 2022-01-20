@@ -1,9 +1,8 @@
-﻿using mobster_backend.DTOs.Write;
+﻿using mobster_backend.DTOs.Read;
+using mobster_backend.DTOs.Write;
 using mobster_backend.Models;
-using mobster_backend.ViewModels.Create;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace mobster_backend.Interfaces
@@ -11,13 +10,13 @@ namespace mobster_backend.Interfaces
     public interface IFamilyService
     {
         Task AddFamily(SetFamilyDto model);
-        Task<IEnumerable<Family>> GetFamilies();
-        Task<Family> GetFamily(Guid familyId);
-        Task<IEnumerable<User>> GetFamilyMembers(Guid familyId);
+        Task<IEnumerable<FamilyDto>> GetFamilies();
+        Task<FamilyDto> GetFamily(Guid familyId);
+        Task<IEnumerable<UserDto>> GetFamilyMembers(Guid familyId);
         Task AddFamilyMember(Guid familyId, Guid userId);
         Task AddFamilyMembers(Guid familyId, IEnumerable<Guid> userIds);
         
-        Task<Family> UpdateFamily(Guid familyId, SetFamilyViewModel model);
+        Task<FamilyDto> UpdateFamily(Guid familyId, SetFamilyDto model);
 
         /// <summary>
         /// Only if admin or site admin

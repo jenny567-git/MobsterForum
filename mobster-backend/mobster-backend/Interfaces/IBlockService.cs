@@ -1,4 +1,4 @@
-﻿using mobster_backend.ViewModels.Create;
+﻿using mobster_backend.DTOs.Write;
 using System;
 using System.Threading.Tasks;
 
@@ -6,7 +6,7 @@ namespace mobster_backend.Interfaces
 {
     public interface IBlockService
     {
-        Task BlockUserFromFamily(SetBlockedMemberViewModel model);
+        Task BlockUserFromFamily(SetBlockedMemberDto model);
 
         Task RemoveBlockedUserFromFamily(Guid userId, Guid familyId);
 

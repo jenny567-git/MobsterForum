@@ -39,5 +39,58 @@ namespace mobster_backend.Extensions
 
             return threads.Select(f => f.ToThreadDto());
         }
+
+        public static FamilyDto ToFamilyDto(this Family family)
+        {
+            if (family == null)
+            {
+                return null;
+            }
+
+            return new FamilyDto
+            {
+                FamilyId = family.FamilyId,
+                Name = family.Name,
+                Description = family.Description,
+                AddedAt = family.AddedAt,
+                UpdatedAt = family.UpdatedAt,
+                MemberCount = family.MemberCount,
+                AdminUserId = family.Admin.UserId
+            };
+        }
+
+        public static IEnumerable<FamilyDto> ToFamilyDtos(this IEnumerable<Family> families)
+        {
+            if (families == null)
+            {
+                return null;
+            }
+
+            return families.Select(f => f.ToFamilyDto());
+        }
+        
+        public static UserDto ToUserDto(this User user)
+        {
+            if (user == null)
+            {
+                return null;
+            }
+
+            return new UserDto
+            {
+                //TODO: to add username
+                UserId = user.UserId
+            };
+        }
+
+        public static IEnumerable<UserDto> ToUserDtos(this IEnumerable<User> users)
+        {
+            if (users == null)
+            {
+                return null;
+            }
+
+            return users.Select(f => f.ToUserDto());
+        }
     }
 }
