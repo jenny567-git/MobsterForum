@@ -70,7 +70,7 @@ namespace mobster_backend.Services
 
         public async Task<FamilyDto> GetFamily(Guid familyId)
         {
-            var family = await context.Families.FindAsync(familyId);
+            var family = await context.Families.Include(f => f.Admin).FirstOrDefaultAsync(f => f.FamilyId == familyId);
             return family.ToFamilyDto();
         }
 
