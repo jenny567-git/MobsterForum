@@ -120,6 +120,7 @@ namespace mobster_backend.Services
                 .Include(a => a.Admin)
                 .FirstOrDefaultAsync(f => f.FamilyId == familyId);
             
+            family.Name = model.Name;
             family.Description = model.Description;
             family.UpdatedAt = DateTime.Now;
 
