@@ -78,8 +78,8 @@ namespace mobster_backend.Extensions
 
             return new UserDto
             {
-                //TODO: to add username
-                UserId = user.UserId
+                UserId = user.UserId,
+                UserName = user.UserName
             };
         }
 

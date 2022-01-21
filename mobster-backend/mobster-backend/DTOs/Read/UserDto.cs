@@ -5,7 +5,7 @@ namespace mobster_backend.DTOs.Read
     public class UserDto
     {
         public Guid UserId { get; set; } //auth0Id
-        public string UserName { get; set; } = "empty";
+        public string UserName { get; set; }
 
     }
 }
