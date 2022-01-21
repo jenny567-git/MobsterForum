@@ -11,6 +11,7 @@ const Family = () => {
 
     const toInviteLink = () => {
         navigate('/');
+        //redirect to user list? or an component with search user function +add button
     };
 
     const toggleEdit = () =>{
@@ -25,15 +26,22 @@ const Family = () => {
         };
         family.memberCount = -10
         updateContext({
-            family: family
+            family: family,
+            test: "new"
         })
+        //redirect to members list -> new component
+    }
+    const toJoin = () => {
+        //fetch api
     }
 
     return (
         <div>
             <h1>{context.family.name}</h1>
+            <h1>{context.test}</h1>
             <p>Members: {context.family.memberCount}</p>
             <button onClick={toInviteLink}>Invite</button>
+            <button onClick={toJoin}>Join</button>
             <button onClick={toggleEdit}>Edit</button>
             <button onClick={toMembers}>Members</button>
             {isEditing && (<EditFamily/>)}

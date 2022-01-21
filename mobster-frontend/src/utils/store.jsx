@@ -9,6 +9,13 @@ export function StoreProvider({ children }) {
         description: "descrip from context",
         admin: "admin from context",
         memberCount: 1000
+    },
+    test: "testdata",
+    user: {
+      userid: "",
+      username: "username",
+      families: [],
+      isAdmin: []
     }
   });
 
