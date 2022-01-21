@@ -4,6 +4,8 @@ import { Context } from "../../utils/store";
 const EditFamily = () => {
   const [context, updateContext] = useContext(Context);
   const [loading, setloading] = useState(true);
+  //useState with object, how to partial update object
+  //https://stackoverflow.com/questions/54150783/react-hooks-usestate-with-object
   const [familyName, setfamilyName] = useState("");
   const [description, setDescription] = useState("");
   const [admin, setAdmin] = useState("");
