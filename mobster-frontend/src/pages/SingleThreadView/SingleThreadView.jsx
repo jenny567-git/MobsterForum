@@ -11,6 +11,7 @@ const SingleThreadView = () => {
     <div className="thread-container">
         { isPending && <div>Loading thread...</div> }
         { error && <h2>Error: no content found.</h2> }
+        
         { thread && (<div className="thread">
           <p className="thread-metadata"> 
             Posted by <strong className='thread-metadata-bold'>{thread.author.userName}</strong> in <em className='thread-metadata-bold'>{thread.family.name}</em>  at {thread.createdAt}
