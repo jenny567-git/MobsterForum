@@ -32,7 +32,9 @@ namespace mobster_backend.Extensions
                     .IsRequired()
                     .HasMaxLength(100)
                 );
-            
+
+            builder.Entity<Family>().HasIndex(e => e.Name).IsUnique();
+
             builder.Entity<Family>(e =>
                 e.Property(p => p.Description)
                     .HasMaxLength(1000)

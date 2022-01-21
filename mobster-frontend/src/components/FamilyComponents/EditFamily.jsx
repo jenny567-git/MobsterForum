@@ -4,6 +4,7 @@ import { Context } from "../../utils/store";
 const EditFamily = () => {
   const [context, updateContext] = useContext(Context);
   const [loading, setloading] = useState(true);
+  const [success, setSuccess] = useState(false);
   //useState with object, how to partial update object
   //https://stackoverflow.com/questions/54150783/react-hooks-usestate-with-object
   const [familyName, setfamilyName] = useState("");
@@ -50,6 +51,7 @@ const EditFamily = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log("Success:", data);
+        setSuccess(true);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -60,6 +62,7 @@ const EditFamily = () => {
     <>
       {/* {!loading && ( */}
       <div>
+        {success && <p style={{color:'green'}}>Successfully added!</p>}
         <p>Name:</p>
         <input
           type="text"
