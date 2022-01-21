@@ -12,7 +12,8 @@ export function StoreProvider({ children }) {
     },
     test: "testdata",
     user: {
-      userid: "",
+      //hard coded user for now
+      userid: "3FA85F64-5717-4562-B3FC-2C963F66AFA6",
       username: "username",
       families: [],
       isAdmin: []

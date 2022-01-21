@@ -31,8 +31,17 @@ const Family = () => {
         })
         //redirect to members list -> new component
     }
+    
     const toJoin = () => {
         //fetch api
+    }
+    
+    const onDelete = () => {
+        //fetch api
+    }
+    
+    const onCreate = () => {
+        navigate('/family/create');
     }
 
     return (
@@ -40,10 +49,12 @@ const Family = () => {
             <h1>{context.family.name}</h1>
             <h1>{context.test}</h1>
             <p>Members: {context.family.memberCount}</p>
-            <button onClick={toInviteLink}>Invite</button>
-            <button onClick={toJoin}>Join</button>
+            <button onClick={toInviteLink}>Invite (Link)</button>
+            <button onClick={toJoin} disabled>Join</button>
             <button onClick={toggleEdit}>Edit</button>
-            <button onClick={toMembers}>Members</button>
+            <button onClick={toMembers}>Members (mainpulate context)</button>
+            <button onClick={onDelete}>Delete family</button>
+            <button onClick={onCreate}>Create new family</button>
             {isEditing && (<EditFamily/>)}
             <FakeThread/>
             <FakeThread/>
