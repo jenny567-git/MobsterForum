@@ -16,6 +16,7 @@ const EditFamily = () => {
   const fetchFamily = async () => {
     console.log("in fetch get");
     var response = await fetch(
+      //hardcoded, to be replaced
       "https://localhost:44304/api/Family/F17478B7-D991-48DD-1AD4-08D9DB54486B"
     );
     var result = await response.json();
@@ -27,8 +28,9 @@ const EditFamily = () => {
   };
 
   const onSubmit = () => {
-      console.log('familyname:' + familyName);
+    console.log("familyname:" + familyName);
     fetch(
+      //hard coded, to be replaced
       "https://localhost:44304/api/Family?familyId=F17478B7-D991-48DD-1AD4-08D9DB54486B",
       {
         method: "Put",
@@ -55,31 +57,30 @@ const EditFamily = () => {
   return (
     <>
       {/* {!loading && ( */}
-        <div>
-          <p>Name:</p>
-          <input
-            type="text"
-            value={familyName}
-            onChange={(e) => setfamilyName(e.target.value)}
-          />
-          <p>Description:</p>
-          <input
-            type="text"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-          <p>Current admin:</p>
-          <input
-            type="text"
-            value={admin}
-            onChange={(e) => setAdmin(e.target.value)}
-          />
-          <p>
-            - Hämta alla family members och ha current admin som current
-            selected
-          </p>
-          <button onClick={onSubmit}>Save</button>
-        </div>
+      <div>
+        <p>Name:</p>
+        <input
+          type="text"
+          value={familyName}
+          onChange={(e) => setfamilyName(e.target.value)}
+        />
+        <p>Description:</p>
+        <input
+          type="text"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+        <p>Current admin:</p>
+        <input
+          type="text"
+          value={admin}
+          onChange={(e) => setAdmin(e.target.value)}
+        />
+        <p>
+          - Hämta alla family members och ha current admin som current selected
+        </p>
+        <button onClick={onSubmit}>Save</button>
+      </div>
       {/* )} */}
     </>
   );
