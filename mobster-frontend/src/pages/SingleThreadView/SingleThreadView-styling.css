@@ -26,6 +26,10 @@ p {
 .thread-metadata {
 	align-self: flex-end;
 }
+
+.thread-metadata-bold{
+	color: #ec625f;
+}
 .thread-btns {
 	align-self: flex-end;
 }

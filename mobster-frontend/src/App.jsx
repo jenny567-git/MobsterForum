@@ -13,7 +13,7 @@ function App() {
         <div className="content">
           <Routes>
             <Route exact path="/" element={<Home />}></Route>
-            <Route path="/thread" element={<SingleThreadView />}></Route>
+            <Route exact path="/thread/:id" element={<SingleThreadView />}></Route>
             <Route exact path="/family" element={<Family />}></Route>
             <Route exact path="/family/create" element={<CreateFamily />}></Route>
           </Routes>
