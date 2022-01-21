@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using mobster_backend.DTOs.Write;
 using mobster_backend.Interfaces;
@@ -21,6 +22,7 @@ namespace mobster_backend.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> AddUserAsync(Guid userId)
         {
             try
@@ -33,6 +35,12 @@ namespace mobster_backend.Controllers
             }
 
             return StatusCode(201);
+        }
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> TestAuth()
+        {
+            return Ok(null);
         }
     }
 }
