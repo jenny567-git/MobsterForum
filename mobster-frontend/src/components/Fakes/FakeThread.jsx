@@ -3,7 +3,7 @@ import React from 'react'
 const FakeThread = () => {
     return (
         <div>
-            <p>Poop</p>
+            <p>Poop Thread</p>
         </div>
     )
 }
