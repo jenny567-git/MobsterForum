@@ -14,15 +14,11 @@ const LoginButton = () => {
       returnTo: window.location.origin,
   });
 
-// const LoginButton = () => {
-//   const { loginWithRedirect } = useAuth0();
-
-  //return <button onClick={() => loginWithRedirect()}>Log In</button>;
   return (
     <div>
         {!isAuthenticated && ( <button onClick={() => loginWithRedirect()}>Log In</button>)}
         {isAuthenticated && (<button onClick={() => logoutWithRedirect()}>Log out</button>)}
-        <button type="button" onClick={() => loginWithRedirect()}>Register</button>
+        {!isAuthenticated && (<button type="button" onClick={() => loginWithRedirect()}>Register</button>)}
     </div>
 )
 };
