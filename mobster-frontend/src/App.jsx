@@ -12,7 +12,7 @@ function App() {
         <div className="content">
           <Routes>
             <Route exact path="/" element={<Home />}></Route>
-            <Route exact path="/family" element={<Family />}></Route>
+            <Route exact path="/family/:id" element={<Family />}></Route>
             <Route exact path="/family/create" element={<CreateFamily />}></Route>
           </Routes>
         </div>

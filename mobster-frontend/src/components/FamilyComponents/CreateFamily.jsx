@@ -1,29 +1,27 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../../utils/store";
-import { FloatingLabel, Form } from "react-bootstrap";
+import { FloatingLabel, Form, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const CreateFamily = () => {
   const [familyName, setfamilyName] = useState("");
   const [description, setDescription] = useState("");
   const [context, updateContext] = useContext(Context);
 
+  let navigate = useNavigate();
+
   const onSubmit = () => {
-    fetch(
-      //works, but get error "Error: SyntaxError: Unexpected end of JSON input"
-      "https://localhost:44304/api/Family",
-      {
-        method: "Post",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          Name: familyName,
-          Description: description,
-          AdminId: context.user.userid,
-        }),
-      }
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Success:", data);
+    let family = {
+      Name: familyName,
+      Description: description,
+      AdminId: context.user.userid,
+    };
+
+    axios
+      .post(`https://localhost:44304/api/Family`, family)
+      .then((res) => {
+        console.log("Success: ", res.data);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -32,6 +30,7 @@ const CreateFamily = () => {
 
   return (
     <div>
+      <Button onClick={() => navigate(-1)}>Back</Button>
       <h2>Create new family</h2>
       {/* <p>Name:</p> */}
       {/* <input
@@ -63,7 +62,9 @@ const CreateFamily = () => {
         />
       </FloatingLabel>
       <p>Admin: {context.user.userid}</p>
-      <button onClick={onSubmit}>Save</button>
+      <Button variant="success" onClick={onSubmit}>
+        Save
+      </Button>
     </div>
   );
 };
