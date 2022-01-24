@@ -12,6 +12,6 @@ namespace mobster_backend.DTOs.Read
         public string Title { get; set; }
         public string Content { get; set; }
         public DateTime CreatedAt { get; set; }
-        public ICollection<PostDto> Posts { get; set; }
+        public IEnumerable<PostDto> Posts { get; set; }
     }
 }

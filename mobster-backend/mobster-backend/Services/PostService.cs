@@ -22,7 +22,7 @@ namespace mobster_backend.Services
         }
         public async Task AddPost(SetPostDto model)
         {
-            var post = new Post(model.ThreadId, model.AuthorId, model.Content);
+            var post = new Post(model.ThreadId, model.AuthorUserId, model.Content);
 
             context.Posts.Add(post);
             
@@ -65,7 +65,7 @@ namespace mobster_backend.Services
         {
             var posts = await context.Posts
                 .Include(p => p.Author)
-                .Where(p => p.AuthorId == authorId)
+                .Where(p => p.AuthorUserId == authorId)
                 .ToListAsync();
 
             if (!posts.Any())
@@ -108,6 +108,23 @@ namespace mobster_backend.Services
             {
                 post.Content = model.Content;
                 post.UpdatedAt = DateTime.Now;
+
+                await context.SaveChangesAsync();
+            }
+        }
+
+        public async Task ToggleCensorPost(Guid postId)
+        {
+            var post = await context.Posts
+                .FirstOrDefaultAsync(p => p.PostId == postId);
+
+            if (post == null)
+            {
+                throw new DbNotFoundException($"No post with id {postId} exists in the database.");
+            }
+            else
+            {
+                post.IsCensored = !post.IsCensored;
 
                 await context.SaveChangesAsync();
             }

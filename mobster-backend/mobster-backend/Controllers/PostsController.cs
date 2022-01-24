@@ -95,7 +95,6 @@ namespace mobster_backend.Controllers
         /// <returns></returns>
         [HttpPost]
         
-        // Might need new migration and clearer delete behavior, not working atm
         public async Task<IActionResult> AddPost(SetPostDto model)
         {
             try
@@ -126,6 +125,25 @@ namespace mobster_backend.Controllers
             try
             {
                 await postService.UpdatePost(postId, model);
+            }
+            catch (DbNotFoundException e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+
+            return Ok();
+        }
+
+        [HttpPut("/censor/{postId}")]
+        public async Task<IActionResult> ToggleCensorPost(Guid postId)
+        {
+            try
+            {
+                await postService.ToggleCensorPost(postId);
             }
             catch (DbNotFoundException e)
             {

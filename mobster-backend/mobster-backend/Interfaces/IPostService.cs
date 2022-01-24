@@ -13,6 +13,7 @@ namespace mobster_backend.Interfaces
         Task<IEnumerable<PostDto>> GetPostsByAuthorId(Guid authorId);
         Task<PostDto> GetPostById(Guid postId);
         Task UpdatePost(Guid postId, SetPostDto model);
+        Task ToggleCensorPost(Guid postId);
         Task DeletePost(Guid postId);
     }
 }
