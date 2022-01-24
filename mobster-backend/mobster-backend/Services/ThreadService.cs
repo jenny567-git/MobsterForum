@@ -41,6 +41,7 @@ namespace mobster_backend.Services
             {
                 thread.Title = model.Title;
                 thread.Content = model.Content;
+                thread.UpdatedAt = DateTime.Now;
 
                 await context.SaveChangesAsync();
             }
