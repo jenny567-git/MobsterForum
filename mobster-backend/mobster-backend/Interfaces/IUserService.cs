@@ -1,4 +1,4 @@
-﻿using mobster_backend.ViewModels.Create;
+﻿using mobster_backend.DTOs.Write;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +8,6 @@ namespace mobster_backend.Interfaces
 {
     public interface IUserService
     {
-        Task AddUser(SetUserViewModel model);
+        Task AddUser(Guid userId);
     }
 }
