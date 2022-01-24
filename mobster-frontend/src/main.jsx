@@ -1,7 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import App from './App'
+import {StoreProvider} from './utils/store'
 import { Auth0Provider } from "@auth0/auth0-react";
 
 import { getConfig } from './config';
@@ -18,10 +20,10 @@ const providerConfig = {
 
 ReactDOM.render(
   <React.StrictMode>
-    <Auth0Provider {...providerConfig}
-   
-  >
-    <App />
+    <Auth0Provider {...providerConfig}>
+            <StoreProvider>
+                <App />
+            </StoreProvider>,
   </Auth0Provider>,
   </React.StrictMode>,
   document.getElementById('root')

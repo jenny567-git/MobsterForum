@@ -1,10 +1,7 @@
 ﻿using mobster_backend.Database;
 using mobster_backend.Interfaces;
 using mobster_backend.Models;
-using mobster_backend.ViewModels.Create;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace mobster_backend.Services
@@ -18,9 +15,9 @@ namespace mobster_backend.Services
             this.context = context;
         }
 
-        public async Task AddUser(SetUserViewModel model)
+        public async Task AddUser(Guid userId)
         {
-            var user = new User(model.Id);
+            var user = new User(userId);
             context.Users.Add(user);
             await context.SaveChangesAsync();
         }

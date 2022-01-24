@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using mobster_backend.Extensions;
 using mobster_backend.Models;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,8 @@ namespace mobster_backend.Database
             builder.Entity<User>()
                 .HasMany(p => p.Families)
                 .WithMany(p => p.FamilyMembers);
+
+            builder.AddRestrictions();
 
             base.OnModelCreating(builder);
         }

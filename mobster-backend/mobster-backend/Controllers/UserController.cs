@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using mobster_backend.DTOs.Write;
 using mobster_backend.Interfaces;
-using mobster_backend.ViewModels.Create;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,11 +23,11 @@ namespace mobster_backend.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> AddUserAsync(SetUserViewModel model)
+        public async Task<IActionResult> AddUserAsync(Guid userId)
         {
             try
             {
-                await userService.AddUser(model);
+                await userService.AddUser(userId);
             }
             catch (Exception e)
             {
