@@ -23,8 +23,8 @@ ReactDOM.render(
     <Auth0Provider {...providerConfig}>
             <StoreProvider>
                 <App />
-            </StoreProvider>,
-  </Auth0Provider>,
+            </StoreProvider>
+  </Auth0Provider>
   </React.StrictMode>,
   document.getElementById('root')
 )

@@ -1,4 +1,7 @@
+import axios from "axios";
 import React, { useState, useContext, useEffect } from "react";
+import { useParams } from "react-router-dom";
+
 import { Context } from "../../utils/store";
 
 const EditFamily = () => {
@@ -10,59 +13,52 @@ const EditFamily = () => {
   const [familyName, setfamilyName] = useState("");
   const [description, setDescription] = useState("");
   const [admin, setAdmin] = useState("");
+  const { id } = useParams();
 
   useEffect(() => {
-    console.log("in effect");
     fetchFamily();
   }, []);
 
   const fetchFamily = async () => {
-    console.log("in fetch get");
-    var response = await fetch(
-      //hardcoded, to be replaced
-      "https://localhost:44304/api/Family/F17478B7-D991-48DD-1AD4-08D9DB54486B"
+    const response = await axios.get(
+      `https://localhost:44304/api/Family/${id}`
     );
-    var result = await response.json();
-    console.log(result);
-    setfamilyName(result.name);
-    setDescription(result.description);
-    setAdmin(result.adminUserId);
+    setfamilyName(response.data.name);
+    setDescription(response.data.description);
+    setAdmin(response.data.adminUserId);
     setloading(false);
   };
 
-  const onSubmit = () => {
-    console.log("familyname:" + familyName);
-    fetch(
-      //hard coded, to be replaced
-      "https://localhost:44304/api/Family?familyId=F17478B7-D991-48DD-1AD4-08D9DB54486B",
-      {
-        method: "Put",
-        headers: {
-          Accept: "application/json",
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({
-          Name: familyName,
-          Description: description,
-          AdminId: admin,
-        }),
-      }
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Success:", data);
-        setSuccess(true);
+  const onSubmit = async () => {
+    let updatedFamily = {
+      Name: familyName,
+      Description: description,
+      AdminId: admin,
+    };
+    await axios
+      .put(`https://localhost:44304/api/Family?familyId=${id}`, updatedFamily)
+      .then((res) => {
+        console.log("Success: ", res.data);
       })
       .catch((error) => {
         console.error("Error:", error);
       });
+    //how to update parent component without refreshing page? context?
+    setSuccess(true);
+    const timer = setTimeout(() => {
+      window.location.reload(false);
+    }, 1500);
   };
 
   return (
     <>
       {/* {!loading && ( */}
       <div>
-        {success && <p style={{color:'green'}}>Successfully added!</p>}
+        {success && (
+          <p style={{ color: "green" }}>
+            Successfully added! Updated in 2 seconds...
+          </p>
+        )}
         <p>Name:</p>
         <input
           type="text"
@@ -70,6 +66,7 @@ const EditFamily = () => {
           onChange={(e) => setfamilyName(e.target.value)}
         />
         <p>Description:</p>
+        {/* TODO: bigger text area */}
         <input
           type="text"
           value={description}

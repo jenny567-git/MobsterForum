@@ -11,14 +11,14 @@ const CreateFamily = () => {
 
   let navigate = useNavigate();
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     let family = {
       Name: familyName,
       Description: description,
       AdminId: context.user.userid,
     };
 
-    axios
+    await axios
       .post(`https://localhost:44304/api/Family`, family)
       .then((res) => {
         console.log("Success: ", res.data);

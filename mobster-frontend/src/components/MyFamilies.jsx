@@ -1,12 +1,12 @@
 import {React, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import FakeThread from "./Fakes/FakeThread";
 
 function MyFamilies() {
   const [families, setFamilies] = useState([]);
   const [isLoading, setisLoading] = useState(true)
   let navigate = useNavigate();
+  
 
   const baseURL = 'https://localhost:44304/api/Family'
 
@@ -29,20 +29,6 @@ function MyFamilies() {
                     navigate(`/family/${result.familyId}`)
                   }>{result.name}</li>
               ))}
-        
-        
-        {/* <li
-          onClick={() =>
-            navigate("/family/F17478B7-D991-48DD-1AD4-08D9DB54486B")
-          }
-        >
-          Hardcoded fam
-        </li> */}
-        {/* <li>family 2</li>
-        <li>family 3</li>
-        <li>family 4</li>
-        <li>family 5</li>
-        <li>family 6</li> */}
       </ul>
     </div>
   );
