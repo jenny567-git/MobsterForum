@@ -25,7 +25,7 @@ const Members = () => {
     return (
         <div>
             <Button variant="dark" onClick={() => navigate(`/family/${familyId}/blockedMembers`)}>Blocked member list</Button>
-            <h1>List of members</h1>
+            <h1>List of members({members.length})</h1>
             {Array.from(members).map((member) => (
                 <Member key={member.userId} member={member}/>
             ))}

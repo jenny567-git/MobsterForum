@@ -19,7 +19,7 @@ const Family = () => {
   let navigate = useNavigate();
 
   const {user} = useAuth0();
-  console.log(user);
+  // console.log(user);
   useEffect(() => {
     fetchFamily();
   }, [])
@@ -70,9 +70,9 @@ const toMembers = () => {
       .catch((error) => {
         console.error("Error:", error);
       });
-      let family = {...family};
-      family.memberCount++;
-      setFamily(family);
+      // let family = {...family};
+      // family.memberCount++;
+      // setFamily(family);
   };
 
   const onDelete = () => {
