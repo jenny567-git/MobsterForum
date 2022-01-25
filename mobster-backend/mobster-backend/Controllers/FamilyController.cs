@@ -84,7 +84,7 @@ namespace mobster_backend.Controllers
         /// </summary>
         /// <param name="userId">The id of the requested user</param>
         /// <returns></returns>
-        [HttpGet("/user/{userId}")]
+        [HttpGet("user/{userId}")]
         public async Task<IActionResult> GetFamiliesByUserId(Guid userId)
         {
             try
