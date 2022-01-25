@@ -41,6 +41,7 @@ namespace mobster_backend.Services
             {
                 thread.Title = model.Title;
                 thread.Content = model.Content;
+                thread.UpdatedAt = DateTime.Now;
 
                 await context.SaveChangesAsync();
             }
@@ -69,7 +70,8 @@ namespace mobster_backend.Services
                 .Include(t => t.Family)
                 .ThenInclude(f => f.Admin)
                 .Include(t => t.Author)
-                //.Include(t => t.Posts)
+                .Include(t => t.Posts)
+                .ThenInclude(p => p.Author)
                 .FirstOrDefaultAsync(t => t.ThreadId == threadId);
 
             if (thread == null)
@@ -88,7 +90,8 @@ namespace mobster_backend.Services
                 .Include(t => t.Family)
                 .ThenInclude(f => f.Admin)
                 .Include(t => t.Author)
-                //.Include(t => t.Posts)
+                .Include(t => t.Posts)
+                .ThenInclude(p => p.Author)
                 .Where(f => f.FamilyId == familyId)
                 .ToListAsync();
 

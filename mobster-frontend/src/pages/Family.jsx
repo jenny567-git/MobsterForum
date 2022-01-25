@@ -21,7 +21,7 @@ const Family = () => {
   };
 
   //working
-  const toMembers = () => {
+  const toManipulate = () => {
     //test to manipulate context
     let family = {
       ...context.family,
@@ -31,8 +31,11 @@ const Family = () => {
       family: family,
       test: "new",
     });
+};
+
+const toMembers = () => {
     //redirect to members list -> new component
-  };
+  }
 
   const toJoin = () => {
     //fetch api
@@ -64,7 +67,8 @@ const Family = () => {
         Join
       </button>
       <button onClick={toggleEdit}>Edit</button>
-      <button onClick={toMembers}>Members (mainpulate context)</button>
+      {/* <button onClick={toManipulate}> Mainpulate context</button> */}
+      <button onClick={toMembers}> List of members</button>
       <button onClick={handleShow}>Delete family</button>
       <button onClick={onCreate}>Create new family</button>
       {isEditing && <EditFamily />}
@@ -74,7 +78,7 @@ const Family = () => {
       
       <Modal show={showModal} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Are you sure</Modal.Title>
+          <Modal.Title>Are you sure?</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>

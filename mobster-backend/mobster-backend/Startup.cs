@@ -65,6 +65,7 @@ namespace mobster_backend
             //real database
             services.AddDbContext<MobsterContext>(options => options.UseSqlServer(connectionString));
             services.AddTransient<IThreadService, ThreadService>();
+            services.AddTransient<IPostService, PostService>();
             services.AddTransient<IFamilyService, FamilyService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IBlockService, BlockService>();
