@@ -1,6 +1,7 @@
-body {
+#root {
 	margin: 0;
 	background-color: #313131;
+	height: 100vh;
 }
 /* Home Page */
 .home {
@@ -20,7 +21,7 @@ body {
 .my-families {
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
+	justify-content: flex-start;
 	width: 20%;
 	background-color: #414141;
 	margin-top: 2rem;
@@ -28,10 +29,12 @@ body {
 	border-radius: 1rem;
 }
 .my-families h3 {
+	width: 100%;
 	align-self: center;
 	font-size: 2rem;
 	color: whitesmoke;
 	border-bottom: 0.2rem solid #ec625f;
+	padding: 1rem;
 }
 .my-families ul {
 	list-style-type: none;
@@ -51,7 +54,7 @@ body {
 .mp-families {
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
+	justify-content: flex-start;
 	width: 20%;
 	background-color: #414141;
 	margin-top: 2rem;
@@ -63,6 +66,7 @@ body {
 	font-size: 2rem;
 	color: whitesmoke;
 	border-bottom: 0.2rem solid #ec625f;
+	padding: 1rem;
 }
 .mp-families ul {
 	list-style-type: none;
@@ -145,31 +149,4 @@ body {
 	border-radius: 0 5px 5px 0;
 	cursor: pointer;
 	font-size: 20px;
-}
-
-/* AddThread component*/
-
-.add-thread {
-	display: flex;
-	flex-direction: row;
-	margin-top: 2rem;
-	justify-content: center;
-	align-items: center;
-}
-.add-thread img {
-	border-radius: 50%;
-	width: 4rem;
-	height: 4rem;
-	margin-right: 2rem;
-}
-.add-thread textarea {
-	resize: none;
-	border: none;
-	overflow: auto;
-	outline: none;
-	-webkit-box-shadow: none;
-	-moz-box-shadow: none;
-	box-shadow: none;
-	font-size: 1rem;
-	background-color: whitesmoke;
 }
