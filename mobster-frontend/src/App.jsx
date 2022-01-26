@@ -5,6 +5,8 @@ import Family from './pages/Family'
 import CreateFamily from './components/FamilyComponents/CreateFamily'
 import Members from './components/FamilyComponents/Members'
 import BlockedMembers from './components/FamilyComponents/BlockedMembers'
+import InviteMembers from './components/FamilyComponents/InviteMembers'
+
 function App() {
 
   return (
@@ -18,6 +20,7 @@ function App() {
             <Route exact path="/family/create" element={<CreateFamily />}></Route>
             <Route exact path="/family/:familyId/members" element={<Members />}></Route>
             <Route exact path="/family/:familyId/blockedMembers" element={<BlockedMembers />}></Route>
+            <Route exact path="/family/:familyId/invite" element={<InviteMembers />}></Route>
           </Routes>
         </div>
       </div>

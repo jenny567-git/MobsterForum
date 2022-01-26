@@ -108,7 +108,7 @@ const toMembers = () => {
        <h2>{family.description}</h2>
        <p>Members: {family.memberCount}</p>
       <Button style={myStyle} onClick={() => navigate("/")}>Home</Button>
-      <Button onClick={() => navigate(`/family/${id}/members`)}>Invite</Button>
+      <Button onClick={() => navigate(`/family/${id}/invite`)}>Invite</Button>
 
       {/* add a check, if current user is not a family member - display Join button */}
       <Button onClick={toJoin}>Join</Button>

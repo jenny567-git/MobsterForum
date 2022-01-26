@@ -19,7 +19,8 @@ export function StoreProvider({ children }) {
       isAdmin: []
     },
     familyMembers:[{}],
-    currentAdmin: {userName: "context", userId:""}
+    currentAdmin: {userName: "context", userId:""},
+    allUsers: ["Adam", "Bertil", "Chris", "David", "Emma", "Fanny", "Gustav"]
   });
 
   // setContext replaces the whole context
