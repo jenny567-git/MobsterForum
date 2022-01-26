@@ -75,7 +75,7 @@ const Members = () => {
   </thead>
   <tbody>
   {Array.from(members).map((member) => (
-    <tr>
+    <tr key={member.userId}>
       <td>{member.userName}</td>
       <td>      
         <Button onClick={onBlock}>Block</Button>

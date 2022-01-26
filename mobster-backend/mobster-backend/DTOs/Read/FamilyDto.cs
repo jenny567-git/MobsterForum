@@ -11,6 +11,7 @@ namespace mobster_backend.DTOs.Read
         public DateTime UpdatedAt { get; set; }
         public int MemberCount { get; set; }
         public Guid AdminUserId { get; set; }
+        public string AdminName { get; set; }
 
     }
 }

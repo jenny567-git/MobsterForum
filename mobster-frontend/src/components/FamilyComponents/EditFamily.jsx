@@ -1,13 +1,17 @@
 import axios from "axios";
 import React, { useState, useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Button } from "react-bootstrap";
+import { Button, Form, FloatingLabel, Modal } from "react-bootstrap";
 import { Context } from "../../utils/store";
+import Searchbar from "./Searchbar2";
 
 const EditFamily = () => {
   const [context, updateContext] = useContext(Context);
   const [loading, setloading] = useState(true);
   const [success, setSuccess] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [members, setmembers] = useState();
+
   //useState with object, how to partial update object
   //https://stackoverflow.com/questions/54150783/react-hooks-usestate-with-object
   const [familyName, setfamilyName] = useState("");
@@ -25,7 +29,7 @@ const EditFamily = () => {
     );
     setfamilyName(response.data.name);
     setDescription(response.data.description);
-    setAdmin(response.data.adminUserId);
+    updateContext({currentAdmin: {userName: response.data.adminName, userId:response.data.adminUserId}})
     setloading(false);
   };
 
@@ -33,7 +37,7 @@ const EditFamily = () => {
     let updatedFamily = {
       Name: familyName,
       Description: description,
-      AdminId: admin,
+      AdminId: context.currentAdmin.userId,
     };
     await axios
       .put(`https://localhost:44304/api/Family?familyId=${id}`, updatedFamily)
@@ -50,6 +54,15 @@ const EditFamily = () => {
     }, 1500);
   };
 
+  const handleClose = () => setShowModal(false);
+  const handleShow = async () => {
+    const response2 = await axios.get(
+      `https://localhost:44304/api/Family/${id}/members`
+    );
+    updateContext({ familyMembers: response2.data });
+    setShowModal(true);
+  };
+
   return (
     <>
       {/* {!loading && ( */}
@@ -59,31 +72,44 @@ const EditFamily = () => {
             Successfully added! Updated in 2 seconds...
           </p>
         )}
-        <p>Name:</p>
-        <input
-          type="text"
-          value={familyName}
-          onChange={(e) => setfamilyName(e.target.value)}
-        />
-        <p>Description:</p>
-        {/* TODO: bigger text area */}
-        <input
-          type="text"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-        <p>Current admin:</p>
-        <input
-          type="text"
-          value={admin}
-          onChange={(e) => setAdmin(e.target.value)}
-        />
-        <p>
-          - Hämta alla family members och ha current admin som current selected
-        </p>
-        <Button onClick={onSubmit}>Save</Button>
+        <FloatingLabel
+          controlId="familyNameLabel"
+          label="Family name"
+          className="mb-3"
+        >
+          <Form.Control
+            as="textarea"
+            value={familyName}
+            onChange={(e) => setfamilyName(e.target.value)}
+          />
+        </FloatingLabel>
+        <FloatingLabel controlId="familyDescription" label="Description">
+          <Form.Control
+            as="textarea"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            style={{ height: "100px" }}
+          />
+        </FloatingLabel>
+        <p>Current admin: {context.currentAdmin.userName}</p>
+        <Button variant="success" onClick={handleShow}>
+          Change admin
+        </Button>
+        <Button onClick={onSubmit}>Save changes</Button>
+
+        <Modal show={showModal} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Change admin</Modal.Title>
+          </Modal.Header>
+
+          <Modal.Body>
+            <Searchbar />
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={handleClose}>Select</Button>
+          </Modal.Footer>
+        </Modal>
       </div>
-      {/* )} */}
     </>
   );
 };

@@ -50,32 +50,36 @@ const BlockedMembers = () => {
           </Button>
         </div>
       ))} */}
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>User name</th>
-            <th>Date</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {Array.from(members).map((member) => (
-            <tr key={member.userId}>
-              <td>{member.userName}</td>
-              <td> TODO</td>
-              <td>
-                <Button>Description (TODO)</Button>
-                <Button
-                  variant="danger"
-                  onClick={() => onRemove(member.userId)}
-                >
-                  Remove block
-                </Button>
-              </td>
+      {!members.length ? 
+      ( <>No users found...</> ) : 
+      (
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>User name</th>
+              <th>Date</th>
+              <th></th>
             </tr>
-          ))}
-        </tbody>
-      </Table>
+          </thead>
+          <tbody>
+            {Array.from(members).map((member) => (
+              <tr key={member.userId}>
+                <td>{member.userName}</td>
+                <td> TODO</td>
+                <td>
+                  <Button>Description (TODO)</Button>
+                  <Button
+                    variant="danger"
+                    onClick={() => onRemove(member.userId)}
+                  >
+                    Remove block
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      )}
     </div>
   );
 };
