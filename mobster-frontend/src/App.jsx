@@ -3,6 +3,7 @@ import Header from './components/Header'
 import Home from './pages/Home'
 import Family from './pages/Family'
 import CreateFamily from './components/FamilyComponents/CreateFamily'
+import Profile from './pages/Profile'
 function App() {
 
   return (
@@ -14,6 +15,7 @@ function App() {
             <Route exact path="/" element={<Home />}></Route>
             <Route exact path="/family" element={<Family />}></Route>
             <Route exact path="/family/create" element={<CreateFamily />}></Route>
+            <Route exact path ="/profile" element={<Profile />}></Route>
           </Routes>
         </div>
       </div>
