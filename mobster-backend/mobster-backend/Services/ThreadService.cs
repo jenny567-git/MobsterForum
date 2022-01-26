@@ -31,7 +31,7 @@ namespace mobster_backend.Services
 
         public async Task UpdateThread(Guid threadId, SetThreadDto model)
         {
-            var thread = await context.Threads.FirstOrDefaultAsync(t => t.ThreadId == threadId);
+            var thread = await context.Threads.FindAsync(threadId);
 
             if (thread == null)
             {
@@ -51,7 +51,8 @@ namespace mobster_backend.Services
         public async Task DeleteThread(Guid threadId)
         {
             var thread = await context.Threads
-                .FirstOrDefaultAsync(t => t.ThreadId == threadId);
+                .Include(t => t.Posts)
+                .FirstOrDefaultAsync(t=> t.ThreadId == threadId);
 
             if (thread == null)
             {
@@ -59,7 +60,11 @@ namespace mobster_backend.Services
             }
             else
             {
-                context.Remove(thread);
+                foreach (var post in thread.Posts)
+                {
+                    post.ThreadId = null;
+                }
+                context.Threads.Remove(thread);
                 await context.SaveChangesAsync();
             }
         }
