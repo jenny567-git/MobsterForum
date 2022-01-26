@@ -40,5 +40,21 @@ namespace mobster_backend.Services
             context.BlockedMembers.Remove(blockedMember);
             await context.SaveChangesAsync();
         }
+
+        public async Task ToggleUserBlockInApplication(Guid userId)
+        {
+            var user = await context.Users.FirstOrDefaultAsync(u => u.UserId == userId);
+
+            if (user.IsBanned)
+            {
+                user.IsBanned = false;
+            }
+            else
+            {
+                user.IsBanned = true;
+            }
+
+            await context.SaveChangesAsync();
+        }
     }
 }

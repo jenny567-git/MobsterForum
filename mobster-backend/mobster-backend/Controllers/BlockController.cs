@@ -46,5 +46,21 @@ namespace mobster_backend.Controllers
 
             return Ok();
         }
+
+        [HttpPut]
+
+        public async Task<IActionResult> ToggleUserBlockInApplicationAsync(Guid userId)
+        {
+            try
+            {
+                await blockService.ToggleUserBlockInApplication(userId);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+
+            return Ok();
+        }
     }
 }
