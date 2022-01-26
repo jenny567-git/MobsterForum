@@ -1,5 +1,6 @@
 import React from 'react'
 import { useParams } from 'react-router-dom';
+import { Post } from '../../components/Post/Post';
 import useFetch from '../../CustomHooks/useFetch';
 import "./SingleThreadView-styling.css"
 
@@ -27,7 +28,7 @@ const SingleThreadView = () => {
         </div>
       )}
       <div className="thread-posts">
-        
+        <Post />
       </div>
       {/* <div className="thread-reply">
         <textarea id="reply-textarea" cols="60" rows="5"></textarea>
