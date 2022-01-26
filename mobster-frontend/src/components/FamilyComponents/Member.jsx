@@ -1,10 +1,10 @@
 import React from "react";
 import { Button } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 import axios from "axios";
 
-const Member = ({ member }) => {
-  const { familyId } = useParams();
+const Member = ({ member, familyId }) => {
+  // const { familyId } = useParams();
 
   const onBlock = async () => {
     let blockedUser = {

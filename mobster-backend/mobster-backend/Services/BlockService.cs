@@ -46,7 +46,7 @@ namespace mobster_backend.Services
             var innerJoin = from blockedUser in blockedUsers
                             join user in context.Users on blockedUser.UserId equals user.UserId
                             select new UserDto { UserId = blockedUser.UserId, UserName = user.UserName };
-            //return Task.FromResult(blockedUsers.ToUserDtos());
+
             return await innerJoin.ToListAsync();
         }
 

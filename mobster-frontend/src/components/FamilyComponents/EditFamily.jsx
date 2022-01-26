@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState, useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
-
+import { Button } from "react-bootstrap";
 import { Context } from "../../utils/store";
 
 const EditFamily = () => {
@@ -81,7 +81,7 @@ const EditFamily = () => {
         <p>
           - Hämta alla family members och ha current admin som current selected
         </p>
-        <button onClick={onSubmit}>Save</button>
+        <Button onClick={onSubmit}>Save</Button>
       </div>
       {/* )} */}
     </>
