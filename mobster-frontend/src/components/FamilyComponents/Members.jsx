@@ -54,14 +54,16 @@ const Members = () => {
   };
 
   return (
-    <div>
+    <div className="container">
+      <div className="flex space">
+      <h1>List of members({members.length})</h1>
       <Button
         variant="dark"
         onClick={() => navigate(`/family/${familyId}/blockedMembers`)}
-      >
+        >
         Blocked member list
       </Button>
-      <h1>List of members({members.length})</h1>
+        </div>
       {/* {Array.from(members).map((member) => (
         <Member key={member.userId} member={member} familyId={familyId} />
       ))} */}

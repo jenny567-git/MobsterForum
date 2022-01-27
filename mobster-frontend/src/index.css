@@ -2,6 +2,15 @@ body {
 	margin: 0;
 	background-color: #313131;
 }
+
+.flex{
+	display: flex;
+	flex-direction: row;
+}
+
+.space{
+	justify-content: space-between;
+}
 /* Home Page */
 .home {
 	width: 100%;

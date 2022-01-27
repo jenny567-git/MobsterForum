@@ -18,7 +18,7 @@ const InviteMembers = () => {
   }
   
   return (
-  <div>
+  <div className="container">
       <Form.Group>
         <Form.Label>Invite user</Form.Label>
         <Typeahead
@@ -31,6 +31,7 @@ const InviteMembers = () => {
           selected={selected}
         />
       </Form.Group>
+      <Button onClick={() => alert('To fix')}>Send invitation</Button>
   </div>
   );
 };

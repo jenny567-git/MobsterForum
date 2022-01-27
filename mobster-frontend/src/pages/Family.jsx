@@ -3,7 +3,6 @@ import FakeThread from "../components/Fakes/FakeThread";
 import { Context } from "../utils/store";
 import { useNavigate,useParams } from "react-router-dom";
 import EditFamily from "../components/FamilyComponents/EditFamily";
-import Member from "../components/FamilyComponents/Members";
 import { Modal, Button } from "react-bootstrap";
 import axios from 'axios';
 import { useAuth0 } from "@auth0/auth0-react";
@@ -12,7 +11,6 @@ import { useAuth0 } from "@auth0/auth0-react";
 const Family = () => {
   const [context, updateContext] = useContext(Context);
   const [isEditing, setIsEditing] = useState(false);
-  const [showMembers, setShowMembers] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [family, setFamily] = useState({});
   const { id } = useParams();
@@ -33,10 +31,6 @@ const Family = () => {
     // setloading(false);
   };
 
-  const toInvite = () => {
-    //redirect to user list? or an component with search user function +add button
-  };
-
   const toggleEdit = () => {
     isEditing ? setIsEditing(false) : setIsEditing(true);
   };
@@ -53,10 +47,6 @@ const Family = () => {
       test: "new",
     });
 };
-
-const toMembers = () => {
-    //redirect to members list -> new component
-  }
 
   const toJoin = () => {
     //hard coded, to be replaced
@@ -88,16 +78,13 @@ const toMembers = () => {
 
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
-  const toggleMembers = () => {
-
-  }
 
   let myStyle = {
     backgroundColor: 'gray'
   };
 
   return (
-    <div>
+    <div className="container">
 
         {/* <p>Hämtad från context:</p>
       <h1>{context.family.name}</h1>
@@ -105,12 +92,13 @@ const toMembers = () => {
       <p>Members: {context.family.memberCount}</p>
        */}
        <h1>{family.name}</h1>
-       <h2>{family.description}</h2>
+       <h2><i>{family.description}</i></h2>
        <p>Members: {family.memberCount}</p>
       <Button style={myStyle} onClick={() => navigate("/")}>Home</Button>
       <Button onClick={() => navigate(`/family/${id}/invite`)}>Invite</Button>
 
       {/* add a check, if current user is not a family member - display Join button */}
+      {/* add a check, if blocked member, cant join */}
       <Button onClick={toJoin}>Join</Button>
 
       {/* add a check, if current user == admin, display Edit button */}
@@ -126,7 +114,7 @@ const toMembers = () => {
       <Button variant="success" onClick={() => navigate("/family/create")}>Create new family</Button>
 
       {isEditing && <EditFamily />}
-      {showMembers && <Member />}
+      
       <FakeThread />
       <FakeThread />
       <FakeThread />
@@ -135,11 +123,9 @@ const toMembers = () => {
         <Modal.Header closeButton>
           <Modal.Title>Are you sure?</Modal.Title>
         </Modal.Header>
-
         <Modal.Body>
           <p>This family will be permanently be removed</p>
         </Modal.Body>
-
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close

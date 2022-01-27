@@ -1,9 +1,4 @@
 .rbt-token .rbt-token-remove-button {
     background: transparent;
     border: none;
-    padding-left: 10px;
-}
-
-.rbt-input-wrapper div:nth-child(n+2) {
-    padding-left: 10px;
 }

@@ -26,21 +26,6 @@ const Searchbar2 = () => {
           selected={selected}
         />
       </Form.Group>
-        {/* <InputGroup className="mb-3">
-    <InputGroup.Text id="basic-addon1">@</InputGroup.Text>
-    <FormControl
-      placeholder="Search for username"
-      aria-label="Username"
-      aria-describedby="basic-addon1"
-      onKeyUp={(e) => setSearchString(e.target.value)}
-    /> */}
-  {/* </InputGroup> */}
-      {/* <input
-        type="text"
-        placeholder="Search for username"
-        onKeyUp={(e) => onFilter(e.target.value)}
-      />
-      <Button onClick={onSearch}>Search</Button> */}
     </div>
   );
 };

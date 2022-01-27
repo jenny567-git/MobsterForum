@@ -35,7 +35,7 @@ const BlockedMembers = () => {
   };
 
   return (
-    <div>
+    <div className="container">
       <h1>Blocked members({members.length})</h1>
       {/* {Array.from(members).map((member) => (
         <div key={member.userId}>

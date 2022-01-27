@@ -29,7 +29,7 @@ const CreateFamily = () => {
   };
 
   return (
-    <div>
+    <div className="container">
       <Button onClick={() => navigate(-1)}>Back</Button>
       <h2>Create new family</h2>
       {/* <p>Name:</p> */}
