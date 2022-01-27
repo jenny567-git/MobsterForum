@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using mobster_backend.DTOs.Write;
 using mobster_backend.Interfaces;
 using mobster_backend.Models;
 using System;
@@ -46,15 +45,16 @@ namespace mobster_backend.Controllers
         }
 
         [HttpGet("allUsers")]
-        public async Task<IEnumerable<User>> GetUsers()
+        public async Task<IActionResult> GetUsers()
         {
             try
             {
-                return await userService.GetUsers();
+                var users = await userService.GetUsers();
+                return Ok(users);
             }
             catch (Exception e)
             {
-                return (IEnumerable<User>)StatusCode(500, e);
+                return StatusCode(500, e);
             }
         }
     }

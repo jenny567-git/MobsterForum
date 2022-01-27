@@ -1,4 +1,5 @@
-﻿using mobster_backend.DTOs.Write;
+﻿using mobster_backend.DTOs.Read;
+using mobster_backend.DTOs.Write;
 using mobster_backend.Models;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,6 @@ namespace mobster_backend.Interfaces
     {
         Task AddUser(Guid userId);
 
-        Task<IEnumerable<User>> GetUsers();
+        Task<IEnumerable<UserDto>> GetUsers();
     }
 }

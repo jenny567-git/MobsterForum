@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using mobster_backend.Database;
+using mobster_backend.DTOs.Read;
+using mobster_backend.Extensions;
 using mobster_backend.Interfaces;
 using mobster_backend.Models;
 using System;
@@ -24,9 +26,10 @@ namespace mobster_backend.Services
             await context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<User>> GetUsers()
+        public async Task<IEnumerable<UserDto>> GetUsers()
         {
-            return await context.Users.ToListAsync();
+            var users = await context.Users.ToListAsync();
+            return users.ToUserDtos();
         }
     }
 }
