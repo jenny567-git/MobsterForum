@@ -10,7 +10,7 @@ namespace mobster_backend.Interfaces
 
         Task RemoveBlockedUserFromFamily(Guid userId, Guid familyId);
 
-        Task ToggleUserBlockInApplication(Guid userId);
+        Task ToggleUserBlockInApplication(SetUserDto model);
 
     }
 }

@@ -49,11 +49,11 @@ namespace mobster_backend.Controllers
 
         [HttpPut]
 
-        public async Task<IActionResult> ToggleUserBlockInApplicationAsync(Guid userId)
+        public async Task<IActionResult> ToggleUserBlockInApplicationAsync(SetUserDto model)
         {
             try
             {
-                await blockService.ToggleUserBlockInApplication(userId);
+                await blockService.ToggleUserBlockInApplication(model);
             }
             catch (Exception e)
             {
