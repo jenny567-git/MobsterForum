@@ -45,14 +45,7 @@ namespace mobster_backend.Services
         {
             var user = await context.Users.FirstOrDefaultAsync(u => u.UserId == userId);
 
-            if (user.IsBanned)
-            {
-                user.IsBanned = false;
-            }
-            else
-            {
-                user.IsBanned = true;
-            }
+            user.IsBanned = !user.IsBanned;
 
             await context.SaveChangesAsync();
         }
