@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Button } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
+import { CreatePost } from '../../components/Post/CreatePost';
 import { Post } from '../../components/Post/Post';
 import useFetch from '../../CustomHooks/useFetch';
 import "./SingleThreadView-styling.css"
@@ -39,10 +40,8 @@ const SingleThreadView = () => {
                 <Button className='thread-btns' title='Censor thread content'><i class="fas fa-comment-slash"></i></Button>
         </div>
 
-        {/* TODO: break out the create post reply to separate component */}
         <div className={isVisible ? 'thread-reply' : 'invisible'} >
-              <textarea id="reply-textarea" cols="60" rows="5"></textarea>
-              <button>Post reply</button>
+              <CreatePost />
         </div>
         
         <div className="thread-posts">
