@@ -79,7 +79,8 @@ namespace mobster_backend.Extensions
             return new UserDto
             {
                 UserId = user.UserId,
-                UserName = user.UserName
+                UserName = user.UserName,
+                IsBanned = user.IsBanned
             };
         }
 
