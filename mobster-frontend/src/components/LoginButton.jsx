@@ -8,7 +8,7 @@ const LoginButton = () => {
       loginWithRedirect,
       logout,
   } = useAuth0();
-  
+  console.log(useAuth0())
   const logoutWithRedirect = () =>
     logout({
       returnTo: window.location.origin,

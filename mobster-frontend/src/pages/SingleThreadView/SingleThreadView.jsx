@@ -10,11 +10,9 @@ const SingleThreadView = () => {
   const [thread, setThread] = useState();
   const [threadTitle, setThreadTitle]= useState("")
   const [threadContent, setThreadContent]= useState("")
-  const [loggedInUser, setLoggedInUser] = useState(useAuth0());
-  const [btnText, setBtnText]= useState("Edit")
-
+  const [btnText, setBtnText]= useState(<i className='fas fa-edit'></i>)
+  const {user} = useAuth0();
   const fetchThreadById = (async ()=> {let response = await axios.get(`https://localhost:44304/api/Thread/${id}`) 
-  console.log(response)
   response.data.createdAt = response.data.createdAt.slice(0,10)
   setThread(response.data)
   setThreadContent(response.data.content)
@@ -22,13 +20,12 @@ const SingleThreadView = () => {
   })
 
   const editThread = (async ()=>{
-   if(isReadOnly && thread.author.userId != loggedInUser){
-    console.log(loggedInUser)
+   if(isReadOnly && thread.author.userId != user){
 
      setIsReadOnly(false)
-    setBtnText("Save")
+    setBtnText(<i className="fas fa-save"></i>)
    }
-   else if(!isReadOnly && thread.author.userId != loggedInUser){
+   else if(!isReadOnly && thread.author.userId != user){
       let updatedThread = {
         familyId: thread.family.familyId,
         title: threadTitle,
@@ -37,7 +34,7 @@ const SingleThreadView = () => {
       }
       console.log(updatedThread)
       setIsReadOnly(true)
-      setBtnText("Edit")
+      setBtnText(<i className='fas fa-edit'></i>)
       const response = await axios.put(`https://localhost:44304/api/Thread?id=${id}`,updatedThread)
       console.log(response)
    }
@@ -46,7 +43,6 @@ const SingleThreadView = () => {
 
   useEffect(()=>{
     fetchThreadById();
-    console.log(loggedInUser)
   },[])
   
   return <div className="SingleThreadView">
@@ -56,25 +52,25 @@ const SingleThreadView = () => {
           <p className="thread-metadata"> 
             Posted by <strong className='thread-metadata-bold'>{thread.author.userName}</strong> in <em className='thread-metadata-bold'>{thread.family.name}</em>  at {thread.createdAt}
           </p>
-          { isReadOnly && (<div>
+          { isReadOnly && (<div className='thread-data'>
             <input value={thread.title} readOnly></input>
-            <textarea value={thread.content} readOnly></textarea>
+            <textarea rows="auto" value={thread.content} readOnly></textarea>
           </div>)}
           
-          {!isReadOnly && (<div>
+          {!isReadOnly && (<div className='thread-data'>
             <input value={threadTitle} onChange={e => setThreadTitle(e.target.value)}></input>
             <textarea value={threadContent} onChange={e => setThreadContent(e.target.value)}></textarea>
           </div>)}
           
           <div className="thread-btns">
-            {thread.author.userId != loggedInUser && (
+            {thread.author.userId != user && (
               <div className='crud-btns'>
                 <button onClick={editThread}>{btnText}</button>
-                <button>Delete</button>
+                <button><i className="fas fa-trash-alt"></i></button>
               </div>
             )}
-            <button>Reply</button>
-            <button>Report</button>
+            <button><i className="fas fa-reply"></i></button>
+            <button><i className="fas fa-exclamation"></i></button>
           </div>
         </div>
       )}

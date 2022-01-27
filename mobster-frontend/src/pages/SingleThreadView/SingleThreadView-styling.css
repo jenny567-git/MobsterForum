@@ -27,11 +27,41 @@ p {
 	align-self: flex-end;
 }
 
-.thread-metadata-bold{
+.thread-metadata-bold {
 	color: #ec625f;
+}
+.thread-data {
+	display: flex;
+	flex-direction: column;
+	padding: 0 1rem 1rem 1rem;
+}
+.thread-data input,
+textarea {
+	border: none;
+	background-color: #414141;
+	color: whitesmoke;
+	resize: none;
+	margin-bottom: 1rem;
+	outline: none;
+}
+.thread-data input {
+	font-weight: bold;
+	font-size: 2rem;
 }
 .thread-btns {
 	align-self: flex-end;
+	display: flex;
+	flex-direction: row;
+}
+.thread-btns button {
+	border: none;
+	background-color: #414141;
+	color: #ec625f;
+	margin-right: 1rem;
+	font-size: 1rem;
+}
+.thread-btns i {
+	font-size: 1.4rem;
 }
 .thread-reply {
 	display: flex;
