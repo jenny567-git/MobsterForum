@@ -6,6 +6,6 @@ export const CreatePost = () => {
   
     return <div className='thread-reply'>
         <textarea className="reply-textarea" cols="60" rows="5"></textarea>
-        <button className="reply-button">Post reply</button>
+        <Button className="reply-button">Post reply</Button>
     </div>;
 };

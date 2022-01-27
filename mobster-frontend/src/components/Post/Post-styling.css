@@ -2,6 +2,7 @@
     display: flex;
     padding: 5px;
     margin-top: 2vh;
+    margin-bottom: 2vh;
     background-color: #414141;
     border-top: 1px solid #ec625f;
     border-bottom: 1px solid #ec625f;
@@ -38,6 +39,7 @@ p {
 
 .post-metadata {
     font-size: 0.9rem;
+    text-decoration: white underline dotted 0.1px;
 }
 
 .post-metadata-bold {

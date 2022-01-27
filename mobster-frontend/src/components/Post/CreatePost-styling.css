@@ -4,12 +4,12 @@
     align-items: center;
     width: 70%;
     margin: 0 auto;
-    padding-top: 10px;
 }
 
 .reply-textarea {
 	resize: none;
 	border: 2px solid #ec625f;
+	border-radius: 0.5rem;
 	overflow: auto;
 	outline: none;
 	-webkit-box-shadow: none;
@@ -27,6 +27,5 @@
 	font-weight: bold;
 	margin-left: 2rem;
 	cursor: pointer;
-	padding: 0.8rem 2rem;
 	border-radius: 0.5rem;
 }

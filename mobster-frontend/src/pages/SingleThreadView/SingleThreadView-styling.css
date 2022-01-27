@@ -66,4 +66,9 @@ p {
 	display: none;
 }
 
+.backtotop-button {
+	display: flex;
+	margin: 10px auto;
+}
+
 

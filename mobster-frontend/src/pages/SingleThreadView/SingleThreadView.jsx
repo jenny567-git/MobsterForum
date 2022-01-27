@@ -14,6 +14,11 @@ const SingleThreadView = () => {
   const toggleReplyBox = () => {
     setVisible(!isVisible);
   }
+
+  function scrollToTop() {
+    document.body.scrollTop = 0; // For Safari
+    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+  }
   
   return <div className="SingleThreadView">
     
@@ -47,6 +52,8 @@ const SingleThreadView = () => {
         <div className="thread-posts">
             <Post id={id} />
         </div>
+
+        <Button className='backtotop-button' onClick={scrollToTop}>Back to top</Button>
     </div>
     
 </div>;
