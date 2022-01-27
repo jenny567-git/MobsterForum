@@ -107,6 +107,7 @@ namespace mobster_backend.Extensions
             return new UserDto
             {
                 UserId = user.UserId,
+                AuthId = user.AuthId,
                 UserName = user.UserName
             };
         }

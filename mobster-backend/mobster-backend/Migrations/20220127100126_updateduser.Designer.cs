@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using mobster_backend.Database;
 
@@ -11,9 +12,10 @@ using mobster_backend.Database;
 namespace mobster_backend.Migrations
 {
     [DbContext(typeof(MobsterContext))]
-    partial class MobsterContextModelSnapshot : ModelSnapshot
+    [Migration("20220127100126_updateduser")]
+    partial class updateduser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -132,7 +134,7 @@ namespace mobster_backend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("AuthorUserId")
+                    b.Property<Guid?>("AuthorUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Content")
@@ -142,9 +144,6 @@ namespace mobster_backend.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsCensored")
-                        .HasColumnType("bit");
 
                     b.Property<Guid>("ThreadId")
                         .HasColumnType("uniqueidentifier");
@@ -288,14 +287,12 @@ namespace mobster_backend.Migrations
                 {
                     b.HasOne("mobster_backend.Models.User", "Author")
                         .WithMany()
-                        .HasForeignKey("AuthorUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AuthorUserId");
 
                     b.HasOne("mobster_backend.Models.Thread", "Thread")
                         .WithMany("Posts")
                         .HasForeignKey("ThreadId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Author");
