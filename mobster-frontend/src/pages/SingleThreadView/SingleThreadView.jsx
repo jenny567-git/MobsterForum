@@ -15,6 +15,11 @@ const SingleThreadView = () => {
     setVisible(!isVisible);
   }
 
+  function getThreadLink(){
+    navigator.clipboard.writeText(window.location.href);
+    console.log(window.location.href);
+  }
+
   function scrollToTop() {
     document.body.scrollTop = 0; // For Safari
     document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
@@ -41,6 +46,7 @@ const SingleThreadView = () => {
       
         <div className="thread-btns">
                 <Button className='thread-btns' title='Post reply' onClick={toggleReplyBox}><i class="fas fa-reply"></i></Button>
+                <Button className='thread-btns' title='Share link' onClick={getThreadLink}><i class="fas fa-share-square"></i></Button>
                 <Button className='thread-btns' title='Flag thread as inappropriate'><i class="fas fa-flag"></i></Button>
                 <Button className='thread-btns' title='Censor thread content'><i class="fas fa-comment-slash"></i></Button>
         </div>
