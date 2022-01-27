@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using mobster_backend.DTOs.Write;
 using mobster_backend.Interfaces;
+using mobster_backend.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,11 +37,25 @@ namespace mobster_backend.Controllers
 
             return StatusCode(201);
         }
+        
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> TestAuth()
         {
             return Ok(null);
+        }
+
+        [HttpGet("allUsers")]
+        public async Task<IEnumerable<User>> GetUsers()
+        {
+            try
+            {
+                return await userService.GetUsers();
+            }
+            catch (Exception e)
+            {
+                return (IEnumerable<User>)StatusCode(500, e);
+            }
         }
     }
 }
