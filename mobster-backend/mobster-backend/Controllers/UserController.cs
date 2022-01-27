@@ -21,21 +21,27 @@ namespace mobster_backend.Controllers
             this.userService = userService;
         }
 
+        /// <summary>
+        /// Adds a user to the db if it doesn't already exist. This endpoint bridges between frontend and auth0
+        /// </summary>
+        /// <param name="authId">The unique auth0 id saved in the auth0 User db</param>
+        /// <param name="userName">The unique username saved in the auth0 User db</param>
+        /// <returns>A User Dto</returns>
         [HttpPost]
-        [Authorize]
-        public async Task<IActionResult> AddUserAsync(Guid userId)
+        //[Authorize]
+        public async Task<IActionResult> AddUserAsync(string authId, string userName)
         {
             try
             {
-                await userService.AddUser(userId);
+                var user = await userService.AddUser(authId, userName);
+                return Ok(user);
             }
             catch (Exception e)
             {
                 return StatusCode(500, e.Message);
             }
-
-            return StatusCode(201);
         }
+
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> TestAuth()

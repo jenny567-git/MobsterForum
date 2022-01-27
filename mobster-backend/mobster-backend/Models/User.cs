@@ -5,12 +5,13 @@ namespace mobster_backend.Models
 {
     public class User
     {
-        public Guid UserId { get; set; } //auth0Id
+        public Guid UserId { get; set; } 
+        public string AuthId { get; set; } //auth0Id
         public string UserName { get; set; }
         public DateTime CreatedAt { get; set; } 
         public DateTime UpdatedAt { get; set; }
-        public bool IsActive { get; set; } = true;
-        public bool IsBanned { get; set; } = false;
+        public bool IsActive { get; set; }
+        public bool IsBanned { get; set; }
 
         public virtual ICollection<Family> Families { get; set; } 
 
@@ -18,11 +19,15 @@ namespace mobster_backend.Models
         {
         }
 
-        public User(Guid id)
+        public User(string authId, string userName)
         {
-            this.UserId = id;
+            this.UserId = Guid.NewGuid();
+            this.AuthId = authId;
+            this.UserName = userName;
             CreatedAt = DateTime.Now;
             UpdatedAt = DateTime.Now;
+            IsActive = true;
+            IsBanned = false;
             Families = new HashSet<Family>();
         }
     }
