@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react'
-import { useParams } from 'react-router-dom';
+import React, {useState, useEffect } from 'react'
+import { useParams,useNavigate } from 'react-router-dom';
 import "./SingleThreadView-styling.css"
 import axios from 'axios'
 import { useAuth0 } from '@auth0/auth0-react'; 
@@ -12,17 +12,24 @@ const SingleThreadView = () => {
   const [threadContent, setThreadContent]= useState("")
   const [btnText, setBtnText]= useState(<i className='fas fa-edit'></i>)
   const {user, isLoading} = useAuth0();
+  let navigate = useNavigate();
 
-  const fetchThreadById = (async ()=> {let response = await axios.get(`https://localhost:44304/api/Thread/${id}`) 
-  response.data.createdAt = response.data.createdAt.slice(0,10)
-  setThread(response.data)
-  setThreadContent(response.data.content)
-  setThreadTitle(response.data.title)
-  
-
+  const fetchThreadById = (async ()=> {
+    let response = await axios.get(`https://localhost:44304/api/Thread/${id}`) 
+    response.data.createdAt = response.data.createdAt.slice(0,10)
+    setThread(response.data)
+    setThreadContent(response.data.content)
+    setThreadTitle(response.data.title)
+    console.log(thread)
   })
 
-  
+  const deleteThread = (async ()=>{
+    let response = await axios.delete(`https://localhost:44304/api/Thread?id=${id}`)
+    console.log(response);
+    alert("your thread has been deleted")
+    navigate("/")
+
+  })
 
   const editThread = (async ()=>{
    if(isReadOnly && thread.author.authId == user.sub){
@@ -73,7 +80,7 @@ const SingleThreadView = () => {
             {thread.author.authId == user.sub && (
               <div className='crud-btns'>
                 <button onClick={editThread}>{btnText}</button>
-                <button><i className="fas fa-trash-alt"></i></button>
+                <button onClick={deleteThread}><i className="fas fa-trash-alt"></i></button>
               </div>
             )}
             <button><i className="fas fa-reply"></i></button>
