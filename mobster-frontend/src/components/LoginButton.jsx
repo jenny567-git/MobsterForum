@@ -5,6 +5,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 const LoginButton = () => {
   const {
       user,
+      isLoading,
       isAuthenticated,
       loginWithRedirect,
       logout,
@@ -15,6 +16,7 @@ const LoginButton = () => {
       returnTo: window.location.origin,
   });
 
+  if(isLoading) return <>Loading</>
 
   return (
     <div>
