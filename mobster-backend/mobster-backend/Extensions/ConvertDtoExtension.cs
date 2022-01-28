@@ -80,7 +80,7 @@ namespace mobster_backend.Extensions
             {
                 UserId = user.UserId,
                 UserName = user.UserName,
-                IsBanned = user.IsBanned
+                IsBanned = user.IsBanned,
                 AuthId = user.AuthId
             };
         }
