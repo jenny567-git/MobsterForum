@@ -29,7 +29,7 @@ namespace mobster_backend.Services
             var user1 = new User()
             {
                 UserId = Guid.NewGuid(),
-                AuthId = "61f296b0c725130071fde31d",
+                AuthId = "auth0|61f296b0c725130071fde31d",
                 UserName = "DonElmis",
                 CreatedAt = new DateTime(2021,02,23),
                 UpdatedAt = DateTime.Now,
@@ -41,7 +41,7 @@ namespace mobster_backend.Services
             var user2 = new User()
             {
                 UserId = Guid.NewGuid(),
-                AuthId = "61f29673daa5cc006ace42f0",
+                AuthId = "auth0|61f29673daa5cc006ace42f0",
                 UserName = "CarmelaSoprano",
                 CreatedAt = new DateTime(2021, 03, 23),
                 UpdatedAt = DateTime.Now,
@@ -52,7 +52,7 @@ namespace mobster_backend.Services
             var user3 = new User()
             {
                 UserId = Guid.NewGuid(),
-                AuthId = "61f292ba3cd34e006c5839c3",
+                AuthId = "auth0|61f292ba3cd34e006c5839c3",
                 UserName = "DonCalzone",
                 CreatedAt = new DateTime(2020, 02, 23),
                 UpdatedAt = DateTime.Now,
@@ -63,7 +63,7 @@ namespace mobster_backend.Services
             var user4 = new User()
             {
                 UserId = Guid.NewGuid(),
-                AuthId = "61f2921b3cd34e006c583978",
+                AuthId = "auth0|61f292ba3cd34e006c5839c3",
                 UserName = "JackSparrow",
                 CreatedAt = new DateTime(2021, 09, 23),
                 UpdatedAt = DateTime.Now,
@@ -74,7 +74,7 @@ namespace mobster_backend.Services
             var user5 = new User()
             {
                 UserId = Guid.NewGuid(),
-                AuthId = "61f2900e1a44500069eb7c7a",
+                AuthId = "auth0|61f2900e1a44500069eb7c7a",
                 UserName = "JennyLawless",
                 CreatedAt = new DateTime(2021, 08, 23),
                 UpdatedAt = DateTime.Now,
@@ -85,7 +85,7 @@ namespace mobster_backend.Services
             var user6 = new User()
             {
                 UserId = Guid.NewGuid(),
-                AuthId = "61f2904cdaa5cc006ace415b",
+                AuthId = "auth0|61f2904cdaa5cc006ace415b",
                 UserName = "DanniDevito",
                 CreatedAt = new DateTime(2021, 01, 23),
                 UpdatedAt = DateTime.Now,
@@ -96,7 +96,7 @@ namespace mobster_backend.Services
             var user7 = new User()
             {
                 UserId = Guid.NewGuid(),
-                AuthId = "61f2907fdaa5cc006ace4169",
+                AuthId = "auth0|61f2907fdaa5cc006ace4169",
                 UserName = "ChrillisCorleone",
                 CreatedAt = new DateTime(2021, 11, 23),
                 UpdatedAt = DateTime.Now,
