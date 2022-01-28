@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using mobster_backend.DTOs.Write;
 using mobster_backend.Interfaces;
+using mobster_backend.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,6 +47,20 @@ namespace mobster_backend.Controllers
         public async Task<IActionResult> TestAuth()
         {
             return Ok(null);
+        }
+
+        [HttpGet("allUsers")]
+        public async Task<IActionResult> GetUsers()
+        {
+            try
+            {
+                var users = await userService.GetUsers();
+                return Ok(users);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e);
+            }
         }
     }
 }

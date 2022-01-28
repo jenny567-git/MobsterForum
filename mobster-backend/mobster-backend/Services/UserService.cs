@@ -5,6 +5,7 @@ using mobster_backend.Extensions;
 using mobster_backend.Interfaces;
 using mobster_backend.Models;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace mobster_backend.Services
@@ -32,5 +33,10 @@ namespace mobster_backend.Services
             return user.ToUserDto();
         }
 
+        public async Task<IEnumerable<UserDto>> GetUsers()
+        {
+            var users = await context.Users.ToListAsync();
+            return users.ToUserDtos();
+        }
     }
 }
