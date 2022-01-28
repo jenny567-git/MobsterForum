@@ -20,6 +20,10 @@ namespace mobster_backend.Models
             UpdatedAt = DateTime.Now;
             CreatedAt = DateTime.Now;
         }
+
+        public Admin()
+        {
+        }
     }
 
 }
