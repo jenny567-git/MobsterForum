@@ -2,6 +2,7 @@
 using mobster_backend.Interfaces;
 using mobster_backend.Models;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace mobster_backend.Services
@@ -116,10 +117,10 @@ namespace mobster_backend.Services
                 FamilyId = new Guid("AF384033-48B1-4B2E-9CEB-007843BF85BF"),
                 Name = "Cleaner-issues",
                 Description = "When you're in desperate need of assistance regarding clean up",
-                MemberCount = 243,
+                MemberCount = 2,
                 AddedAt = new DateTime(2020 - 11 - 19),
                 UpdatedAt = DateTime.Now,
-
+                FamilyMembers = new HashSet<User>(){ user1, user2}
             };
 
             var fam2 = new Family()
@@ -127,11 +128,10 @@ namespace mobster_backend.Services
                 FamilyId = new Guid("4451A114-79F2-4ECC-ACAD-E64942747AC7"),
                 Name = "Gun Cleaning",
                 Description = "How to avoid shooting yourself while cleaning your piece",
-                MemberCount = 333,
+                MemberCount = 3,
                 AddedAt = new DateTime(2020, 11, 19),
                 UpdatedAt = DateTime.Now,
-
-
+                FamilyMembers = new HashSet<User>() { user1, user2, user3 }
             };
 
             var fam3 = new Family()
@@ -139,11 +139,10 @@ namespace mobster_backend.Services
                 FamilyId = new Guid("684EDB4D-AB69-469C-9F6B-32806556DF8B"),
                 Name = "Offers you can't refuse",
                 Description = "Don't ask, tell",
-                MemberCount = 666,
+                MemberCount = 4,
                 AddedAt = new DateTime(2020, 11, 19),
                 UpdatedAt = DateTime.Now,
-
-
+                FamilyMembers = new HashSet<User>() { user1, user2, user6, user7 }
             };
 
             var fam4 = new Family()
@@ -151,11 +150,10 @@ namespace mobster_backend.Services
                 FamilyId = new Guid("383979C1-ADC7-427B-8C6E-EB6DAEB9A5FC"),
                 Name = "How to spy on your spouse",
                 Description = "or any other cheating bastard",
-                MemberCount = 24,
+                MemberCount = 4,
                 AddedAt = new DateTime(2020, 11, 19),
                 UpdatedAt = DateTime.Now,
-
-
+                FamilyMembers = new HashSet<User>() { user4, user5, user6, user7 }
             };
 
             var fam5 = new Family()
@@ -163,11 +161,10 @@ namespace mobster_backend.Services
                 FamilyId = new Guid("5DCA4C06-5985-4972-B332-05E346E76010"),
                 Name = "Missing family members",
                 Description = "Lost, gone or sleeping with the fishes?",
-                MemberCount = 343,
+                MemberCount = 5,
                 AddedAt = new DateTime(2020, 11, 19),
                 UpdatedAt = DateTime.Now,
-
-
+                FamilyMembers = new HashSet<User>() { user6, user7, user2, user4, user3 }
             };
 
             var fam6 = new Family()
@@ -175,11 +172,10 @@ namespace mobster_backend.Services
                 FamilyId = new Guid("3F41F931-D8A9-44EC-8AB0-15ADE73A61BB"),
                 Name = "Buy/sell",
                 Description = "Snitches get stitches",
-                MemberCount = 543,
+                MemberCount = 1,
                 AddedAt = new DateTime(2020, 11, 19),
                 UpdatedAt = DateTime.Now,
-
-
+                FamilyMembers = new HashSet<User>() { user7 }
             };
 
             var fam7 = new Family()
@@ -187,11 +183,10 @@ namespace mobster_backend.Services
                 FamilyId = new Guid("A2311FA1-8772-45BE-91EF-63DC7548CF91"),
                 Name = "Food",
                 Description = "Take the gun, leave the cannoli",
-                MemberCount = 273,
+                MemberCount = 7,
                 AddedAt = new DateTime(2020, 11, 19),
                 UpdatedAt = DateTime.Now,
-
-
+                FamilyMembers = new HashSet<User>() { user7, user6, user5, user4, user3, user2, user1 }
             };
 
             context.Families.AddRange(fam1, fam2, fam3, fam4, fam5, fam6, fam7);
