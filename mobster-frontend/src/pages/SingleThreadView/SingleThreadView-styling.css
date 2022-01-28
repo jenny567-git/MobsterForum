@@ -50,8 +50,9 @@ p {
 	cursor: pointer;
 }
 
-.thread-btns Button:hover {
+.thread-btns Button:hover, .thread-btns Button:active, .thread-btns Button:visited, .thread-btns Button:focus {
 	background-color: #eb4a48;
+	box-shadow: none;
 }
 
 .thread-reply {
@@ -62,9 +63,9 @@ p {
 	align-items: center;
 }
 
-.invisible {
+/* .invisible {
 	display: none;
-}
+} */
 
 .backtotop-button {
 	display: flex;

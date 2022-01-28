@@ -9,15 +9,20 @@ import "./SingleThreadView-styling.css"
 const SingleThreadView = () => {
   const { id } = useParams();
   const { data: thread, error, isPending } = useFetch(`https://localhost:44304/api/Thread/${id}`);
-  const [isVisible, setVisible] = useState(false);
+  // const [isVisible, setVisible] = useState(true);
 
   const toggleReplyBox = () => {
-    setVisible(!isVisible);
+    // setVisible(!isVisible);
+    scrollToBottom();
   }
 
   function getThreadLink(){
     navigator.clipboard.writeText(window.location.href);
-    console.log(window.location.href);
+  }
+
+  function scrollToBottom(){
+    let scrollingElement = (document.scrollingElement || document.body);
+    scrollingElement.scrollTop = scrollingElement.scrollHeight;
   }
 
   function scrollToTop() {
@@ -51,13 +56,19 @@ const SingleThreadView = () => {
                 <Button className='thread-btns' title='Censor thread content'><i class="fas fa-comment-slash"></i></Button>
         </div>
 
-        <div className={isVisible ? 'thread-reply' : 'invisible'} >
-              <CreatePost />
-        </div>
+        
         
         <div className="thread-posts">
             <Post id={id} />
         </div>
+
+        {/* <div className={isVisible ? 'thread-reply' : 'invisible'} >
+              <CreatePost />
+        </div> */}
+        <div className='thread-reply' >
+              <CreatePost />
+        </div>
+        
 
         <Button className='backtotop-button' onClick={scrollToTop}>Back to top</Button>
     </div>
