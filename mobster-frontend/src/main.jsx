@@ -14,7 +14,7 @@ const providerConfig = {
   domain: config.domain,
   clientId: config.clientId,
   ...(config.audience ? { audience: config.audience } : null),
-  redirectUri: window.location.origin,
+  redirectUri: "http://localhost:3000/profile",
  
 };
 

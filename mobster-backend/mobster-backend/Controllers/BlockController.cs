@@ -17,6 +17,20 @@ namespace mobster_backend.Controllers
             this.blockService = blockService;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetBlockUserByFamily(Guid familyId)
+        {
+            try
+            {
+                var blockedUsers = await blockService.GetBlockedUserByFamily(familyId);
+                return Ok(blockedUsers);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+        
         [HttpPost]
         public async Task<IActionResult> BlockUserFromFamilyAsync(SetBlockedMemberDto model)
         {
@@ -38,6 +52,22 @@ namespace mobster_backend.Controllers
             try
             {
                 await blockService.RemoveBlockedUserFromFamily(userId, familyId);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+
+            return Ok();
+        }
+
+        [HttpPut]
+
+        public async Task<IActionResult> ToggleUserBlockInApplicationAsync(SetUserDto model)
+        {
+            try
+            {
+                await blockService.ToggleUserBlockInApplication(model);
             }
             catch (Exception e)
             {

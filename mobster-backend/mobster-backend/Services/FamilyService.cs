@@ -99,7 +99,12 @@ namespace mobster_backend.Services
         public async Task<FamilyDto> GetFamily(Guid familyId)
         {
             var family = await context.Families.Include(f => f.Admin).FirstOrDefaultAsync(f => f.FamilyId == familyId);
-            return family.ToFamilyDto();
+            var familyDto = family.ToFamilyDto();
+
+            var admin = await context.Users.FindAsync(family.Admin.UserId);
+            familyDto.AdminName = admin.UserName;
+            
+            return familyDto;
         }
 
         public async Task<IEnumerable<UserDto>> GetFamilyMembers(Guid familyId)
@@ -146,6 +151,7 @@ namespace mobster_backend.Services
         {
             var family = await context.Families
                 .Include(a => a.Admin)
+                .Include(fm => fm.FamilyMembers)
                 .FirstOrDefaultAsync(f => f.FamilyId == familyId);
 
             family.Name = model.Name;

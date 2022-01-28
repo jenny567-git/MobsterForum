@@ -28,5 +28,9 @@ namespace mobster_backend.Models
             UpdatedAt = DateTime.Now;
             Posts = new HashSet<Post>();
         }
+
+        public Thread()
+        {
+        }
     }
 }

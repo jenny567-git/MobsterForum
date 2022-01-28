@@ -8,5 +8,7 @@ namespace mobster_backend.DTOs.Read
         public string AuthId { get; set; }
         public string UserName { get; set; }
 
+        public bool IsBanned { get; set; }
+
     }
 }

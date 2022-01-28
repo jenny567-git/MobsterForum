@@ -1,19 +1,34 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import FakeThread from "../components/Fakes/FakeThread";
 import { Context } from "../utils/store";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useParams } from "react-router-dom";
 import EditFamily from "../components/FamilyComponents/EditFamily";
 import { Modal, Button } from "react-bootstrap";
+import axios from 'axios';
+import { useAuth0 } from "@auth0/auth0-react";
+
 
 const Family = () => {
   const [context, updateContext] = useContext(Context);
   const [isEditing, setIsEditing] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [family, setFamily] = useState({});
+  const { id } = useParams();
   let navigate = useNavigate();
 
-  const toInviteLink = () => {
-    navigate("/");
-    //redirect to user list? or an component with search user function +add button
+  const {user} = useAuth0();
+  // console.log(user);
+  useEffect(() => {
+    fetchFamily();
+  }, [])
+  
+  const fetchFamily = async () => {
+    const response = await axios.get(
+      `https://localhost:44304/api/Family/${id}`
+    );
+    setFamily(response.data);
+    console.log(response.data);
+    // setloading(false);
   };
 
   const toggleEdit = () => {
@@ -33,45 +48,73 @@ const Family = () => {
     });
 };
 
-const toMembers = () => {
-    //redirect to members list -> new component
-  }
-
   const toJoin = () => {
-    //fetch api
+    //hard coded, to be replaced
+    let userid = "507DED86-5B40-4A96-ACAF-F847AB7AE72E";
+    axios
+      .post(`https://localhost:44304/addMember?familyId=${id}&userId=${userid}`)
+      .then((res) => {
+        console.log("Success: ", res.data);
+        alert('You have joined the family');
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+      // let family = {...family};
+      // family.memberCount++;
+      // setFamily(family);
   };
 
   const onDelete = () => {
-    //fetch api
-  };
-
-  const onCreate = () => {
-    navigate("/family/create");
+    axios.delete(`https://localhost:44304/api/Family?familyId=${id}`).then( () => {
+      alert('Family deleted');
+    })
+    //add message: will be redirected after 5 sec
+    const timer = setTimeout( () => {
+      handleClose();
+      navigate('/');
+    }, 5000);
   };
 
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
 
   let myStyle = {
-    backgroundColor: 'red'
+    backgroundColor: 'gray'
   };
 
   return (
-    <div>
-        <p>Hämtad från context:</p>
+    <div className="container">
+
+        {/* <p>Hämtad från context:</p>
       <h1>{context.family.name}</h1>
       <h1>{context.test}</h1>
       <p>Members: {context.family.memberCount}</p>
-      <Button style={myStyle} onClick={toInviteLink}>Invite (Link)</Button>
-      <button onClick={toJoin} disabled>
-        Join
-      </button>
-      <button onClick={toggleEdit}>Edit</button>
+       */}
+       <h1>{family.name}</h1>
+       <h2><i>{family.description}</i></h2>
+       <p>Members: {family.memberCount}</p>
+      <Button style={myStyle} onClick={() => navigate("/")}>Home</Button>
+      <Button onClick={() => navigate(`/family/${id}/invite`)}>Invite</Button>
+
+      {/* add a check, if current user is not a family member - display Join button */}
+      {/* add a check, if blocked member, cant join */}
+      <Button onClick={toJoin}>Join</Button>
+
+      {/* add a check, if current user == admin, display Edit button */}
+      <Button onClick={toggleEdit}>Edit</Button>
+
       {/* <button onClick={toManipulate}> Mainpulate context</button> */}
-      <button onClick={toMembers}> List of members</button>
-      <button onClick={handleShow}>Delete family</button>
-      <button onClick={onCreate}>Create new family</button>
+      <Button onClick={() => navigate(`/family/${id}/members`)}> Handle members</Button>
+
+      {/* add a check, if current user == admin, display Delete button */}
+      <Button variant="danger" onClick={handleShow}>Delete family</Button>
+
+      {/* to be moved */}
+      <Button variant="success" onClick={() => navigate("/family/create")}>Create new family</Button>
+
       {isEditing && <EditFamily />}
+      
       <FakeThread />
       <FakeThread />
       <FakeThread />
@@ -80,16 +123,14 @@ const toMembers = () => {
         <Modal.Header closeButton>
           <Modal.Title>Are you sure?</Modal.Title>
         </Modal.Header>
-
         <Modal.Body>
           <p>This family will be permanently be removed</p>
         </Modal.Body>
-
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="danger" onClick={onDelete}>
             Confirm delete
           </Button>
         </Modal.Footer>
