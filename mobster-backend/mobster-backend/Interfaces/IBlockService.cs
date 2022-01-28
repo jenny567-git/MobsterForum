@@ -1,5 +1,7 @@
-﻿using mobster_backend.DTOs.Write;
+﻿using mobster_backend.DTOs.Read;
+using mobster_backend.DTOs.Write;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace mobster_backend.Interfaces
@@ -12,5 +14,6 @@ namespace mobster_backend.Interfaces
 
         Task ToggleUserBlockInApplication(SetUserDto model);
 
+        Task<IEnumerable<UserDto>> GetBlockedUserByFamily(Guid familyId);
     }
 }
