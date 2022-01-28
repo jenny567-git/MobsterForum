@@ -2,6 +2,11 @@
 	display: flex;
 	justify-content: center;
 }
+
+.main-container{
+	flex-direction: column;
+}
+
 .thread-container {
 	display: flex;
 	flex-direction: column;
@@ -49,23 +54,26 @@ textarea {
 	font-size: 2rem;
 }
 .thread-btns {
-	align-self: flex-end;
 	display: flex;
-	flex-direction: row;
+	justify-content: flex-end;
+	align-items: center;
+    border: none;
+	height: 5vh;
+	background-color: #ec625f;
 }
-.thread-btns button {
-	border: none;
-	background-color: #414141;
-	color: #ec625f;
-	margin-right: 1rem;
-	font-size: 1rem;
+
+.thread-btns Button {
+	cursor: pointer;
 }
-.thread-btns i {
-	font-size: 1.4rem;
+
+.thread-btns Button:hover, .thread-btns Button:active, .thread-btns Button:visited, .thread-btns Button:focus {
+	background-color: #eb4a48;
+	box-shadow: none;
 }
 .thread-reply {
 	display: flex;
 	flex-direction: row;
+	margin-top: 2vh;
 	justify-content: center;
 	align-items: center;
 }
@@ -94,4 +102,9 @@ textarea {
 	padding: 1rem 2rem;
 	border-radius: 0.5rem;
 	max-height: 3.5rem;
+}
+
+.backtotop-button {
+	display: flex;
+	margin: 10px auto;
 }
