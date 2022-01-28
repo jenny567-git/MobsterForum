@@ -47,7 +47,7 @@ namespace mobster_backend.Controllers
         /// </summary>
         /// <param name="threadId">The id of the thread the posts belong to</param>
         /// <returns></returns>
-        [HttpGet("/thread/{threadId}")]
+        [HttpGet("thread/{threadId}")]
         public async Task<IActionResult> GetPostsByThreadId(Guid threadId)
         {
             try
