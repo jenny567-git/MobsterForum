@@ -6,16 +6,14 @@ import { Button, Table} from "react-bootstrap";
 
 const Members = () => {
   const [members, setmembers] = useState([]);
+  const [isLoading, setisLoading] = useState(true);
   
   let navigate = useNavigate();
   
   const { familyId } = useParams();
+
   useEffect(() => {
-    // const source = axios.CancelToken.source();
     if(familyId) fetchFamily();
-    // return () => {
-      // source.cancel();
-    // };
   }, [members]);
   
   const fetchFamily = async () => {
@@ -23,9 +21,10 @@ const Members = () => {
       `https://localhost:44304/api/Family/${familyId}/members`
     );
     setmembers(response.data);
+    setisLoading(false)
   };
 
-  const onBlock = async () => {
+  const onBlock = async (member) => {
     let blockedUser = {
       FamilyId: familyId,
       UserId: member.userId,
@@ -42,7 +41,7 @@ const Members = () => {
       });
   };
 
-  const onRemove = async () => {
+  const onRemove = async (member) => {
     const response = await axios
     .delete(`https://localhost:44304/removeUser?familyId=${familyId}&userId=${member.userId}`)
     .then((res) => {
@@ -52,6 +51,8 @@ const Members = () => {
       console.error("Error:", error);
     });
   };
+
+  if(isLoading) return <>Loading...</>
 
   return (
     <div className="container">
@@ -68,26 +69,24 @@ const Members = () => {
         <Member key={member.userId} member={member} familyId={familyId} />
       ))} */}
       <Table striped bordered hover size="sm">
-  <thead>
-    <tr>
-      <th>User Name</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-  {Array.from(members).map((member) => (
-    <tr key={member.userId}>
-      <td>{member.userName}</td>
-      <td>      
-        <Button onClick={onBlock}>Block</Button>
-      <Button variant="danger" onClick={onRemove}>
-        Remove
-      </Button>
-      </td>
-    </tr>
-      ))}
-  </tbody>
-</Table>
+        <thead>
+          <tr>
+            <th>User Name</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {Array.from(members).map((member) => (
+            <tr key={member.userId}>
+              <td>{member.userName}</td>
+              <td>      
+                <Button onClick={() => onBlock(member)}>Block</Button>
+                <Button variant="danger" onClick={() => onRemove(member)}>Remove</Button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
     </div>
   );
 };
