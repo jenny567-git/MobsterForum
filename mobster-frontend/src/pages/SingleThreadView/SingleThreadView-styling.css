@@ -4,14 +4,12 @@
 
 .main-container{
 	flex-direction: column;
+	width: 100%;
 }
 
 .thread-container {
 	display: flex;
 	flex-direction: column;
-}
-
-.thread-container {
 	background-color: #414141;
 	border-radius: 0;
 	width: 100%;
@@ -59,22 +57,15 @@ textarea {
 	font-weight: bold;
 	font-size: 2rem;
 }
+
 .thread-btns {
 	display: flex;
 	justify-content: flex-end;
 	align-items: center;
+	flex-direction: row;
     border: none;
 	height: 5vh;
 	background-color: #ec625f;
-}
-
-.thread-btns Button {
-	cursor: pointer;
-}
-
-.thread-btns Button:hover, .thread-btns Button:active, .thread-btns Button:visited, .thread-btns Button:focus {
-	background-color: #eb4a48;
-	box-shadow: none;
 }
 
 .thread-btns Button {

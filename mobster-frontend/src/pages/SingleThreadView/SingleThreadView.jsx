@@ -3,6 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import { useAuth0 } from '@auth0/auth0-react'; 
 import { Button } from 'react-bootstrap';
+import { CreatePost } from '../../components/Post/CreatePost';
+import { Post } from '../../components/Post/Post';
 import "./SingleThreadView-styling.css"
 
 const SingleThreadView = () => {
@@ -11,7 +13,7 @@ const SingleThreadView = () => {
   const [thread, setThread] = useState();
   const [threadTitle, setThreadTitle]= useState("")
   const [threadContent, setThreadContent]= useState("")
-  const [btnText, setBtnText]= useState(<i className='fas fa-edit'></i>)
+  const [btnText, setBtnText]= useState(<i className='fas fa-edit' title="Edit thread"></i>)
   const {user, isLoading} = useAuth0();
   let navigate = useNavigate();
 
@@ -48,7 +50,7 @@ const SingleThreadView = () => {
       }
       console.log(updatedThread)
       setIsReadOnly(true)
-      setBtnText(<i className='fas fa-edit'></i>)
+      setBtnText(<i className='fas fa-edit' title="Save changes"></i>)
       const response = await axios.put(`https://localhost:44304/api/Thread?id=${id}`,updatedThread)
       console.log(response)
    }
@@ -91,25 +93,25 @@ const SingleThreadView = () => {
               </p>
               { isReadOnly && (<div className='thread-data'>
                 <input value={threadTitle} readOnly></input>
-                <textarea value={threadContent} readOnly></textarea>
+                <textarea value={threadContent} readOnly rows="8"></textarea>
               </div>)}
               
               {!isReadOnly && (<div className='thread-data'>
                 <input value={threadTitle} onChange={e => setThreadTitle(e.target.value)}></input>
-                <textarea value={threadContent} onChange={e => setThreadContent(e.target.value)}></textarea>
+                <textarea value={threadContent} onChange={e => setThreadContent(e.target.value)} rows="8"></textarea>
               </div>)}
               
               <div className="thread-btns">
                 {thread.author.authId == user.sub && (
-                  <div className='crud-btns'>
-                    <button onClick={editThread}>{btnText}</button>
-                    <button onClick={deleteThread}><i className="fas fa-trash-alt"></i></button>
+                  <div className='thread-btns'>
+                    <Button className='thread-btns' onClick={editThread}>{btnText}</Button>
+                    <Button className='thread-btns' onClick={deleteThread} title="Delete thread"><i className="fas fa-trash-alt"></i></Button>
                   </div>
                 )}
-                <Button className='thread-btns' title='Post reply' onClick={toggleReplyBox}><i class="fas fa-reply"></i></Button>
-                <Button className='thread-btns' title='Share link' onClick={getThreadLink}><i class="fas fa-share-square"></i></Button>
+                <Button className='thread-btns' title='Post reply' onClick={toggleReplyBox}><i className="fas fa-reply"></i></Button>
+                <Button className='thread-btns' title='Share link' onClick={getThreadLink}><i className="fas fa-share-square"></i></Button>
                 <Button className='thread-btns' title='Report thread'><i className="fas fa-exclamation"></i></Button>
-                <Button className='thread-btns' title='Censor thread content'><i class="fas fa-comment-slash"></i></Button>
+                <Button className='thread-btns' title='Censor thread content'><i className="fas fa-comment-slash"></i></Button>
               </div>
             </div>
           )}
