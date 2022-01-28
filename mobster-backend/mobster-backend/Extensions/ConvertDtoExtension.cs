@@ -79,11 +79,36 @@ namespace mobster_backend.Extensions
             return new UserDto
             {
                 UserId = user.UserId,
-                UserName = user.UserName
+                UserName = user.UserName,
+                IsBanned = user.IsBanned,
+                AuthId = user.AuthId
             };
         }
 
         public static IEnumerable<UserDto> ToUserDtos(this IEnumerable<User> users)
+        {
+            if (users == null)
+            {
+                return null;
+            }
+
+            return users.Select(f => f.ToUserDto());
+        }
+        public static UserDto ToUserDto(this BlockedMember user)
+        {
+            if (user == null)
+            {
+                return null;
+            }
+
+            return new UserDto
+            {
+                UserId = user.UserId,
+                //UserName = user.UserName
+            };
+        }
+
+        public static IEnumerable<UserDto> ToUserDtos(this IEnumerable<BlockedMember> users)
         {
             if (users == null)
             {
