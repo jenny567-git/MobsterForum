@@ -93,7 +93,7 @@ const SingleThreadView = () => {
               </p>
               { isReadOnly && (<div className='thread-data'>
                 <input value={threadTitle} readOnly></input>
-                <textarea value={threadContent} readOnly rows="8"></textarea>
+                <textarea value={threadContent} readOnly></textarea>
               </div>)}
               
               {!isReadOnly && (<div className='thread-data'>

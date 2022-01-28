@@ -52,6 +52,7 @@ textarea {
 	resize: none;
 	margin-bottom: 1rem;
 	outline: none;
+	height: auto;
 }
 .thread-data input {
 	font-weight: bold;

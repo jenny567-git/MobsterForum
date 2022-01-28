@@ -15,6 +15,11 @@ namespace mobster_backend.Models
         public virtual User Author { get; set; }
         public virtual Thread Thread { get; set; }
 
+        public Post()
+        {
+
+        }
+        
         public Post(Guid? threadId, Guid authorUserId, string content)
         {
             this.ThreadId = threadId;
