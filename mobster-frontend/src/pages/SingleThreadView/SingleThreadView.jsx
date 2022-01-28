@@ -11,21 +11,26 @@ const SingleThreadView = () => {
   const [threadTitle, setThreadTitle]= useState("")
   const [threadContent, setThreadContent]= useState("")
   const [btnText, setBtnText]= useState(<i className='fas fa-edit'></i>)
-  const {user} = useAuth0();
+  const {user, isLoading} = useAuth0();
+
   const fetchThreadById = (async ()=> {let response = await axios.get(`https://localhost:44304/api/Thread/${id}`) 
   response.data.createdAt = response.data.createdAt.slice(0,10)
   setThread(response.data)
   setThreadContent(response.data.content)
   setThreadTitle(response.data.title)
+  
+
   })
 
+  
+
   const editThread = (async ()=>{
-   if(isReadOnly && thread.author.userId != user){
+   if(isReadOnly && thread.author.authId == user.sub){
 
      setIsReadOnly(false)
     setBtnText(<i className="fas fa-save"></i>)
    }
-   else if(!isReadOnly && thread.author.userId != user){
+   else if(!isReadOnly && thread.author.authId == user.sub){
       let updatedThread = {
         familyId: thread.family.familyId,
         title: threadTitle,
@@ -44,7 +49,9 @@ const SingleThreadView = () => {
   useEffect(()=>{
     fetchThreadById();
   },[])
-  
+  if(isLoading){
+    return <div> <p>loading</p></div>
+  }
   return <div className="SingleThreadView">
     <div className="thread-container">
         
@@ -53,8 +60,8 @@ const SingleThreadView = () => {
             Posted by <strong className='thread-metadata-bold'>{thread.author.userName}</strong> in <em className='thread-metadata-bold'>{thread.family.name}</em>  at {thread.createdAt}
           </p>
           { isReadOnly && (<div className='thread-data'>
-            <input value={thread.title} readOnly></input>
-            <textarea rows="auto" value={thread.content} readOnly></textarea>
+            <input value={threadTitle} readOnly></input>
+            <textarea value={threadContent} readOnly></textarea>
           </div>)}
           
           {!isReadOnly && (<div className='thread-data'>
@@ -63,7 +70,7 @@ const SingleThreadView = () => {
           </div>)}
           
           <div className="thread-btns">
-            {thread.author.userId != user && (
+            {thread.author.authId == user.sub && (
               <div className='crud-btns'>
                 <button onClick={editThread}>{btnText}</button>
                 <button><i className="fas fa-trash-alt"></i></button>
