@@ -1,6 +1,7 @@
 import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import {useState, useEffect} from 'react'
+import axios from "axios";
 
 const ProfileInformation = () => {
   const {
@@ -10,7 +11,7 @@ const ProfileInformation = () => {
 
   useEffect(() => {
     console.log("working");
-    console.log(user);
+    axios.post(`https://localhost:44304/api/User?authId=${user.sub}&userName=${user["https://mobster.com/username"]}`);
   }, []);
 
   return (
