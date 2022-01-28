@@ -8,5 +8,7 @@ namespace mobster_backend.DTOs.Write
     public class SetUserDto
     {
         public Guid Id { get; set; }
+
+        public bool IsBanned { get; set; }
     }
 }
