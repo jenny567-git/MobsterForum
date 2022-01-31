@@ -32,6 +32,7 @@ const SingleThreadView = () => {
     console.log(response);
     alert("your thread has been deleted")
     navigate("/")
+    
 
   })
 

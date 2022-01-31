@@ -38,6 +38,7 @@
 	-webkit-box-shadow: none;
 	-moz-box-shadow: none;
 	box-shadow: none;
+	color: #414141;
 }
 .thread-text textarea {
 	padding: 0.5rem;
@@ -52,6 +53,7 @@
 	font-size: 1rem;
 	background-color: whitesmoke;
 	margin-bottom: 1rem;
+	color: #414141;
 }
 
 .family-select {
