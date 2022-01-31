@@ -118,7 +118,7 @@ namespace mobster_backend.Services
                 Name = "Cleaner-issues",
                 Description = "When you're in desperate need of assistance regarding clean up",
                 MemberCount = 2,
-                AddedAt = new DateTime(2020 - 11 - 19),
+                AddedAt = new DateTime(2020, 11, 19),
                 UpdatedAt = DateTime.Now,
                 FamilyMembers = new HashSet<User>(){ user1, user2}
             };
@@ -589,6 +589,36 @@ namespace mobster_backend.Services
 
             #endregion
 
+            #region Blocked members
+
+            var bm1 = new BlockedMember()
+            {
+                FamilyId = fam1.FamilyId,
+                UserId = user5.UserId,
+                Description = "Too ugly",
+                BlockedAt = new DateTime(2020, 11, 20),
+            };
+            
+            var bm2 = new BlockedMember()
+            {
+                FamilyId = fam1.FamilyId,
+                UserId = user3.UserId,
+                Description = "Too pretty",
+                BlockedAt = new DateTime(2020, 11, 21),
+            };
+            
+            var bm3 = new BlockedMember()
+            {
+                FamilyId = fam2.FamilyId,
+                UserId = user4.UserId,
+                Description = "Too violent",
+                BlockedAt = new DateTime(2020, 11, 23),
+            };
+
+            context.BlockedMembers.AddRange(bm1, bm2, bm3);
+            context.SaveChanges();
+
+            #endregion
         }
 
 
