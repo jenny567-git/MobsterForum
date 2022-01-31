@@ -55,7 +55,8 @@ namespace mobster_backend.Extensions
                 AddedAt = family.AddedAt,
                 UpdatedAt = family.UpdatedAt,
                 MemberCount = family.MemberCount,
-                AdminUserId = family.Admin.UserId
+                AdminUserId = family.Admin.UserId,
+                FamilyMembers = family.FamilyMembers.ToUserDtos(),
             };
         }
 

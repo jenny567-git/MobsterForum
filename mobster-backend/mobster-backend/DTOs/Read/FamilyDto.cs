@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace mobster_backend.DTOs.Read
 {
@@ -12,6 +14,7 @@ namespace mobster_backend.DTOs.Read
         public int MemberCount { get; set; }
         public Guid AdminUserId { get; set; }
         public string AdminName { get; set; }
+        public IEnumerable<UserDto> FamilyMembers { get; set; }
 
     }
 }
