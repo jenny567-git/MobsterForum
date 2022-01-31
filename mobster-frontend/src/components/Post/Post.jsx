@@ -41,10 +41,7 @@ export const Post = ({ id }) => {
     const deletePost = async (postId) => {
       await axios
       .delete(`https://localhost:44304/api/Posts?postId=${postId}`)
-      .then((res) => {
-        console.log(`Success: deleted post with id ${postId}`);
-    })
-    .catch((error) => {
+      .catch((error) => {
         console.error("Error:", error);
     });
       
