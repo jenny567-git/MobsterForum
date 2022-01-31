@@ -6,7 +6,7 @@ import CreateFamily from './components/FamilyComponents/CreateFamily'
 import Members from './components/FamilyComponents/Members'
 import BlockedMembers from './components/FamilyComponents/BlockedMembers'
 import InviteMembers from './components/FamilyComponents/InviteMembers'
-
+import AdminDashboard from './pages/Admin-dashboard'
 import Profile from './pages/Profile'
 function App() {
 
@@ -23,6 +23,7 @@ function App() {
             <Route exact path="/family/:familyId/blockedMembers" element={<BlockedMembers />}></Route>
             <Route exact path="/family/:familyId/invite" element={<InviteMembers />}></Route>
             <Route exact path ="/profile" element={<Profile />}></Route>
+            <Route exact path="/admin-dashboard" element={<AdminDashboard />}></Route>
           </Routes>
         </div>
       </div>
