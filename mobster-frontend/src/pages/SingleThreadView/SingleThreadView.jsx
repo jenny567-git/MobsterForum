@@ -3,7 +3,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import { useAuth0 } from '@auth0/auth0-react'; 
 import { Button } from 'react-bootstrap';
-import { CreatePost } from '../../components/Post/CreatePost';
 import { Post } from '../../components/Post/Post';
 import "./SingleThreadView-styling.css"
 
@@ -117,10 +116,6 @@ const SingleThreadView = () => {
           )}
           <div className="thread-posts">
                 <Post id={id} />
-            </div>
-
-            <div className='thread-reply' >
-                  <CreatePost />
             </div>
 
             <Button className='backtotop-button' onClick={scrollToTop}>Back to top</Button>

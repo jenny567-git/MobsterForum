@@ -83,6 +83,7 @@ namespace mobster_backend.Services
             var posts = await context.Posts
                 .Include(p => p.Author)
                 .Where(p => p.ThreadId == threadId)
+                .OrderBy(p => p.CreatedAt)
                 .ToListAsync();
 
             if (!posts.Any())

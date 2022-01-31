@@ -1,20 +1,71 @@
-import React from 'react';
-import  "./Post-styling.css"
+import React, { useState, useEffect } from 'react';
+import axios from 'axios'
+import { Button, Form } from 'react-bootstrap';
+import { useAuth0 } from '@auth0/auth0-react'; 
 import logo from '../../assets/Mobster-logo.png'
-import { Button } from 'react-bootstrap';
-import useFetch from '../../CustomHooks/useFetch';
+import  "./Post-styling.css"
 
 export const Post = ({ id }) => {
-  const { data: posts, error, isPending } = useFetch(`https://localhost:44304/api/Posts/thread/${id}`);
-  
-    return <div>
-            
-            { isPending && <div>Loading posts...</div> }
+  const [posts, setPosts] = useState([]);
+  const {user, isLoading} = useAuth0();
+  const [newPostContent, setNewPostContent] = useState("");
 
-            { error && <div>There are no posts on this thread yet...</div> }
+    const fetchPosts = (async () => {
+    let response = await axios.get(`https://localhost:44304/api/Posts/thread/${id}`) 
+    setPosts(response.data)
+  })
+
+  const submitNewPost = async () => {
+    let newPost = {
+        authorUserId: "8E4FB1ED-0570-4FE1-B2F9-3882ABDE9DC7", //don't forget to remove hardcoded author user id when we have solution to auth0 id problem
+        threadId: id,
+        content: newPostContent 
+    }
+
+    await axios
+    .post(`https://localhost:44304/api/Posts`, newPost)
+    .then((res) => {
+        console.log("Success: ", res.data);
+    })
+    .catch((error) => {
+        console.error("Error:", error);
+    });
+    setNewPostContent("");
+    fetchPosts();
+  };
+
+    const editPost = async (postId) => {
+      console.log(postId)
+  }
+
+    const deletePost = async (postId) => {
+      await axios
+      .delete(`https://localhost:44304/api/Posts?postId=${postId}`)
+      .then((res) => {
+        console.log(`Success: deleted post with id ${postId}`);
+    })
+    .catch((error) => {
+        console.error("Error:", error);
+    });
+      
+    fetchPosts();
+
+    }
+
+
+useEffect(()=>{
+    fetchPosts();
+  },[])
+  
+if(isLoading){
+    return <div> <p>Loading page...</p></div>
+  }
+    return <div>
+
+            {/* { error && <div>There are no posts on this thread yet...</div> } */}
 
             { posts && posts.map((post) => 
-                <div className='single-post'>
+                <div className='single-post' key={post.postId}>
                     <div className="avatar-container">
                         <img className='avatar' src={logo} alt="profile picture" />
                     </div>
@@ -25,11 +76,31 @@ export const Post = ({ id }) => {
                     </div>
                     
                     <div className="post-buttons">
-                        <Button className='post-btn' title='Flag post as inappropriate'><i class="fas fa-flag"></i></Button>
-                        <Button className='post-btn' title='Censor post content'><i class="fas fa-comment-slash"></i></Button>
+                        {post.author.authId == user.sub && 
+                        <div>
+                            <Button className='post-btn' onClick={() => editPost(post.postId)}><i className='fas fa-edit' title="Edit post"></i></Button>
+                            <Button className='post-btn' title='Delete post' onClick={() => deletePost(post.postId)}><i className="fas fa-trash-alt"></i></Button>
+                        </div>}
+                        {post.author.authId != user.sub && <Button className='post-btn' title='Report post'><i className="fas fa-exclamation"></i></Button>}
+                        
                     </div>
                 </div>
             )}
+
+                  <div className='thread-reply'>
+                          <Form.Control
+                            className="reply-textarea"
+                            as="textarea"
+                            cols="60" 
+                            rows="5"
+                            placeholder="Reply content..."
+                            value={newPostContent}
+                            onChange={(e) => setNewPostContent(e.target.value)}
+                          />
+                          <Button className="reply-button" onClick={submitNewPost}>Post reply</Button>
+                      </div>
         
         </div>;
 };
+
+export default Post;
