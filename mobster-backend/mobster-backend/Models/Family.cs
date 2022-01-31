@@ -27,5 +27,9 @@ namespace mobster_backend.Models
             Threads = new HashSet<Thread>();
             FamilyMembers = new HashSet<User>();
         }
+
+        public Family()
+        {
+        }
     }
 }

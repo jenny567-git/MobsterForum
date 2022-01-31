@@ -69,6 +69,7 @@ namespace mobster_backend
             services.AddTransient<IFamilyService, FamilyService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IBlockService, BlockService>();
+            services.AddTransient<IDatabaseSeedService, DatabaseSeedService>();
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
@@ -91,6 +92,7 @@ namespace mobster_backend
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

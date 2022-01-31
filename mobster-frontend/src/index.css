@@ -3,6 +3,15 @@
 	background-color: #313131;
 	min-height: 100vh;
 }
+
+.flex{
+	display: flex;
+	flex-direction: row;
+}
+
+.space{
+	justify-content: space-between;
+}
 /* Home Page */
 .home {
 	width: 100%;
