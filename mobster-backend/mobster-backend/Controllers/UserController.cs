@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using mobster_backend.DTOs.Write;
 using mobster_backend.Interfaces;
 using mobster_backend.Models;
 using System;
@@ -29,11 +30,11 @@ namespace mobster_backend.Controllers
         /// <returns>A User Dto</returns>
         [HttpPost]
         //[Authorize]
-        public async Task<IActionResult> AddUserAsync(string authId, string userName)
+        public async Task<IActionResult> AddUserAsync(SetUserDto model)
         {
             try
             {
-                var user = await userService.AddUser(authId, userName);
+                var user = await userService.AddUser(model);
                 return Ok(user);
             }
             catch (Exception e)
