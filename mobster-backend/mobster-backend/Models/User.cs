@@ -1,4 +1,5 @@
-﻿using System;
+﻿using mobster_backend.DTOs.Write;
+using System;
 using System.Collections.Generic;
 
 namespace mobster_backend.Models
@@ -17,6 +18,18 @@ namespace mobster_backend.Models
 
         public User()
         {
+        }
+
+        public User(SetUserDto model)
+        {
+            this.UserId = model.Id;
+            this.AuthId = model.AuthId;
+            this.UserName = model.UserName;
+            CreatedAt = DateTime.Now;
+            UpdatedAt = DateTime.Now;
+            IsActive = true;
+            IsBanned = false;
+            Families = new HashSet<Family>();
         }
 
         public User(string authId, string userName)
