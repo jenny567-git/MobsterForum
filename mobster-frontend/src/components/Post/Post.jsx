@@ -9,8 +9,13 @@ export const Post = ({ id }) => {
   const [posts, setPosts] = useState([]);
   const {user, isLoading} = useAuth0();
   const [newPostContent, setNewPostContent] = useState("");
+  const [postToEdit, setPostToEdit] = useState({});
+  const [editedPostContent, setEditedPostContent] = useState("");
   const [postToDeleteId, setPostToDeleteId] = useState("");
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+
+  
 
     const fetchPosts = (async () => {
     let response = await axios.get(`https://localhost:44304/api/Posts/thread/${id}`) 
@@ -36,11 +41,33 @@ export const Post = ({ id }) => {
     fetchPosts();
   };
 
-    const editPost = async (postId) => {
-      console.log(postId)
+  const handleCloseEdit = () => setShowEditModal(false);
+  
+  const handleShowEdit = (post) => {
+    setPostToEdit(post);
+    setShowEditModal(true);
+  } 
+  
+  const saveEditedPost = async (postId) => {
+    
+    let editedPost = {
+      authorUserId: postToEdit.authorUserId,
+      threadId: id,
+      content: editedPostContent 
+  }
+    
+    await axios
+    .put(`https://localhost:44304/api/Posts?postId=${postId}`, editedPost)
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+
+    fetchPosts();
+    setShowEditModal(false);
   }
 
   const handleCloseDelete = () => setShowDeleteModal(false);
+  
   const handleShowDelete = (postId) => {
       setShowDeleteModal(true);
       setPostToDeleteId(postId); 
@@ -86,7 +113,8 @@ if(isLoading){
                     <div className="post-buttons">
                         {post.author.authId == user.sub && 
                         <div>
-                            <Button className='post-btn' onClick={() => editPost(post.postId)}><i className='fas fa-edit' title="Edit post"></i></Button>
+                            {/* <Button className='post-btn' onClick={() => editPost(post.postId)}><i className='fas fa-edit' title="Edit post"></i></Button> */}
+                            <Button className='post-btn' onClick={() => handleShowEdit(post)}><i className='fas fa-edit' title="Edit post"></i></Button>
                             <Button className='post-btn' title='Delete post' onClick={() => handleShowDelete(post.postId)}><i className="fas fa-trash-alt"></i></Button>
                         </div>}
                         {post.author.authId != user.sub && <Button className='post-btn' title='Report post'><i className="fas fa-exclamation"></i></Button>}
@@ -108,17 +136,42 @@ if(isLoading){
                           <Button className="reply-button" onClick={submitNewPost}>Post reply</Button>
                   </div>
 
-                  <Modal show={showDeleteModal} onHide={handleCloseDelete}>
+                  {/* Delete modal */}
+                  <Modal show={showDeleteModal} onHide={handleCloseDelete} className="delete-modal">
                         <Modal.Header closeButton>
-                            <Modal.Title>Confirm deletion</Modal.Title>
+                            <Modal.Title>Are you sure you want to delete this post?</Modal.Title>
                         </Modal.Header>
-                      <Modal.Body>Are you sure you want to delete this post?</Modal.Body>
                         <Modal.Footer>
                           <Button variant="secondary" onClick={handleCloseDelete}>
-                            Close
+                            Cancel
                           </Button>
                           <Button variant="danger" onClick={() => deletePost(postToDeleteId)}>
-                            Delete post
+                            Delete
+                          </Button>
+                        </Modal.Footer>
+                  </Modal>
+
+                  {/* Edit modal */}
+                  <Modal 
+                  show={showEditModal} 
+                  onHide={handleCloseEdit}
+                  size="lg"
+                  aria-labelledby="contained-modal-title-vcenter"
+                  >
+                        <Modal.Header closeButton>
+                          <Modal.Title>Edit post</Modal.Title>
+                        </Modal.Header>
+                          <Form.Control 
+                          as="textarea"
+                          rows="5"
+                          onChange={(e) => setEditedPostContent(e.target.value)}
+                          >{postToEdit.content}</Form.Control>
+                        <Modal.Footer>
+                          <Button variant="secondary" onClick={handleCloseEdit}>
+                            Close
+                          </Button>
+                          <Button variant="primary" onClick={() => saveEditedPost(postToEdit.postId)}>
+                            Save Changes
                           </Button>
                         </Modal.Footer>
                   </Modal>

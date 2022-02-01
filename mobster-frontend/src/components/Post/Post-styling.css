@@ -97,3 +97,7 @@ p {
 	cursor: pointer;
 	border-radius: 0.5rem;
 }
+
+.delete-modal {
+    background-color: #6363639c;
+}
