@@ -1,8 +1,9 @@
 import React,{useState, useEffect } from 'react'
-import logo from '../../assets/Mobster-logo.png'
-import './add-thread-styling.css'
+import { useNavigate } from 'react-router-dom'
 import { useAuth0 } from '@auth0/auth0-react'; 
 import axios from 'axios'
+import logo from '../../assets/Mobster-logo.png'
+import './add-thread-styling.css'
 
 
 
@@ -10,20 +11,30 @@ const AddThread = () => {
     const {user, isLoading} = useAuth0();
     const[isFetching, setIsFetching] = useState(true)
     const [myFamilies, setMyFamilies] = useState();
-    const [thread, setThread] = useState({});
-    console.log(user);
+    const [thread, setThread] = useState({familyId:"",title:"",content:"",authorId:""});
+    let navigate = useNavigate();
 
-    const fetchFamiliesByAuthId = (async () => {
-        let response = await axios.get(`https://localhost:44304/api/Family/user/sub/${user.sub}`)
+    // needs to update userId after merge
+    const fetchFamiliesByUserId = (async () => {
+        let response = await axios.get(`https://localhost:44304/api/Family/user/4B1EAC2A-4A60-42B8-8C42-31B66D5466BA`)
         setMyFamilies(response.data) 
         setIsFetching(false);
         console.log(response)
     })
+    
+
+    const postThread = (async () => {
+        let response = await axios.post("https://localhost:44304/api/Thread",thread)
+        console.log(response);
+        navigate(`/family/${thread.familyId}`)
+    })
 
     useEffect(()=>{
         if(!isLoading){
-
-            fetchFamiliesByAuthId();
+            fetchFamiliesByUserId();
+            // setThread({
+            //     ...thread, authorId: user["https://rules.com/claims/user_metadata"].uuid})
+        
         }
         
       },[isLoading])
@@ -41,19 +52,26 @@ const AddThread = () => {
                 
                 <div className="family-select">
                     <label htmlFor="family-selection">Choose a Family:</label>
+                    <select value={thread.familyId} onChange={(e)=> setThread({
+                    ...thread, familyId: e.target.value
+                })} name="family-selection">
+                    <option value="" disabled>Choose a Family</option>
                     {!isFetching && myFamilies && myFamilies.map((family) =>
-                    <select name="family-selection">
-                        <option >{family.name}</option>
+                        <option key={family.familyId} value={family.familyId} >{family.name}</option>)}
                         
-                    </select>)}
+                    </select>
                     {!isFetching && !myFamilies &&
                     <p>You have not joined any families</p>
                     }
                 </div>
                
-                <input type="text" placeholder="Title" value={thread.title}/>
-                <textarea placeholder="Text" name="thread-content"cols="70" rows="4" value={thread.content}></textarea>
-                <button className="post-button">Post</button>
+                <input type="text" placeholder="Title" onChange={(e)=> setThread({
+                    ...thread, title: e.target.value
+                })} value={thread.title}/>
+                <textarea placeholder="Text" name="thread-content"cols="70" rows="4" onChange={(e)=> setThread({
+                    ...thread, content: e.target.value
+                })} value={thread.content}></textarea>
+                <button onClick={postThread} className="post-button">Post</button>
             
             </div>
         </div>
