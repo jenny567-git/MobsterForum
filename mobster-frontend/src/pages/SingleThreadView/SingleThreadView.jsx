@@ -31,8 +31,11 @@ const SingleThreadView = () => {
     console.log(response);
     alert("your thread has been deleted")
     navigate("/")
+    
 
   })
+
+  
 
   const editThread = (async ()=>{
    if(isReadOnly && thread.author.authId == user.sub){
@@ -109,7 +112,7 @@ const SingleThreadView = () => {
                 )}
                 <Button className='thread-btns' title='Post reply' onClick={toggleReplyBox}><i className="fas fa-reply"></i></Button>
                 <Button className='thread-btns' title='Share link' onClick={getThreadLink}><i className="fas fa-share-square"></i></Button>
-                <Button className='thread-btns' title='Report thread'><i className="fas fa-exclamation"></i></Button>
+                <Button className='thread-btns' title='Report thread' ><i className="fas fa-exclamation"></i></Button>
                 <Button className='thread-btns' title='Censor thread content'><i className="fas fa-comment-slash"></i></Button>
               </div>
             </div>
