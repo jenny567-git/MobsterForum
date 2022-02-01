@@ -21,23 +21,51 @@ namespace mobster_backend.Extensions
             return new ThreadDto
             {
                 ThreadId = thread.ThreadId,
-                Family = thread.Family,
-                Author = thread.Author,
+                Family = thread.Family.ToFamilyDto(),
+                Author = thread.Author.ToUserDto(),
                 Title = thread.Title,
                 Content = thread.Content,
                 CreatedAt = thread.CreatedAt,
-                Posts = thread.Posts,
+                Posts = thread.Posts.ToPostDtos()
             };
         }
 
         public static IEnumerable<ThreadDto> ToThreadDtos(this IEnumerable<Thread> threads)
         {
-            if (threads == null)
+            if (!threads.Any())
             {
                 return null;
             }
 
             return threads.Select(f => f.ToThreadDto());
+        }
+
+        public static PostDto ToPostDto(this Post post)
+        {
+            if (post == null)
+            {
+                return null;
+            }
+
+            return new PostDto
+            {
+                PostId = post.PostId,
+                ThreadId = post.ThreadId,
+                Content = post.Content,
+                IsCensored = post.IsCensored,
+                CreatedAt = post.CreatedAt,
+                Author = post.Author.ToUserDto(),
+            };
+        }
+
+        public static IEnumerable<PostDto> ToPostDtos(this IEnumerable<Post> posts)
+        {
+            if(!posts.Any())
+            {
+                return null;
+            }
+
+            return posts.Select(p => p.ToPostDto());
         }
 
         public static FamilyDto ToFamilyDto(this Family family)

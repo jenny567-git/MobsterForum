@@ -1,0 +1,33 @@
+.thread-container {
+	display: flex;
+	flex-direction: column;
+	background-color: #414141;
+	border-radius: 1rem;
+	width: 90%;
+	margin-top: 2rem;
+	padding: 1rem;
+}
+.thread-title {
+	display: flex;
+	flex-direction: column;
+	color: #fff;
+}
+.thread-title h2,
+p {
+	margin: 0.2rem;
+}
+.thread-text {
+	color: #fff;
+}
+.thread-metadata {
+	align-self: flex-end;
+}
+.reply-btn {
+	border: none;
+	padding: 1rem 2rem;
+	border-radius: 0.5rem;
+	background-color: #ec625f;
+	color: #fff;
+	align-self: flex-end;
+	text-align: center;
+}

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using mobster_backend.Database;
 
@@ -11,9 +12,10 @@ using mobster_backend.Database;
 namespace mobster_backend.Migrations
 {
     [DbContext(typeof(MobsterContext))]
-    partial class MobsterContextModelSnapshot : ModelSnapshot
+    [Migration("20220124182134_censorposts")]
+    partial class censorposts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -146,7 +148,7 @@ namespace mobster_backend.Migrations
                     b.Property<bool>("IsCensored")
                         .HasColumnType("bit");
 
-                    b.Property<Guid?>("ThreadId")
+                    b.Property<Guid>("ThreadId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -202,9 +204,6 @@ namespace mobster_backend.Migrations
                     b.Property<Guid>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("AuthId")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -294,7 +293,9 @@ namespace mobster_backend.Migrations
 
                     b.HasOne("mobster_backend.Models.Thread", "Thread")
                         .WithMany("Posts")
-                        .HasForeignKey("ThreadId");
+                        .HasForeignKey("ThreadId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Author");
 

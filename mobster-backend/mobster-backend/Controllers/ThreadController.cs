@@ -24,7 +24,7 @@ namespace mobster_backend.Controllers
         /// </summary>
         /// <param name="threadId">The given id for the thread</param>
         /// <returns>A single thread</returns>
-        [HttpGet]
+        [HttpGet("{threadId}")]
         public async Task<IActionResult> Get(Guid threadId)
         {
             try
@@ -48,7 +48,7 @@ namespace mobster_backend.Controllers
         /// </summary>
         /// <param name="familyId">The provided family id</param>
         /// <returns></returns>
-        [HttpGet("{familyId}")]
+        [HttpGet("threads/{familyId}")]
         public async Task<IActionResult> GetThreadsByFamilyId(Guid familyId)
         {
             try
