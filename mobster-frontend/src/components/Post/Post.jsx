@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'
-import { Button, Form } from 'react-bootstrap';
+import { Button, Form, Modal } from 'react-bootstrap';
 import { useAuth0 } from '@auth0/auth0-react'; 
 import logo from '../../assets/Mobster-logo.png'
 import  "./Post-styling.css"
@@ -9,6 +9,7 @@ export const Post = ({ id }) => {
   const [posts, setPosts] = useState([]);
   const {user, isLoading} = useAuth0();
   const [newPostContent, setNewPostContent] = useState("");
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
     const fetchPosts = (async () => {
     let response = await axios.get(`https://localhost:44304/api/Posts/thread/${id}`) 
@@ -38,14 +39,19 @@ export const Post = ({ id }) => {
       console.log(postId)
   }
 
-    const deletePost = async (postId) => {
-      await axios
-      .delete(`https://localhost:44304/api/Posts?postId=${postId}`)
-      .catch((error) => {
-        console.error("Error:", error);
-    });
+  const handleCloseDelete = () => setShowDeleteModal(false);
+  const handleShowDelete = () => setShowDeleteModal(true);  
+  
+  const deletePost = async (postId) => {
+      handleShowDelete();
+    
+    //   await axios
+    //   .delete(`https://localhost:44304/api/Posts?postId=${postId}`)
+    //   .catch((error) => {
+    //     console.error("Error:", error);
+    // });
       
-    fetchPosts();
+    // fetchPosts();
 
     }
 
@@ -90,12 +96,27 @@ if(isLoading){
                             as="textarea"
                             cols="60" 
                             rows="5"
-                            placeholder="Reply content..."
+                            placeholder="Your reply..."
                             value={newPostContent}
                             onChange={(e) => setNewPostContent(e.target.value)}
                           />
                           <Button className="reply-button" onClick={submitNewPost}>Post reply</Button>
-                      </div>
+                  </div>
+
+                  <Modal show={showDeleteModal} onHide={handleCloseDelete}>
+                      <Modal.Header closeButton>
+                        <Modal.Title>Confirm deletion</Modal.Title>
+                      </Modal.Header>
+                    <Modal.Body>Are you sure you want to delete this post?</Modal.Body>
+                    <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseDelete}>
+                      Close
+                    </Button>
+                    <Button variant="danger" onClick={handleCloseDelete}>
+                      Delete post
+                    </Button>
+                    </Modal.Footer>
+                  </Modal>
         
         </div>;
 };
