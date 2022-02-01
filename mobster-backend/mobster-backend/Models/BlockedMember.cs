@@ -13,6 +13,8 @@ namespace mobster_backend.Models
         public virtual Family Family { get; set; }
         public virtual User User { get; set; }
 
+        public BlockedMember() {}
+
         public BlockedMember(Guid familyId, Guid userId, string description)
         {
             FamilyId = familyId;
