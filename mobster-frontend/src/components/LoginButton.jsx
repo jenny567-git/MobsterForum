@@ -10,7 +10,6 @@ const LoginButton = () => {
       loginWithRedirect,
       logout,
   } = useAuth0();
-
   const logoutWithRedirect = () =>
     logout({
       returnTo: window.location.origin,

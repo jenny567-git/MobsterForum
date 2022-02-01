@@ -2,6 +2,7 @@
 using mobster_backend.Database;
 using mobster_backend.DTOs.Read;
 using mobster_backend.DTOs.Write;
+using mobster_backend.Exceptions;
 using mobster_backend.Extensions;
 using mobster_backend.Interfaces;
 using mobster_backend.Models;
@@ -69,6 +70,33 @@ namespace mobster_backend.Services
         {
             var families = await context.Families.Include(f => f.Admin).ToListAsync();
             return families.ToFamilyDtos();
+        }
+
+        public async Task<IEnumerable<FamilyDto>> GetFamiliesByUserId(Guid userId)
+        {
+            var user = await context.Users.FirstOrDefaultAsync(u => u.UserId == userId);
+
+            if (user == null)
+            {
+                throw new DbNotFoundException($"No user with id {user} exists in the database.");
+            }
+
+            var families = await context.Families
+                .Include(f => f.Admin)
+                .Where(f => f.FamilyMembers
+                .Contains(user))
+                .ToListAsync();
+
+
+            if (!families.Any())
+            {
+                throw new DbNotFoundException($"The user with id {user} is not currently a member of any families.");
+            }
+
+
+            return families.ToFamilyDtos();
+
+
         }
 
         public async Task<FamilyDto> GetFamily(Guid familyId)
@@ -161,5 +189,7 @@ namespace mobster_backend.Services
             context.Families.Remove(family);
             await context.SaveChangesAsync();
         }
+
+
     }
 }

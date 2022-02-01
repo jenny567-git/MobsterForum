@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using mobster_backend.DTOs.Write;
+using mobster_backend.Exceptions;
 using mobster_backend.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -76,6 +77,29 @@ namespace mobster_backend.Controllers
                 return StatusCode(500, e.Message);
             }
 
+        }
+
+        /// <summary>
+        /// Gets a list of families that the given user is a member of
+        /// </summary>
+        /// <param name="userId">The id of the requested user</param>
+        /// <returns></returns>
+        [HttpGet("user/{userId}")]
+        public async Task<IActionResult> GetFamiliesByUserId(Guid userId)
+        {
+            try
+            {
+                var families = await familyService.GetFamiliesByUserId(userId);
+                return Ok(families);
+            }
+            catch (DbNotFoundException e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
         }
         
         [HttpGet("{familyId}")]
