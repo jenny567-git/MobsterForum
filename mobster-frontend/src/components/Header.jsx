@@ -3,6 +3,7 @@ import SearchBar from './SearchBar'
 import logo from '../assets/Mobster-logo.png'
 import { Link } from 'react-router-dom'
 import LoginButton from './LoginButton'
+import { Link } from 'react-router-dom'
 
 
 function Header() {
