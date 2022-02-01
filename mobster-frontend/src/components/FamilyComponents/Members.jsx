@@ -13,8 +13,8 @@ const Members = () => {
   const { familyId } = useParams();
 
   useEffect(() => {
-    if(familyId) fetchFamily();
-  }, [members]);
+    fetchFamily();
+  }, []);
   
   const fetchFamily = async () => {
     const response = await axios.get(
@@ -39,6 +39,10 @@ const Members = () => {
       .catch((error) => {
         console.error("Error:", error);
       });
+
+      setmembers(members.filter(function(user){
+        return user.userId !== member.userId;
+      }) );
   };
 
   const onRemove = async (member) => {
@@ -50,6 +54,10 @@ const Members = () => {
     .catch((error) => {
       console.error("Error:", error);
     });
+
+    setmembers(members.filter(function(user){
+      return user.userId !== member.userId;
+    }) );
   };
 
   if(isLoading) return <>Loading...</>
