@@ -25,8 +25,6 @@ namespace mobster_backend.Controllers
         /// <summary>
         /// Adds a user to the db if it doesn't already exist. This endpoint bridges between frontend and auth0
         /// </summary>
-        /// <param name="authId">The unique auth0 id saved in the auth0 User db</param>
-        /// <param name="userName">The unique username saved in the auth0 User db</param>
         /// <returns>A User Dto</returns>
         [HttpPost]
         //[Authorize]
