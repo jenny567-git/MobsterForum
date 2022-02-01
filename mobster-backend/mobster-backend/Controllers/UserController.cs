@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using mobster_backend.DTOs.Write;
 using mobster_backend.Interfaces;
 using mobster_backend.Models;
 using System;
@@ -24,16 +25,14 @@ namespace mobster_backend.Controllers
         /// <summary>
         /// Adds a user to the db if it doesn't already exist. This endpoint bridges between frontend and auth0
         /// </summary>
-        /// <param name="authId">The unique auth0 id saved in the auth0 User db</param>
-        /// <param name="userName">The unique username saved in the auth0 User db</param>
         /// <returns>A User Dto</returns>
         [HttpPost]
         //[Authorize]
-        public async Task<IActionResult> AddUserAsync(string authId, string userName)
+        public async Task<IActionResult> AddUserAsync(SetUserDto model)
         {
             try
             {
-                var user = await userService.AddUser(authId, userName);
+                var user = await userService.AddUser(model);
                 return Ok(user);
             }
             catch (Exception e)

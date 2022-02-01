@@ -11,8 +11,13 @@ const ProfileInformation = () => {
 
   useEffect(() => {
     console.log("working");
-    //TODO: solve error 500
-    axios.post(`https://localhost:44304/api/User?authId=${user.sub}&userName=${user["https://mobster.com/username"]}`);
+
+    let userObj = {
+      userName: user["https://rules.com/claims/user_metadata"].username,
+      AuthId: user.sub,
+      Id: user["https://rules.com/claims/user_metadata"].uuid,
+    };
+    axios.post(`https://localhost:44304/api/User`, userObj);
   }, []);
 
   return (
