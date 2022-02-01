@@ -40,8 +40,11 @@ namespace mobster_backend.Services
 
         public async Task AddFamilyMember(Guid familyId, Guid userId)
         {
+
             var family = await context.Families.Include(f => f.FamilyMembers).FirstOrDefaultAsync(f => f.FamilyId == familyId);
             var user = await context.Users.FindAsync(userId);
+
+            if (family.FamilyMembers.Contains(user)) throw new ArgumentException();
 
             family.FamilyMembers.Add(user);
             family.MemberCount = family.FamilyMembers.Count;
@@ -94,6 +97,9 @@ namespace mobster_backend.Services
             var family = await context.Families
                 .Include(f => f.FamilyMembers)
                 .FirstOrDefaultAsync(f => f.FamilyId == familyId);
+
+            if (!family.FamilyMembers.Contains(user)) throw new ArgumentException();
+
             family.FamilyMembers.Remove(user);
 
             //check if user is admin
