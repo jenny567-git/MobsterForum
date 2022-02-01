@@ -10,7 +10,7 @@ namespace mobster_backend.Interfaces
 {
     public interface IUserService
     {
-        Task<UserDto> AddUser(string authId, string userName);
+        Task<UserDto> AddUser(SetUserDto model);
 
         Task<IEnumerable<UserDto>> GetUsers();
     }
