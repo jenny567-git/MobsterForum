@@ -9,6 +9,7 @@ export const Post = ({ id }) => {
   const [posts, setPosts] = useState([]);
   const {user, isLoading} = useAuth0();
   const [newPostContent, setNewPostContent] = useState("");
+  const [postToDeleteId, setPostToDeleteId] = useState("");
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
     const fetchPosts = (async () => {
@@ -18,7 +19,7 @@ export const Post = ({ id }) => {
 
   const submitNewPost = async () => {
     let newPost = {
-        authorUserId: "8E4FB1ED-0570-4FE1-B2F9-3882ABDE9DC7", //don't forget to remove hardcoded author user id when we have solution to auth0 id problem
+        authorUserId: user["https://rules.com/claims/user_metadata"].uuid,
         threadId: id,
         content: newPostContent 
     }
@@ -40,18 +41,22 @@ export const Post = ({ id }) => {
   }
 
   const handleCloseDelete = () => setShowDeleteModal(false);
-  const handleShowDelete = () => setShowDeleteModal(true);  
+  const handleShowDelete = (postId) => {
+      setShowDeleteModal(true);
+      setPostToDeleteId(postId); 
+  }
   
   const deletePost = async (postId) => {
-      handleShowDelete();
     
-    //   await axios
-    //   .delete(`https://localhost:44304/api/Posts?postId=${postId}`)
-    //   .catch((error) => {
-    //     console.error("Error:", error);
-    // });
-      
-    // fetchPosts();
+      await axios
+      .delete(`https://localhost:44304/api/Posts?postId=${postId}`)
+      .catch((error) => {
+        console.error("Error:", error);
+    });
+
+    setPostToDeleteId("");
+    setShowDeleteModal(false);
+    fetchPosts();
 
     }
 
@@ -82,7 +87,7 @@ if(isLoading){
                         {post.author.authId == user.sub && 
                         <div>
                             <Button className='post-btn' onClick={() => editPost(post.postId)}><i className='fas fa-edit' title="Edit post"></i></Button>
-                            <Button className='post-btn' title='Delete post' onClick={() => deletePost(post.postId)}><i className="fas fa-trash-alt"></i></Button>
+                            <Button className='post-btn' title='Delete post' onClick={() => handleShowDelete(post.postId)}><i className="fas fa-trash-alt"></i></Button>
                         </div>}
                         {post.author.authId != user.sub && <Button className='post-btn' title='Report post'><i className="fas fa-exclamation"></i></Button>}
                         
@@ -104,18 +109,18 @@ if(isLoading){
                   </div>
 
                   <Modal show={showDeleteModal} onHide={handleCloseDelete}>
-                      <Modal.Header closeButton>
-                        <Modal.Title>Confirm deletion</Modal.Title>
-                      </Modal.Header>
-                    <Modal.Body>Are you sure you want to delete this post?</Modal.Body>
-                    <Modal.Footer>
-                    <Button variant="secondary" onClick={handleCloseDelete}>
-                      Close
-                    </Button>
-                    <Button variant="danger" onClick={handleCloseDelete}>
-                      Delete post
-                    </Button>
-                    </Modal.Footer>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Confirm deletion</Modal.Title>
+                        </Modal.Header>
+                      <Modal.Body>Are you sure you want to delete this post?</Modal.Body>
+                        <Modal.Footer>
+                          <Button variant="secondary" onClick={handleCloseDelete}>
+                            Close
+                          </Button>
+                          <Button variant="danger" onClick={() => deletePost(postToDeleteId)}>
+                            Delete post
+                          </Button>
+                        </Modal.Footer>
                   </Modal>
         
         </div>;
