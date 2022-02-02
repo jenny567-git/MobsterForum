@@ -41,14 +41,14 @@ namespace mobster_backend.Controllers
             }
         }
 
-        [HttpGet]
-        [Authorize]
-        public async Task<IActionResult> TestAuth()
-        {
-            return Ok(null);
-        }
+        //[HttpGet]
+        //[Authorize]
+        //public async Task<IActionResult> TestAuth()
+        //{
+        //    return Ok(null);
+        //}
 
-        [HttpGet("allUsers")]
+        [HttpGet]
         public async Task<IActionResult> GetUsers()
         {
             try
