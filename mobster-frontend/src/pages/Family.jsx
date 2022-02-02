@@ -28,12 +28,16 @@ const Family = () => {
   }, []);
 
   const fetchFamily = async () => {
-    const response = await axios.get(
-      `https://localhost:44304/api/Family/${id}`
-    );
-    setFamily(response.data);
-    setIsFetching(false);
-    console.log(response.data);
+    const response = await axios
+      .get(`https://localhost:44304/api/Family/${id}`)
+      .then((res) => {
+        console.log("Success: ", res.data);
+        setFamily(res.data);
+        setIsFetching(false);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   };
 
   const checkJoinable = async () => {
@@ -72,20 +76,20 @@ const Family = () => {
   };
 
   const toJoin = () => {
-    //hard coded, to be replaced
-    // let userid = "507DED86-5B40-4A96-ACAF-F847AB7AE72E";
-    // axios
-    //   .post(`https://localhost:44304/addMember?familyId=${id}&userId=${userid}`)
-    //   .then((res) => {
-    //     console.log("Success: ", res.data);
-    //     alert('You have joined the family');
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error:", error);
-    //   });
-    //   // let family = {...family};
-    //   // family.memberCount++;
-    //   // setFamily(family);
+    let userid = user["https://rules.com/claims/user_metadata"].uuid;
+    axios
+      .post(`https://localhost:44304/addMember?familyId=${id}&userId=${userid}`)
+      .then((res) => {
+        console.log("Success: ", res.data);
+        let newfamily = { ...family };
+        newfamily.memberCount++;
+        setFamily(newfamily);
+        //TODO: fix a different response than alert
+        alert("You have joined the family");
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
     console.log(family);
   };
 
@@ -129,7 +133,7 @@ const Family = () => {
             family.adminUserId) && (
           <>
             <Button onClick={() => navigate(`/family/${id}/invite`)}>
-              Invite
+              Add members
             </Button>
             <Button onClick={toggleEdit}>Edit</Button>
             <Button onClick={() => navigate(`/family/${id}/members`)}>

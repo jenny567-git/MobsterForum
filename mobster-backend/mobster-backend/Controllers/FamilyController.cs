@@ -19,6 +19,11 @@ namespace mobster_backend.Controllers
             this.familyService = familyService;
         }
 
+        /// <summary>
+        /// Create a new family
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> AddFamilyAsync(SetFamilyDto model)
         {
@@ -34,6 +39,12 @@ namespace mobster_backend.Controllers
             return StatusCode(201);
         }
         
+        /// <summary>
+        /// Add an user to an existing family
+        /// </summary>
+        /// <param name="familyId"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         [HttpPost("/addMember/")]
         public async Task<IActionResult> AddFamilyMemberAsync(Guid familyId, Guid userId)
         {
@@ -49,6 +60,12 @@ namespace mobster_backend.Controllers
             return StatusCode(201);
         }
         
+        /// <summary>
+        /// Adds a list of members to an existing family
+        /// </summary>
+        /// <param name="familyId"></param>
+        /// <param name="userIds"></param>
+        /// <returns></returns>
         [HttpPost("/addMembers/")]
         public async Task<IActionResult> AddFamilyMembersAsync(Guid familyId, IEnumerable<Guid> userIds)
         {
@@ -64,6 +81,10 @@ namespace mobster_backend.Controllers
             return StatusCode(201);
         }
         
+        /// <summary>
+        /// Get all families
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetFamiliesAsync()
         {
@@ -102,6 +123,11 @@ namespace mobster_backend.Controllers
             }
         }
         
+        /// <summary>
+        /// Gets a specific family
+        /// </summary>
+        /// <param name="familyId"></param>
+        /// <returns></returns>
         [HttpGet("{familyId}")]
         public async Task<IActionResult> GetFamilyAsync(Guid familyId)
         {
@@ -117,6 +143,11 @@ namespace mobster_backend.Controllers
 
         }
         
+        /// <summary>
+        /// Gets a list of members for a family
+        /// </summary>
+        /// <param name="familyId"></param>
+        /// <returns></returns>
         [HttpGet("{familyId}/members")]
         public async Task<IActionResult> GetFamilyMembersAsync(Guid familyId)
         {
@@ -131,6 +162,12 @@ namespace mobster_backend.Controllers
             }
         }
 
+        /// <summary>
+        /// Removes an member from the family
+        /// </summary>
+        /// <param name="familyId"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         [HttpDelete("/removeUser/")]
         public async Task<IActionResult> RemoveUserFromFamilyAsync(Guid familyId, Guid userId)
         {
@@ -146,6 +183,12 @@ namespace mobster_backend.Controllers
             return Ok();
         }
         
+        /// <summary>
+        /// Removes a list of members from the family
+        /// </summary>
+        /// <param name="familyId">ID of the family</param>
+        /// <param name="userIds">Id of the users</param>
+        /// <returns></returns>
         [HttpDelete("/removeUsers/")]
         public async Task<IActionResult> RemoveUsersFromFamilyAsync(Guid familyId, IEnumerable<Guid> userIds)
         {
@@ -161,6 +204,11 @@ namespace mobster_backend.Controllers
             return Ok();
         }
         
+        /// <summary>
+        /// Deletes a family
+        /// </summary>
+        /// <param name="familyId"></param>
+        /// <returns></returns>
         [HttpDelete]
         public async Task<IActionResult> DeleteFamilyAsync(Guid familyId)
         {
@@ -176,6 +224,12 @@ namespace mobster_backend.Controllers
             return Ok();
         }
         
+        /// <summary>
+        /// Updates a family
+        /// </summary>
+        /// <param name="familyId"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPut]
         public async Task<IActionResult> UpdateFamilyAsync(Guid familyId, SetFamilyDto model)
         {
