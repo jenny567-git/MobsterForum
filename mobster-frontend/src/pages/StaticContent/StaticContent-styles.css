@@ -1,0 +1,64 @@
+.about-container{
+    background-color: #636363ea;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border-radius: 10px;
+}
+
+.about-header {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+}
+
+.aboutme{
+    color: red;
+}
+
+.single-card{
+    width: 20rem;
+    padding: 10px;
+    margin: 10px auto;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.notfound-container{
+    padding: 20px;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: center;
+    margin: 10vh auto;
+    width: 80%;
+    color: #ec625f;
+}
+
+.faq-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px auto;
+}
+
+.faq-heading {
+    color: white;
+}
+
+.faq-question {
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 28px;
+}
+
+.faq-answer {
+    color: #ec625f;
+    font-size: 18px;
+}
+
+details {
+    padding: 10px;
+}
+
