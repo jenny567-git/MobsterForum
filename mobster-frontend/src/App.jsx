@@ -9,6 +9,7 @@ import BlockedMembers from './components/FamilyComponents/BlockedMembers'
 import InviteMembers from './components/FamilyComponents/InviteMembers'
 
 import Profile from './pages/Profile'
+import { About } from './pages/StaticContent/About'
 function App() {
 
   return (
@@ -26,6 +27,7 @@ function App() {
             <Route exact path="/family/:familyId/blockedMembers" element={<BlockedMembers />}></Route>
             <Route exact path="/family/:familyId/invite" element={<InviteMembers />}></Route>
             <Route exact path ="/profile" element={<Profile />}></Route>
+            <Route exact path ="/about" element={<About />}></Route>
           </Routes>
         </div>
       </div>
