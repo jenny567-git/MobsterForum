@@ -39,6 +39,34 @@ namespace mobster_backend.Extensions
 
             return threads.Select(f => f.ToThreadDto());
         }
+        
+        public static ThreadDtoOverview ToThreadDtoForFamily(this Thread thread)
+        {
+            if (thread == null)
+            {
+                return null;
+            }
+
+            return new ThreadDtoOverview
+            {
+                ThreadId = thread.ThreadId,
+                FamilyName = thread.Family.Name,
+                FamilyId = thread.FamilyId,
+                Author = thread.Author.ToUserDto(),
+                Title = thread.Title,
+                CreatedAt = thread.CreatedAt,
+            };
+        }
+
+        public static IEnumerable<ThreadDtoOverview> ToThreadDtosForFamily(this IEnumerable<Thread> threads)
+        {
+            if (!threads.Any())
+            {
+                return null;
+            }
+
+            return threads.Select(f => f.ToThreadDtoForFamily());
+        }
 
         public static PostDto ToPostDto(this Post post)
         {
@@ -84,7 +112,8 @@ namespace mobster_backend.Extensions
                 UpdatedAt = family.UpdatedAt,
                 MemberCount = family.MemberCount,
                 AdminUserId = family.Admin.UserId,
-                FamilyMembers = family.FamilyMembers.ToUserDtos(),
+                FamilyMembers = family.FamilyMembers?.ToUserDtos(),
+                Threads = family.Threads?.ToThreadDtosForFamily()
             };
         }
 

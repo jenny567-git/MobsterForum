@@ -89,10 +89,6 @@ const Family = () => {
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
 
-  let myStyle = {
-    backgroundColor: "gray",
-  };
-
   return (
     <div className="container">
       {/* <p>Hämtad från context:</p>
@@ -105,9 +101,6 @@ const Family = () => {
         <i>{family.description}</i>
       </h2>
       <p>Members: {family.memberCount}</p>
-      <Button style={myStyle} onClick={() => navigate("/")}>
-        Home
-      </Button>
       <Button onClick={() => navigate(`/family/${id}/invite`)}>Invite</Button>
 
       {/* add a check, if current user is not a family member - display Join button */}
