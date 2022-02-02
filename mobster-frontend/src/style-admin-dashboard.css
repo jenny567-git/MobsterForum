@@ -39,9 +39,10 @@ p {
 }
 
 .users-list {
-    max-height: 200px;
+    min-height: 275px;
+    max-height: 500px;
     padding-right: .3rem;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .users-search {
