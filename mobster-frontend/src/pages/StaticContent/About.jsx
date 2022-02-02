@@ -1,5 +1,5 @@
 import React from 'react';
-import './About-styles.css';
+import './StaticContent-styles.css';
 import { Card, Container, Row, Col, Image } from 'react-bootstrap';
 
 export const About = () => {
