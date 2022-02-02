@@ -1,6 +1,7 @@
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
 import Header from './components/Header'
 import Home from './pages/Home'
+import SingleThreadView from './pages/SingleThreadView/SingleThreadView'
 import Family from './pages/Family'
 import CreateFamily from './components/FamilyComponents/CreateFamily'
 import Members from './components/FamilyComponents/Members'
@@ -17,6 +18,8 @@ function App() {
         <div className="content">
           <Routes>
             <Route exact path="/" element={<Home />}></Route>
+            <Route exact path="/thread/:id" element={<SingleThreadView />}></Route>
+            <Route exact path="/family" element={<Family />}></Route>
             <Route exact path="/family/:id" element={<Family />}></Route>
             <Route exact path="/family/create" element={<CreateFamily />}></Route>
             <Route exact path="/family/:familyId/members" element={<Members />}></Route>

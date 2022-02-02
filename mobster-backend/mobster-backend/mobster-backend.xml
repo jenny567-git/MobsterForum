@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>mobster-backend</name>
+    </assembly>
+    <members>
+        <member name="M:mobster_backend.Controllers.ThreadController.Get(System.Guid)">
+            <summary>
+            Gets a single thread by thread id
+            </summary>
+            <param name="threadId">The given id for the thread</param>
+            <returns>A single thread</returns>
+        </member>
+        <member name="M:mobster_backend.Controllers.ThreadController.GetThreadsByFamilyId(System.Guid)">
+            <summary>
+            Get all threads belonging to the given family
+            </summary>
+            <param name="familyId">The provided family id</param>
+            <returns></returns>
+        </member>
+        <member name="M:mobster_backend.Controllers.ThreadController.AddThread(mobster_backend.DTOs.Write.SetThreadDto)">
+            <summary>
+            Creates a new thread in an existing family
+            </summary>
+            <param name="model">The viewmodel used to represent the thread entity</param>
+            <returns></returns>
+        </member>
+        <member name="M:mobster_backend.Controllers.ThreadController.UpdateThread(System.Guid,mobster_backend.DTOs.Write.SetThreadDto)">
+            <summary>
+            Updates an existing thread
+            </summary>
+            <param name="id">the id for the thread to be updated</param>
+            <param name="model">The viewmodel used to represent the thread entity</param>
+            <returns></returns>
+        </member>
+        <member name="M:mobster_backend.Controllers.ThreadController.DeleteThread(System.Guid)">
+            <summary>
+            Deletes an existing thread
+            </summary>
+            <param name="id">The id of the thread to be deleted</param>
+            <returns></returns>
+        </member>
+        <member name="M:mobster_backend.Exceptions.DbNotFoundException.#ctor(System.String)">
+            <summary>
+            A custom Exception class that is used when the entity cannot be found in the database.
+            </summary>
+        </member>
+        <member name="T:mobster_backend.Extensions.ConvertDtoExtension">
+            <summary>
+            Class used to convert entity to DTO and DTO to entity
+            </summary>
+        </member>
+        <member name="M:mobster_backend.Interfaces.IFamilyService.DeleteFamily(System.Guid)">
+            <summary>
+            Only if admin or site admin
+            </summary>
+            <param name="familyId"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
