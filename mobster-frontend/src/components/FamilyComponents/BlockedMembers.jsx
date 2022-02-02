@@ -57,7 +57,7 @@ const BlockedMembers = () => {
       {!members.length ? 
       ( <>No users found...</> ) : 
       (
-        <Table striped bordered hover>
+        <Table striped bordered hover variant="dark">
           <thead>
             <tr>
               <th>User name</th>

@@ -76,7 +76,7 @@ const Members = () => {
       {/* {Array.from(members).map((member) => (
         <Member key={member.userId} member={member} familyId={familyId} />
       ))} */}
-      <Table striped bordered hover size="sm">
+      <Table striped bordered hover size="sm" variant="dark">
         <thead>
           <tr>
             <th>User Name</th>

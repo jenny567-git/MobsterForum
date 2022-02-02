@@ -14,39 +14,45 @@ const Family = () => {
   const [canJoin, setCanJoin] = useState(false);
   const [family, setFamily] = useState({});
   const [isFetching, setIsFetching] = useState(true);
-  const [blockedMembers, setBlockedMembers] = useState();
   const { id } = useParams();
   let navigate = useNavigate();
 
   const { user, isLoading } = useAuth0();
 
   useEffect(() => {
+    if (!isLoading) checkJoinable();
+  }, [isLoading]);
+
+  useEffect(() => {
     fetchFamily();
   }, []);
+
+  const checkJoinable = async () => {
+    console.log('user', user);
+    const blockResponse = await axios.get(
+      `https://localhost:44304/api/Block?familyId=${id}`
+    );
+    console.log("blocked", blockResponse.data);
+    console.log('family in join method', family);
+    //if current user is not a member of the group and not a blocked member
+    if (
+        !family.familyMembers.some( (e) => e.authId === user.sub) &&
+        !blockResponse.data.some((e) => e.authId === user.sub)
+      )
+     {
+      console.log("can join");
+      setCanJoin(true);
+    }
+  };
 
   const fetchFamily = async () => {
     const response = await axios.get(
       `https://localhost:44304/api/Family/${id}`
     );
     setFamily(response.data);
-
-    const blockResponse = await axios.get(
-      `https://localhost:44304/api/Block?familyId=${id}`
-    );
-    setBlockedMembers(blockResponse.data)
-    console.log('blocked', blockResponse.data);
-
     setIsFetching(false);
     console.log(response.data);
     console.log("members", response.data.familyMembers);
-    console.log("user", user);
-    // console.log("threads", response.data.threads);
-    if (!isLoading) {
-      if (!response.data.familyMembers.some((e) => e.authId === user.sub)) {
-        setCanJoin(true);
-      }
-    }
-    // setloading(false);
   };
 
   const toggleEdit = () => {
@@ -112,7 +118,6 @@ const Family = () => {
         <i>{family.description}</i>
       </h2>
       <p>Members: {family.memberCount}</p>
-      <Button onClick={() => navigate(`/family/${id}/invite`)}>Invite</Button>
 
       {/* add a check, if current user is not a family member - display Join button */}
       {/* add a check, if blocked member, cant join */}
@@ -120,10 +125,15 @@ const Family = () => {
 
       {/*if current user == admin or site admin, display Edit button */}
       {!isLoading &&
-        (user["https://rules.com/claims/user_metadata"].roles.includes("admin") ||
-          user["https://rules.com/claims/user_metadata"].uuid == family.adminUserId) && 
-        (
+        (user["https://rules.com/claims/user_metadata"].roles.includes(
+          "admin"
+        ) ||
+          user["https://rules.com/claims/user_metadata"].uuid ==
+            family.adminUserId) && (
           <>
+            <Button onClick={() => navigate(`/family/${id}/invite`)}>
+              Invite
+            </Button>
             <Button onClick={toggleEdit}>Edit</Button>
             <Button onClick={() => navigate(`/family/${id}/members`)}>
               {" "}
@@ -138,7 +148,7 @@ const Family = () => {
       {/* <button onClick={toManipulate}> Mainpulate context</button> */}
 
       {/* add a check, if current user == admin, display Delete button */}
-      
+
       {/* to be moved */}
       <Button variant="success" onClick={() => navigate("/family/create")}>
         Create new family
