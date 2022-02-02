@@ -13,6 +13,7 @@ const Family = () => {
   const [showModal, setShowModal] = useState(false);
   const [canJoin, setCanJoin] = useState(false);
   const [family, setFamily] = useState({});
+  const [isFetching, setIsFetching] = useState(true);
   const { id } = useParams();
   let navigate = useNavigate();
 
@@ -27,14 +28,16 @@ const Family = () => {
       `https://localhost:44304/api/Family/${id}`
     );
     setFamily(response.data);
+    setIsFetching(false);
     console.log(response.data);
-    console.log(response.data.familyMembers);
-    console.log(user);
-    if(!isLoading){
+    console.log("members", response.data.familyMembers);
+    console.log("user", user);
+    console.log("threads", response.data.threads);
+    if (!isLoading) {
       if (!response.data.familyMembers.some((e) => e.authId === user.sub)) {
-      setCanJoin(true);
+        setCanJoin(true);
+      }
     }
-  }
     // setloading(false);
   };
 
@@ -120,7 +123,6 @@ const Family = () => {
       <Button variant="danger" onClick={handleShow}>
         Delete family
       </Button>
-
       {/* to be moved */}
       <Button variant="success" onClick={() => navigate("/family/create")}>
         Create new family
@@ -128,9 +130,17 @@ const Family = () => {
 
       {isEditing && <EditFamily />}
 
-      <FakeThread />
-      <FakeThread />
-      <FakeThread />
+      <ul>
+        {!isFetching &&
+          Array.from(family.threads).map((thread) => (
+            <li
+              key={thread.threadId}
+              onClick={() => navigate(`/thread/${thread.threadId}`)}
+            >
+              {thread.title}
+            </li>
+          ))}
+      </ul>
 
       <Modal show={showModal} onHide={handleClose}>
         <Modal.Header closeButton>
