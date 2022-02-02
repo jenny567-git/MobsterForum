@@ -14,16 +14,10 @@ namespace mobster_backend.Interfaces
         Task<IEnumerable<FamilyDto>> GetFamiliesByUserId(Guid userId);
         Task<FamilyDto> GetFamily(Guid familyId);
         Task<IEnumerable<UserDto>> GetFamilyMembers(Guid familyId);
+        Task<IEnumerable<UserDto>> GetInvitableUsers(Guid familyId);
         Task AddFamilyMember(Guid familyId, Guid userId);
-        Task AddFamilyMembers(Guid familyId, IEnumerable<Guid> userIds);
-        
+        Task AddFamilyMembers(Guid familyId, IEnumerable<UserDto> users);
         Task<FamilyDto> UpdateFamily(Guid familyId, SetFamilyDto model);
-
-        /// <summary>
-        /// Only if admin or site admin
-        /// </summary>
-        /// <param name="familyId"></param>
-        /// <returns></returns>
         Task DeleteFamily(Guid familyId);
         Task RemoveUserFromFamily(Guid familyId, Guid userId);
         Task RemoveUsersFromFamily(Guid familyId, IEnumerable<Guid> userIds);

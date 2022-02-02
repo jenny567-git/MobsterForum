@@ -27,7 +27,7 @@ namespace mobster_backend.Controllers
         {
             try
             {
-                var blockedUsers = await blockService.GetBlockedUserByFamily(familyId);
+                var blockedUsers = await blockService.GetBlockedUsersByFamily(familyId);
                 return Ok(blockedUsers);
             }
             catch (Exception e)

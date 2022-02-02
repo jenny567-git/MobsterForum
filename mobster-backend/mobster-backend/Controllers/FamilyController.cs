@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using mobster_backend.DTOs.Read;
 using mobster_backend.DTOs.Write;
 using mobster_backend.Exceptions;
 using mobster_backend.Interfaces;
@@ -64,14 +65,13 @@ namespace mobster_backend.Controllers
         /// Adds a list of members to an existing family
         /// </summary>
         /// <param name="familyId"></param>
-        /// <param name="userIds"></param>
         /// <returns></returns>
         [HttpPost("/addMembers/")]
-        public async Task<IActionResult> AddFamilyMembersAsync(Guid familyId, IEnumerable<Guid> userIds)
+        public async Task<IActionResult> AddFamilyMembersAsync(Guid familyId, IEnumerable<UserDto> users)
         {
             try
             {
-                await familyService.AddFamilyMembers(familyId, userIds);
+                await familyService.AddFamilyMembers(familyId, users);
             }
             catch (Exception e)
             {
@@ -155,6 +155,25 @@ namespace mobster_backend.Controllers
             {
                 var members = await familyService.GetFamilyMembers(familyId);
                 return Ok(members);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+        
+        /// <summary>
+        /// Gets a list of members that's not a current member or blocked member of the family
+        /// </summary>
+        /// <param name="familyId"></param>
+        /// <returns></returns>
+        [HttpGet("{familyId}/invite")]
+        public async Task<IActionResult> GetInvitableUsersByFamilyId(Guid familyId)
+        {
+            try
+            {
+                var users = await familyService.GetInvitableUsers(familyId);
+                return Ok(users);
             }
             catch (Exception e)
             {

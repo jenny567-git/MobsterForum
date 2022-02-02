@@ -1,5 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import { Button, InputGroup, FormControl, Form } from "react-bootstrap";
+import { useParams } from "react-router-dom";
 import { Context } from "../../utils/store";
 import { Typeahead } from 'react-bootstrap-typeahead'
 import 'react-bootstrap-typeahead/css/Typeahead.css';
@@ -11,6 +12,8 @@ const InviteMembers = () => {
   const [context, updateContext] = useContext(Context);
   const [selected, setSelected] = useState([]);
   const [users, setUsers] = useState([]);
+  const { familyId } = useParams();
+
 
   useEffect(() => {
     fetchUsers();
@@ -18,7 +21,7 @@ const InviteMembers = () => {
   }, []);
   
   const fetchUsers = async () => {
-    const response = await axios.get(`https://localhost:44304/api/User`)
+    const response = await axios.get(`https://localhost:44304/api/Family/${familyId}/invite`)
     .then((res) => {
       console.log("Success: ", res.data);
       setUsers(res.data)
@@ -33,6 +36,19 @@ const InviteMembers = () => {
     console.log(data);
     // updateContext({currentAdmin: data[0]})
   }
+
+  const onAdd = async () =>{
+    console.log('in add', selected);
+    const response = await axios.post(`https://localhost:44304/addMembers?familyId=${familyId}`, selected)
+    .then((res) => {
+      console.log("Success: ", res.data);
+      setUsers(users.filter(user => !selected.includes(user)));
+      setSelected([]);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+  }
   
   return (
   <div className="container">
@@ -43,12 +59,12 @@ const InviteMembers = () => {
           multiple
           labelKey="userName"
           onChange={(e) => onSelect(e)}
-          options={context.allUsers}
+          options={users}
           placeholder="Type an username"
           selected={selected}
         />
       </Form.Group>
-      <Button onClick={() => alert('To fix')}>Add</Button>
+      <Button onClick={onAdd}>Add</Button>
   </div>
   );
 };

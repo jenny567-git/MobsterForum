@@ -16,9 +16,14 @@ namespace mobster_backend.Services
     public class FamilyService : IFamilyService
     {
         private readonly MobsterContext context;
-        public FamilyService(MobsterContext context)
+        private readonly IBlockService blockService;
+        private readonly IUserService userService;
+
+        public FamilyService(MobsterContext context, IBlockService blockService, IUserService userService)
         {
             this.context = context;
+            this.blockService = blockService;
+            this.userService = userService;
         }
 
         public async Task AddFamily(SetFamilyDto model)
@@ -52,13 +57,13 @@ namespace mobster_backend.Services
             await context.SaveChangesAsync();
         }
 
-        public async Task AddFamilyMembers(Guid familyId, IEnumerable<Guid> userIds)
+        public async Task AddFamilyMembers(Guid familyId, IEnumerable<UserDto> users)
         {
             var family = await context.Families.Include(f => f.FamilyMembers).FirstOrDefaultAsync(f => f.FamilyId == familyId);
 
-            foreach (var userId in userIds)
+            foreach (var user in users)
             {
-                var newMember = await context.Users.FindAsync(userId);
+                var newMember = await context.Users.FindAsync(user.UserId);
                 family.FamilyMembers.Add(newMember);
             }
             family.MemberCount = family.FamilyMembers.Count;
@@ -119,6 +124,23 @@ namespace mobster_backend.Services
                 .FirstOrDefaultAsync(f => f.FamilyId == familyId);
 
             return family.FamilyMembers.ToList().ToUserDtos();
+        }
+
+        public async Task<IEnumerable<UserDto>> GetInvitableUsers(Guid familyId)
+        {
+            var allUsers = await userService.GetUsers();
+            var blockedUsers = await blockService.GetBlockedUsersByFamily(familyId);
+            var familyMembers = await GetFamilyMembers(familyId);
+            
+            var inviteList = new List<UserDto>();
+            foreach (var user in allUsers)
+            {
+                if (!blockedUsers.Any(u => u.UserId == user.UserId) && !familyMembers.Any(u => u.UserId == user.UserId))
+                {
+                    inviteList.Add(user);
+                }
+            }
+            return inviteList;
         }
 
         public async Task RemoveUserFromFamily(Guid familyId, Guid userId)
@@ -191,7 +213,5 @@ namespace mobster_backend.Services
             context.Families.Remove(family);
             await context.SaveChangesAsync();
         }
-
-
     }
 }

@@ -38,7 +38,7 @@ namespace mobster_backend.Services
             await context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<UserDto>> GetBlockedUserByFamily(Guid familyId)
+        public async Task<IEnumerable<UserDto>> GetBlockedUsersByFamily(Guid familyId)
         {
             var blockedUsers = context.BlockedMembers
                 .Where(u => u.FamilyId == familyId);
