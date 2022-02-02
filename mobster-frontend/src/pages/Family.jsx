@@ -14,6 +14,7 @@ const Family = () => {
   const [canJoin, setCanJoin] = useState(false);
   const [family, setFamily] = useState({});
   const [isFetching, setIsFetching] = useState(true);
+  const [blockedMembers, setBlockedMembers] = useState();
   const { id } = useParams();
   let navigate = useNavigate();
 
@@ -28,11 +29,18 @@ const Family = () => {
       `https://localhost:44304/api/Family/${id}`
     );
     setFamily(response.data);
+
+    const blockResponse = await axios.get(
+      `https://localhost:44304/api/Block?familyId=${id}`
+    );
+    setBlockedMembers(blockResponse.data)
+    console.log('blocked', blockResponse.data);
+
     setIsFetching(false);
     console.log(response.data);
     console.log("members", response.data.familyMembers);
     console.log("user", user);
-    console.log("threads", response.data.threads);
+    // console.log("threads", response.data.threads);
     if (!isLoading) {
       if (!response.data.familyMembers.some((e) => e.authId === user.sub)) {
         setCanJoin(true);
@@ -110,19 +118,27 @@ const Family = () => {
       {/* add a check, if blocked member, cant join */}
       {canJoin && <Button onClick={toJoin}>Join</Button>}
 
-      {/* add a check, if current user == admin, display Edit button */}
-      <Button onClick={toggleEdit}>Edit</Button>
+      {/*if current user == admin or site admin, display Edit button */}
+      {!isLoading &&
+        (user["https://rules.com/claims/user_metadata"].roles.includes("admin") ||
+          user["https://rules.com/claims/user_metadata"].uuid == family.adminUserId) && 
+        (
+          <>
+            <Button onClick={toggleEdit}>Edit</Button>
+            <Button onClick={() => navigate(`/family/${id}/members`)}>
+              {" "}
+              Handle members
+            </Button>
+            <Button variant="danger" onClick={handleShow}>
+              Delete family
+            </Button>
+          </>
+        )}
 
       {/* <button onClick={toManipulate}> Mainpulate context</button> */}
-      <Button onClick={() => navigate(`/family/${id}/members`)}>
-        {" "}
-        Handle members
-      </Button>
 
       {/* add a check, if current user == admin, display Delete button */}
-      <Button variant="danger" onClick={handleShow}>
-        Delete family
-      </Button>
+      
       {/* to be moved */}
       <Button variant="success" onClick={() => navigate("/family/create")}>
         Create new family
