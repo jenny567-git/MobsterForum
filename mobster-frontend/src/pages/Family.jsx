@@ -27,24 +27,6 @@ const Family = () => {
     fetchFamily();
   }, []);
 
-  const checkJoinable = async () => {
-    console.log('user', user);
-    const blockResponse = await axios.get(
-      `https://localhost:44304/api/Block?familyId=${id}`
-    );
-    console.log("blocked", blockResponse.data);
-    console.log('family in join method', family);
-    //if current user is not a member of the group and not a blocked member
-    if (
-        !family.familyMembers.some( (e) => e.authId === user.sub) &&
-        !blockResponse.data.some((e) => e.authId === user.sub)
-      )
-     {
-      console.log("can join");
-      setCanJoin(true);
-    }
-  };
-
   const fetchFamily = async () => {
     const response = await axios.get(
       `https://localhost:44304/api/Family/${id}`
@@ -52,7 +34,24 @@ const Family = () => {
     setFamily(response.data);
     setIsFetching(false);
     console.log(response.data);
-    console.log("members", response.data.familyMembers);
+  };
+
+  const checkJoinable = async () => {
+    console.log("user", user);
+    const blockResponse = await axios.get(
+      `https://localhost:44304/api/Block?familyId=${id}`
+    );
+    const memberResponse = await axios.get(
+      `https://localhost:44304/api/Family/${id}/members`
+    );
+    //check if current user is not a member of the group and not a blocked member
+    if (
+      !memberResponse.data.some((e) => e.authId === user.sub) &&
+      !blockResponse.data.some((e) => e.authId === user.sub)
+    ) {
+      console.log("can join");
+      setCanJoin(true);
+    }
   };
 
   const toggleEdit = () => {
@@ -119,8 +118,6 @@ const Family = () => {
       </h2>
       <p>Members: {family.memberCount}</p>
 
-      {/* add a check, if current user is not a family member - display Join button */}
-      {/* add a check, if blocked member, cant join */}
       {canJoin && <Button onClick={toJoin}>Join</Button>}
 
       {/*if current user == admin or site admin, display Edit button */}
