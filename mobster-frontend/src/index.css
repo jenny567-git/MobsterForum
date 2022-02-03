@@ -100,6 +100,25 @@
 	background-color: #313131;
 	border-bottom: 0.2rem solid #ec625f;
 }
+
+.footer {
+	position: fixed;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	background-color: #505050;
+	border-top: 0.2rem solid #ec625f;
+}
+
+.footer-left, .footer-middle, .footer-right {
+	padding: 10px;
+	margin: 0 auto;
+}
+
 .search-bar {
 	width: 33%;
 }
