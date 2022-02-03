@@ -1,8 +1,10 @@
 import React, { useState, useContext, useEffect } from "react";
+import axios from "axios";
 
 function SearchBar() {
   const [searchString, setSearchString] = useState("");
   const [searchType, setSearchType] = useState('families');
+  const [result, setResult] = useState([]);
 
   const search = async (e) => {
     e.preventDefault();
@@ -13,27 +15,38 @@ function SearchBar() {
     setSearchType(radiovalue);
     switch (radiovalue) {
       case "threads":
-        var response = await fetch(
-          "https://yt-music-api.herokuapp.com/api/yt/albums/" + searchString
-        );
+        axios.get(`https://localhost:44304/api/Thread?searchstring=${searchString}`)
+        .then((res) => {
+          console.log("Success: ", res.data);
+          setResult(res.data);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
         break;
       default:
-        var response = await fetch(
-          "https://yt-music-api.herokuapp.com/api/yt/songs/" + searchString
-          ); 
+        axios.get(`https://localhost:44304/api/Family?searchstring=${searchString}`)
+        .then((res) => {
+          console.log("Success: ", res.data);
+          setResult(res.data);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
         break;
-    }
-    var result = await response.json();
-    if (result) {
-      setResults(result.content);
-      setLoading(false)
     }
   };
 
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    search(e);
+  }
+
   return (
     <div className="search-bar-input">
-      <form action="">
+      <form onSubmit={onSubmit}>
         <input
+          id="searchText"
           type="text"
           placeholder="Search..."
           autoComplete="off"
