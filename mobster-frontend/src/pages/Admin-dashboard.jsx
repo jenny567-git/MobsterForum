@@ -9,6 +9,7 @@ function AdminDashboard() {
     let [isLoaded, setLoadedState] = useState(false);
     let searchbar = document.querySelector('#searchbar');
     let searchString = '';
+    let auth0 = useAuth0();
 
     useEffect(() => {
         if(isLoaded == false){
@@ -51,7 +52,7 @@ function AdminDashboard() {
             console.log(searchString);
             filterUsersBySearchString();
         }
-        setTimeout(timer, 0); // TODO: Set timer to what ever delay we want when
+        setTimeout(timer, 0); // TODO: Set timer to what ever delay we want when going live
     }
 
     return (
@@ -88,4 +89,4 @@ function AdminDashboard() {
     )
 }
 
-export default AdminDashboard;
+export default withAuthenticationRequired(AdminDashboard, {});

@@ -10,7 +10,6 @@ import InviteMembers from './components/FamilyComponents/InviteMembers'
 import AdminDashboard from './pages/Admin-dashboard'
 import Profile from './pages/Profile'
 function App() {
-
   return (
     <Router>
       <div className="App">
@@ -26,7 +25,7 @@ function App() {
             <Route exact path="/family/:familyId/blockedMembers" element={<BlockedMembers />}></Route>
             <Route exact path="/family/:familyId/invite" element={<InviteMembers />}></Route>
             <Route exact path ="/profile" element={<Profile />}></Route>
-            <Route exact path="/admin-dashboard" element={<AdminDashboard />}></Route>
+            <Route exact path="/admin-dashboard" element={ <AdminDashboard/>}></Route>
           </Routes>
         </div>
       </div>
