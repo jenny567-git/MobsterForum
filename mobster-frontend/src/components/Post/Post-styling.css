@@ -70,7 +70,8 @@ p {
     flex-direction: row;
     align-items: center;
     width: 70%;
-    margin: 0 auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .reply-textarea {
