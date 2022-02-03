@@ -14,7 +14,6 @@ function MyFamilies() {
       .then((res) => {
         console.log("Success: ", res.data);
         setFamilies(res.data);
-        console.log("top 5", res.data);
         setIsLoading(false);
       })
       .catch((error) => {

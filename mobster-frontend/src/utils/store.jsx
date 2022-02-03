@@ -6,6 +6,7 @@ export function StoreProvider({ children }) {
   const [context, setContext] = useState({
     searchString:'',
     searchResult: [],
+    searchType:'families',
     family: {
         name: "family from context",
         description: "descrip from context",

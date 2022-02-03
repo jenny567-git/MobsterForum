@@ -20,7 +20,6 @@ function MyFamilies() {
     const families = await axios.get(
       `https://localhost:44304/api/Family/user/${user["https://rules.com/claims/user_metadata"].uuid}`
     );
-    console.log("families", families.data);
     setFamilies(families.data);
     if (!families.data.length) {
       setError(true);

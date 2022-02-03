@@ -1,10 +1,14 @@
 import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
+import { Context } from "../../utils/store";
+import { useNavigate } from "react-router-dom";
+
 
 function SearchBar() {
   const [searchString, setSearchString] = useState("");
-  const [searchType, setSearchType] = useState('families');
-  const [result, setResult] = useState([]);
+  const [context, updateContext] = useContext(Context);
+
+  let navigate = useNavigate();
 
   const search = async (e) => {
     e.preventDefault();
@@ -12,13 +16,13 @@ function SearchBar() {
       'input[type="radio"]:checked'
     ).value;
     
-    setSearchType(radiovalue);
+    // setSearchType(radiovalue);
     switch (radiovalue) {
       case "threads":
         axios.get(`https://localhost:44304/api/Thread?searchstring=${searchString}`)
         .then((res) => {
           console.log("Success: ", res.data);
-          setResult(res.data);
+          updateContext({searchResult: res.data, searchType:radiovalue})
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -28,13 +32,14 @@ function SearchBar() {
         axios.get(`https://localhost:44304/api/Family?searchstring=${searchString}`)
         .then((res) => {
           console.log("Success: ", res.data);
-          setResult(res.data);
+          updateContext({searchResult: res.data, searchType:radiovalue})
         })
         .catch((error) => {
           console.error("Error:", error);
         });
         break;
     }
+    navigate("/searchresult");
   };
 
   const onSubmit = async (e) => {
