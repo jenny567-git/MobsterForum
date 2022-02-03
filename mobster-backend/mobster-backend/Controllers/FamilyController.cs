@@ -60,11 +60,12 @@ namespace mobster_backend.Controllers
 
             return StatusCode(201);
         }
-        
+
         /// <summary>
         /// Adds a list of members to an existing family
         /// </summary>
         /// <param name="familyId"></param>
+        /// <param name="users"></param>
         /// <returns></returns>
         [HttpPost("/addMembers/")]
         public async Task<IActionResult> AddFamilyMembersAsync(Guid familyId, IEnumerable<UserDto> users)
@@ -86,11 +87,14 @@ namespace mobster_backend.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetFamiliesAsync()
+#nullable enable
+
+        public async Task<IActionResult> GetFamiliesAsync(string? searchstring)
+#nullable disable
         {
             try
             {
-                var families = await familyService.GetFamilies();
+                var families = await familyService.GetFamilies(searchstring);
                 return Ok(families);
             }
             catch (Exception e)

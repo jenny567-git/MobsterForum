@@ -71,9 +71,27 @@ namespace mobster_backend.Services
             await context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<FamilyDto>> GetFamilies()
+#nullable enable
+        public async Task<IEnumerable<FamilyDto>> GetFamilies(string? searchstring)
         {
-            var families = await context.Families.Include(f => f.Admin).ToListAsync();
+#nullable disable
+            var families = new HashSet<Family>();
+
+            if (string.IsNullOrWhiteSpace(searchstring))
+            {
+                var result = await context.Families.Include(f => f.Admin).ToListAsync();
+                families = new HashSet<Family>(result);
+            }
+            else
+            {
+                string[] subs = searchstring.ToLower().Split();
+                foreach(string sub in subs)
+                {
+                    var result = await context.Families.Include(f => f.Admin).Where(f => f.Name.ToLower().Contains(sub)).ToListAsync();
+                    families.AddRange(result);
+                }
+            }
+
             return families.ToFamilyDtos();
         }
        

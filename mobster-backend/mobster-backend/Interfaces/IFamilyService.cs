@@ -10,7 +10,9 @@ namespace mobster_backend.Interfaces
     public interface IFamilyService
     {
         Task AddFamily(SetFamilyDto model);
-        Task<IEnumerable<FamilyDto>> GetFamilies();
+#nullable enable
+        Task<IEnumerable<FamilyDto>> GetFamilies(string? searchstring);
+#nullable disable
         Task<IEnumerable<FamilyDto>> GetFamiliesByUserId(Guid userId);
         Task<FamilyDto> GetFamily(Guid familyId);
         Task<IEnumerable<FamilyDto>> GetTop5Families();

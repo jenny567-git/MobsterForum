@@ -52,7 +52,7 @@ namespace mobster_backend.Services
         {
             var thread = await context.Threads
                 .Include(t => t.Posts)
-                .FirstOrDefaultAsync(t=> t.ThreadId == threadId);
+                .FirstOrDefaultAsync(t => t.ThreadId == threadId);
 
             if (thread == null)
             {
@@ -67,6 +67,31 @@ namespace mobster_backend.Services
                 context.Threads.Remove(thread);
                 await context.SaveChangesAsync();
             }
+        }
+
+#nullable enable
+        public async Task<IEnumerable<ThreadDtoOverview>> GetThreads(string? searchstring)
+#nullable disable
+        {
+            var threads = new HashSet<Thread>();
+
+
+            if (string.IsNullOrWhiteSpace(searchstring))
+            {
+                var result = await context.Threads.Include(t => t.Family).ToListAsync();
+                threads = new HashSet<Thread>(result);
+            }
+            else
+            {
+                string[] subs = searchstring.ToLower().Split();
+                foreach (string sub in subs)
+                {
+                    var result = await context.Threads.Include(t => t.Family).Where(f => f.Title.ToLower().Contains(sub)).ToListAsync();
+                    threads.AddRange(result);
+                }
+            }
+
+            return threads.ToThreadDtosOverview();
         }
 
         public async Task<ThreadDto> GetThread(Guid threadId)
@@ -109,7 +134,5 @@ namespace mobster_backend.Services
                 return threads.ToThreadDtos();
             }
         }
-
-
     }
 }
