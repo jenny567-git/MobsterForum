@@ -27,6 +27,7 @@ p {
     padding: .5rem;
     border-radius: 5px;
     border: 1px solid #EC625F;
+    margin: auto;
 }
 
 .user-detail {
