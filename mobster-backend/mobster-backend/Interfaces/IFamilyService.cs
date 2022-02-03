@@ -13,6 +13,7 @@ namespace mobster_backend.Interfaces
         Task<IEnumerable<FamilyDto>> GetFamilies();
         Task<IEnumerable<FamilyDto>> GetFamiliesByUserId(Guid userId);
         Task<FamilyDto> GetFamily(Guid familyId);
+        Task<IEnumerable<FamilyDto>> GetTop5Families();
         Task<IEnumerable<UserDto>> GetFamilyMembers(Guid familyId);
         Task<IEnumerable<UserDto>> GetInvitableUsers(Guid familyId);
         Task AddFamilyMember(Guid familyId, Guid userId);

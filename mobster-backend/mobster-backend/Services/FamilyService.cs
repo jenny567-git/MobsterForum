@@ -76,6 +76,13 @@ namespace mobster_backend.Services
             var families = await context.Families.Include(f => f.Admin).ToListAsync();
             return families.ToFamilyDtos();
         }
+       
+        public async Task<IEnumerable<FamilyDto>> GetTop5Families()
+        {
+            var top5 = await context.Families.Include(a => a.Admin).OrderByDescending(m => m.MemberCount).Take(5).ToListAsync();
+
+            return top5.ToFamilyDtos();
+        }
 
         public async Task<IEnumerable<FamilyDto>> GetFamiliesByUserId(Guid userId)
         {

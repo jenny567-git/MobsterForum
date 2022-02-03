@@ -99,6 +99,26 @@ namespace mobster_backend.Controllers
             }
 
         }
+        /// <summary>
+        /// Get top 5 families with most members
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("top5")]
+        public async Task<IActionResult> GetTopFamiliesAsync()
+        {
+            try
+            {
+                var families = await familyService.GetTop5Families();
+                return Ok(families);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+
+        }
+
+
 
         /// <summary>
         /// Gets a list of families that the given user is a member of
