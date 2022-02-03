@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'
 import { Button, Form, Modal } from 'react-bootstrap';
-import { useAuth0 } from '@auth0/auth0-react'; 
+// import { useAuth0 } from '@auth0/auth0-react'; 
+import { useLocalStorage } from '../../CustomHooks/useLocalStorage';
 import logo from '../../assets/Mobster-logo.png'
 import  "./Post-styling.css"
 
 export const Post = ({ id }) => {
   const [posts, setPosts] = useState([]);
-  const {user, isLoading} = useAuth0();
+  // const {user, isLoading} = useAuth0();
+  const [user, setuser] = useLocalStorage('user', null)
   const [newPostContent, setNewPostContent] = useState("");
   const [postToEdit, setPostToEdit] = useState({});
   const [editedPostContent, setEditedPostContent] = useState("");
@@ -15,16 +17,14 @@ export const Post = ({ id }) => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
 
-  
-
     const fetchPosts = (async () => {
-    let response = await axios.get(`https://localhost:44304/api/Posts/thread/${id}`) 
+    let response = await axios.get(`https://localhost:44304/api/Posts/thread/${id}`)
     setPosts(response.data)
   })
 
   const submitNewPost = async () => {
     let newPost = {
-        authorUserId: user["https://rules.com/claims/user_metadata"].uuid,
+        authorUserId: user.userId,
         threadId: id,
         content: newPostContent 
     }
@@ -87,17 +87,27 @@ export const Post = ({ id }) => {
 
     }
 
+    const toggleCensorPost = async (postId) => {
+      await axios
+        .put(`https://localhost:44304/censor/${postId}`)
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+
+      fetchPosts();
+    }
+
 
 useEffect(()=>{
     fetchPosts();
   },[])
   
-if(isLoading){
-    return <div> <p>Loading page...</p></div>
-  }
+// if(isLoading){
+//     return <div> <p>Loading page...</p></div>
+//   }
     return <div>
 
-            {/* { error && <div>There are no posts on this thread yet...</div> } */}
+            { !posts && <p>There are no posts on this thread yet...</p> }
 
             { posts && posts.map((post) => 
                 <div className='single-post' key={post.postId}>
@@ -106,18 +116,24 @@ if(isLoading){
                     </div>
                     
                     <div className="post-content">
-                        <p className='post-metadata'>Posted by <strong className='post-metadata-bold'>{ post.author.userName }</strong> at { post.createdAt }</p>
-                        <p>{ post.content }</p>
+                        
+                        {post.author.isBanned && post.author.isActive && <p className='post-metadata'>Posted by <strong className='post-metadata-banned'> &#91;Banned User&#93; </strong> at {post.createdAt}</p>}
+                        {!post.author.isActive && !post.author.isBanned && <p className='post-metadata'>Posted by <strong className='post-metadata-banned'> &#91;Deleted User&#93; </strong> at {post.createdAt}</p>}
+                        {!post.author.isBanned && post.author.isActive && <p className='post-metadata'>Posted by <strong className='post-metadata-bold'>{post.author.userName}</strong> at {post.createdAt}</p>}
+                        
+                        {!post.isCensored && <p>{post.content}</p>}
+                        {post.isCensored && <p className='censored-post'>&#91;The contents of this post have been censored by an admin&#93;</p>}
+                        
                     </div>
                     
                     <div className="post-buttons">
-                        {post.author.authId == user.sub && 
+                        {post.author.userId == user.userId && 
                         <div>
-                            {/* <Button className='post-btn' onClick={() => editPost(post.postId)}><i className='fas fa-edit' title="Edit post"></i></Button> */}
                             <Button className='post-btn' onClick={() => handleShowEdit(post)}><i className='fas fa-edit' title="Edit post"></i></Button>
                             <Button className='post-btn' title='Delete post' onClick={() => handleShowDelete(post.postId)}><i className="fas fa-trash-alt"></i></Button>
                         </div>}
-                        {post.author.authId != user.sub && <Button className='post-btn' title='Report post'><i className="fas fa-exclamation"></i></Button>}
+                        {post.author.userId != user.userId && <Button className='post-btn' title='Report post'><i className="fas fa-exclamation"></i></Button>}
+                        {user.roles.includes("admin") && (<Button className='post-btn' onClick={() => toggleCensorPost(post.postId)} title='Censor post content'><i className="fas fa-comment-slash"></i></Button>)}
                         
                     </div>
                 </div>
