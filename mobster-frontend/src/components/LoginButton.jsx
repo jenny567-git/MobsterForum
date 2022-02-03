@@ -21,7 +21,7 @@ const LoginButton = () => {
 
   return (
     <div>
-        {!isAuthenticated && ( <button onClick={() => loginWithRedirect()}>Log In</button>)}
+        {!isAuthenticated && ( <button className="button" onClick={() => loginWithRedirect()}>Log In</button>)}
         {!isAuthenticated && (<button onClick={() => loginWithRedirect({screen_hint: "signup"})}>Register</button>)}
         <Link to="/profile">{isAuthenticated && (<button onClick={() => Navigate }>Profile</button>)}</Link>
         {isAuthenticated && (<button onClick={() => logoutWithRedirect()}>Log out</button>)}

@@ -1,180 +1,207 @@
 #root {
-	margin: 0;
-	background-color: #313131;
-	min-height: 100vh;
+  margin: 0;
+  background-color: #313131;
+  min-height: 100vh;
 }
 
-.flex{
-	display: flex;
-	flex-direction: row;
+.flex {
+  display: flex;
+  flex-direction: row;
 }
 
-.space{
-	justify-content: space-between;
+.space {
+  justify-content: space-between;
+}
+
+/* Profile page */
+
+.profile {
+  display: flex;
+  padding: 5px;
+  margin-left: 2vw;
+  margin-right: 30vw;
+  margin-top: 3vh;
+  margin-bottom: 3vh;
+  background-color: #414141;
+  color: whitesmoke;
+  width: 58%;
+  border-radius: 1rem;
+}
+
+.profile h2 {
+  color: whitesmoke;
+  margin-left: 1vh;
+  border-bottom: 0.2rem solid #ec625f;
 }
 /* Home Page */
 .home {
-	width: 100%;
-	display: flex;
-	flex-direction: row;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
 }
 .page-center {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 60%;
 }
 /* MyFamilies component*/
 
 .my-families {
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-start;
-	width: 20%;
-	background-color: #414141;
-	margin-top: 2rem;
-	margin-left: 2rem;
-	border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 20%;
+  background-color: #414141;
+  margin-top: 2rem;
+  margin-left: 2rem;
+  border-radius: 1rem;
 }
 .my-families h3 {
-	width: 100%;
-	align-self: center;
-	font-size: 2rem;
-	color: whitesmoke;
-	border-bottom: 0.2rem solid #ec625f;
-	padding: 1rem;
+  width: 100%;
+  align-self: center;
+  font-size: 2rem;
+  color: whitesmoke;
+  border-bottom: 0.2rem solid #ec625f;
+  padding: 1rem;
 }
 .my-families ul {
-	list-style-type: none;
-	font-size: 1.5rem;
+  list-style-type: none;
+  font-size: 1.5rem;
 }
 .my-families li {
-	margin-bottom: 1rem;
-	color: whitesmoke;
+  margin-bottom: 1rem;
+  color: whitesmoke;
 }
 .my-families li:hover {
-	color: #ec625f;
-	cursor: pointer;
+  color: #ec625f;
+  cursor: pointer;
 }
 
 /* MostPopularFamilies component*/
 
 .mp-families {
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-start;
-	width: 20%;
-	background-color: #414141;
-	margin-top: 2rem;
-	margin-right: 2rem;
-	border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 20%;
+  background-color: #414141;
+  margin-top: 2rem;
+  margin-right: 2rem;
+  border-radius: 1rem;
 }
 .mp-families h3 {
-	align-self: center;
-	font-size: 2rem;
-	color: whitesmoke;
-	border-bottom: 0.2rem solid #ec625f;
-	padding: 1rem;
+  align-self: center;
+  font-size: 2rem;
+  color: whitesmoke;
+  border-bottom: 0.2rem solid #ec625f;
+  padding: 1rem;
 }
 .mp-families ul {
-	list-style-type: none;
-	font-size: 1.5rem;
+  list-style-type: none;
+  font-size: 1.5rem;
 }
 .mp-families li {
-	margin-bottom: 1rem;
-	color: whitesmoke;
+  margin-bottom: 1rem;
+  color: whitesmoke;
 }
 .mp-families li:hover {
-	color: #ec625f;
-	cursor: pointer;
+  color: #ec625f;
+  cursor: pointer;
 }
 /* Header Component*/
 .header {
-	width: 100%;
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: space-between;
-	height: 10rem;
-	background-color: #313131;
-	border-bottom: 0.2rem solid #ec625f;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: 10rem;
+  background-color: #313131;
+  border-bottom: 0.2rem solid #ec625f;
 }
 
 .footer {
-	position: fixed;
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: space-between;
-	left: 0;
-	bottom: 0;
-	width: 100%;
-	background-color: #505050;
-	border-top: 0.2rem solid #ec625f;
+  position: fixed;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #505050;
+  border-top: 0.2rem solid #ec625f;
 }
 
-.footer-left, .footer-middle, .footer-right {
-	padding: 10px;
-	margin: 0 auto;
+.footer-left,
+.footer-middle,
+.footer-right {
+  padding: 10px;
+  margin: 0 auto;
 }
 
 .search-bar {
-	width: 33%;
+  width: 33%;
 }
 .sign-in {
-	display: flex;
-	flex-direction: row;
-	width: 33%;
-	justify-content: flex-end;
-	margin-right: 2rem;
+  display: flex;
+  flex-direction: row;
+  width: 33%;
+  justify-content: flex-end;
+  margin-right: 2rem;
 }
 .sign-in button {
-	border: none;
-	background-color: #ec625f;
-	color: #fff;
-	font-weight: bold;
-	font-size: 1rem;
-	margin-left: 2rem;
-	text-align: center;
-	text-decoration: none;
-	cursor: pointer;
-	padding: 1rem 2rem;
-	border-radius: 0.5rem;
+  border: none;
+  background-color: #ec625f;
+  color: #fff;
+  font-weight: bold;
+  font-size: 1rem;
+  margin-left: 2rem;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+}
+.sign-in button:hover {
+  background-color: #505050;
+  color: #ec625f;
 }
 .logo {
-	width: 33%;
-	display: flex;
-	justify-content: flex-start;
-	align-items: center;
-	margin-left: 2rem;
+  width: 33%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-left: 2rem;
 }
 .logo img {
-	height: auto;
-	width: 50%;
+  height: auto;
+  width: 50%;
 }
 /* Search bar Component*/
 .search-bar-input {
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 .search-bar-input input {
-	border: 0.2rem solid #ec625f;
-	border-right: none;
-	padding: 5px;
-	width: 60%;
-	height: 1.5rem;
-	border-radius: 5px 0 0 5px;
-	outline: none;
+  border: 0.2rem solid #ec625f;
+  border-right: none;
+  padding: 5px;
+  width: 80%;
+  height: 2.5rem;
+  border-radius: 5px 0 0 5px;
+  outline: none;
 }
 .search-bar-input button {
-	width: 3rem;
-	height: 2.5rem;
-	border: 1px solid #ec625f;
-	background: #ec625f;
-	color: #fff;
-	border-radius: 0 5px 5px 0;
-	cursor: pointer;
-	font-size: 20px;
+  width: 3rem;
+  height: 2.5rem;
+  border: 1px solid #ec625f;
+  background: #ec625f;
+  color: #fff;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  font-size: 20px;
 }
