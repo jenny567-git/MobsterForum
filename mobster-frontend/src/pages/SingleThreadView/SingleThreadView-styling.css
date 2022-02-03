@@ -1,5 +1,6 @@
 .SingleThreadView {
 	display: flex;
+	margin-bottom: 30px;
 }
 
 .main-container{

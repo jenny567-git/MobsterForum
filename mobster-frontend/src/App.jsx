@@ -12,6 +12,7 @@ import Profile from './pages/Profile'
 import { About } from './pages/StaticContent/About'
 import { NotFound } from './pages/StaticContent/NotFound'
 import { FAQ } from './pages/StaticContent/FAQ'
+import { Footer } from './components/Footer'
 function App() {
 
   return (
@@ -35,6 +36,7 @@ function App() {
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
+        <Footer></Footer>
       </div>
     </Router>
   )
