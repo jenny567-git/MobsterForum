@@ -21,7 +21,7 @@ const ProfileInformation = () => {
 
     let loggedInUser = {
       userName: user["https://rules.com/claims/user_metadata"].username,
-      AuthId: user.sub,
+      authId: user.sub,
       userId: user["https://rules.com/claims/user_metadata"].uuid,
       roles: user["https://rules.com/claims/user_metadata"].roles,
       email: user.email,
