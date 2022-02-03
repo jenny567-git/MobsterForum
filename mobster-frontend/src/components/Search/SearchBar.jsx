@@ -16,7 +16,6 @@ function SearchBar() {
       'input[type="radio"]:checked'
     ).value;
     
-    // setSearchType(radiovalue);
     switch (radiovalue) {
       case "threads":
         axios.get(`https://localhost:44304/api/Thread?searchstring=${searchString}`)

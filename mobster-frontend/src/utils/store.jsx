@@ -6,7 +6,7 @@ export function StoreProvider({ children }) {
   const [context, setContext] = useState({
     searchString:'',
     searchResult: [],
-    searchType:'families',
+    searchType:'',
     family: {
         name: "family from context",
         description: "descrip from context",
@@ -23,7 +23,6 @@ export function StoreProvider({ children }) {
     },
     familyMembers:[{}],
     currentAdmin: {userName: "context", userId:""},
-    allUsers: ["Adam", "Bertil", "Chris", "David", "Emma", "Fanny", "Gustav"]
   });
 
   // setContext replaces the whole context
