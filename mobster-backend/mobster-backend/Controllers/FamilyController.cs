@@ -99,6 +99,7 @@ namespace mobster_backend.Controllers
             }
 
         }
+
         /// <summary>
         /// Get top 5 families with most members
         /// </summary>
@@ -117,8 +118,6 @@ namespace mobster_backend.Controllers
             }
 
         }
-
-
 
         /// <summary>
         /// Gets a list of families that the given user is a member of
