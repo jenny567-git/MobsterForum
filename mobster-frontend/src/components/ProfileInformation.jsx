@@ -18,6 +18,16 @@ const ProfileInformation = () => {
       Id: user["https://rules.com/claims/user_metadata"].uuid,
     };
     axios.post(`https://localhost:44304/api/User`, userObj);
+
+    let loggedInUser = {
+      userName: user["https://rules.com/claims/user_metadata"].username,
+      authId: user.sub,
+      userId: user["https://rules.com/claims/user_metadata"].uuid,
+      roles: user["https://rules.com/claims/user_metadata"].roles,
+      email: user.email,
+      updatedAt: user.updated_at
+    }
+    localStorage.setItem("user", JSON.stringify(loggedInUser));
   }, []);
 
   return (
