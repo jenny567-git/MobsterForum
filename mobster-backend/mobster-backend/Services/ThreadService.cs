@@ -78,7 +78,7 @@ namespace mobster_backend.Services
 
             if (string.IsNullOrWhiteSpace(searchstring))
             {
-                var result = await context.Threads.Include(t => t.Family).ToListAsync();
+                var result = await context.Threads.Include(t => t.Family).Include(a => a.Author).ToListAsync();
                 threads = new HashSet<Thread>(result);
             }
             else
@@ -86,7 +86,7 @@ namespace mobster_backend.Services
                 string[] subs = searchstring.ToLower().Split();
                 foreach (string sub in subs)
                 {
-                    var result = await context.Threads.Include(t => t.Family).Where(f => f.Title.ToLower().Contains(sub)).ToListAsync();
+                    var result = await context.Threads.Include(t => t.Family).Include(a => a.Author).Where(f => f.Title.ToLower().Contains(sub)).ToListAsync();
                     threads.AddRange(result);
                 }
             }

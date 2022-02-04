@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../../utils/store";
 import { useNavigate } from "react-router-dom";
+import Thread from "../Thread/Thread";
 
 const SearchResult = () => {
   const [context, updateContext] = useContext(Context);
@@ -28,12 +29,10 @@ const SearchResult = () => {
       <>
         <div>Threads results, Found: {context.searchResult.length}</div>
         {Array.from(context.searchResult).map((thread) => (
-            <li
-              key={thread.threadId}
-              onClick={() => navigate(`/thread/${thread.threadId}`)}
-            >
-              {thread.title}
-            </li>
+            <Thread
+            key={thread.threadId}
+            thread={thread}
+          />
           ))}
       </>
     );
