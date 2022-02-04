@@ -1,14 +1,12 @@
-import React, { useState, useContext, useEffect } from "react";
-import { Context } from "../utils/store";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import EditFamily from "../components/FamilyComponents/EditFamily";
 import { Modal, Button } from "react-bootstrap";
 import Thread from "../components/Thread/Thread";
 import axios from "axios";
-import { useAuth0 } from "@auth0/auth0-react";
+import { useLocalStorage } from '../CustomHooks/useLocalStorage'
 
 const Family = () => {
-  const [context, updateContext] = useContext(Context);
   const [isEditing, setIsEditing] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [canJoin, setCanJoin] = useState(false);
@@ -17,14 +15,11 @@ const Family = () => {
   const { id } = useParams();
   let navigate = useNavigate();
 
-  const { user, isLoading } = useAuth0();
-
-  useEffect(() => {
-    if (!isLoading) checkJoinable();
-  }, [isLoading]);
-
+  const [user, setuser] = useLocalStorage('user', null)
+ 
   useEffect(() => {
     fetchFamily();
+    checkJoinable();
   }, []);
 
   const fetchFamily = async () => {
@@ -45,13 +40,16 @@ const Family = () => {
     const blockResponse = await axios.get(
       `https://localhost:44304/api/Block?familyId=${id}`
     );
+    
+    var blocklist = blockResponse.data ? blockResponse.data : [];
+    
     const memberResponse = await axios.get(
       `https://localhost:44304/api/Family/${id}/members`
     );
     //check if current user is not a member of the group and not a blocked member
     if (
-      !memberResponse.data.some((e) => e.authId === user.sub) &&
-      !blockResponse.data.some((e) => e.authId === user.sub)
+      !memberResponse.data.some((e) => e.authId === user.authId) &&
+      !blocklist.some((e) => e.authId === user.authId)
     ) {
       console.log("can join");
       setCanJoin(true);
@@ -62,23 +60,9 @@ const Family = () => {
     isEditing ? setIsEditing(false) : setIsEditing(true);
   };
 
-  //working
-  const toManipulate = () => {
-    //test to manipulate context
-    let family = {
-      ...context.family,
-    };
-    family.memberCount = -10;
-    updateContext({
-      family: family,
-      test: "new",
-    });
-  };
-
   const toJoin = () => {
-    let userid = user["https://rules.com/claims/user_metadata"].uuid;
     axios
-      .post(`https://localhost:44304/addMember?familyId=${id}&userId=${userid}`)
+      .post(`https://localhost:44304/addMember?familyId=${id}&userId=${user.userId}`)
       .then((res) => {
         console.log("Success: ", res.data);
         let newfamily = { ...family };
@@ -125,11 +109,11 @@ const Family = () => {
       {canJoin && <Button onClick={toJoin}>Join</Button>}
 
       {/*if current user == admin or site admin, display Edit button */}
-      {!isLoading &&
-        (user["https://rules.com/claims/user_metadata"].roles.includes(
+      {
+        (user.roles.includes(
           "admin"
         ) ||
-          user["https://rules.com/claims/user_metadata"].uuid ==
+          user.userId ==
             family.adminUserId) && (
           <>
             <Button onClick={() => navigate(`/family/${id}/invite`)}>
@@ -167,12 +151,12 @@ const Family = () => {
           ))}
       </ul>
 
-      <Modal show={showModal} onHide={handleClose}>
+      <Modal show={showModal} onHide={handleClose} className="dark">
         <Modal.Header closeButton>
-          <Modal.Title>Are you sure?</Modal.Title>
+          <Modal.Title className="dark">Are you sure?</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>This family will be permanently be removed</p>
+          <p className="dark">This family will be permanently be removed</p>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>

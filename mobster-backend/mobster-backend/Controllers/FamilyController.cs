@@ -136,10 +136,10 @@ namespace mobster_backend.Controllers
                 var families = await familyService.GetFamiliesByUserId(userId);
                 return Ok(families);
             }
-            catch (DbNotFoundException e)
-            {
-                return NotFound(e.Message);
-            }
+            //catch (DbNotFoundException e)
+            //{
+            //    return NotFound(e.Message);
+            //}
             catch (Exception e)
             {
                 return StatusCode(500, e.Message);

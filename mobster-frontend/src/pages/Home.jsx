@@ -8,13 +8,12 @@ import { useLocalStorage } from '../CustomHooks/useLocalStorage'
 
 function Home() {
     const [user, setuser] = useLocalStorage('user', null)
-    const {isAuthenticated} = useAuth0();
 
     console.log(user);
 
     return (
         <div className="home">
-            {isAuthenticated && (<MyFamilies />)}
+            {user && (<MyFamilies />)}
             <div className="page-center">
                 <AddThread />
             </div>

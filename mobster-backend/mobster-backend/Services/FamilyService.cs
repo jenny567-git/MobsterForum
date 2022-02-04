@@ -118,13 +118,13 @@ namespace mobster_backend.Services
                 .ToListAsync();
 
 
-            if (!families.Any())
-            {
-                throw new DbNotFoundException($"The user with id {user} is not currently a member of any families.");
-            }
+            //if (!families.Any())
+            //{
+            //    throw new DbNotFoundException($"The user with id {user} is not currently a member of any families.");
+            //}
 
 
-            return families.ToFamilyDtos();
+            return families.Count>0 ? families.ToFamilyDtos() : null;
 
 
         }
