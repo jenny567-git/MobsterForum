@@ -7,7 +7,7 @@ font-family: 'Special Elite', cursive; */
 	min-height: 100vh;
 }
 
-p, a, li, strong {
+p, a, li, strong, label {
 	font-family: 'Lekton', sans-serif;
 }
 
