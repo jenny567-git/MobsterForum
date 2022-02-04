@@ -163,7 +163,6 @@ const Family = () => {
             <Thread
               key={thread.threadId}
               thread={thread}
-              onClick={() => navigate(`/thread/${thread.threadId}`)}
             />
           ))}
       </ul>
