@@ -36,6 +36,7 @@ div {
   flex-direction: column;
   justify-content: flex-start;
   width: 20%;
+  height: 100%;
   background-color: #414141;
   margin-top: 2rem;
   margin-left: 2rem;
@@ -43,15 +44,16 @@ div {
 }
 .my-families h3 {
   width: 100%;
-  align-self: center;
-  font-size: 2rem;
+  text-align: center;
+  font-size: 1.5rem;
+
   color: whitesmoke;
   border-bottom: 0.2rem solid #ec625f;
   padding: 1rem;
 }
 .my-families ul {
   list-style-type: none;
-  font-size: 1.5rem;
+  font-size: 1rem;
 }
 .my-families li {
   margin-bottom: 1rem;
@@ -69,30 +71,35 @@ div {
   flex-direction: column;
   justify-content: flex-start;
   width: 20%;
+  height: 100%;
   background-color: #414141;
   margin-top: 2rem;
   margin-right: 2rem;
   border-radius: 1rem;
 }
 .mp-families h3 {
-  align-self: center;
-  font-size: 2rem;
+  text-align: center;
+  font-size: 1.5rem;
   color: whitesmoke;
   border-bottom: 0.2rem solid #ec625f;
   padding: 1rem;
 }
 .mp-families ul {
-  list-style-type: none;
-  font-size: 1.5rem;
+  list-style-type:upper-roman;
+  font-size: 1rem;
 }
 .mp-families li {
   margin-bottom: 1rem;
   color: whitesmoke;
 }
-.mp-families li:hover {
+.mp-families span{
+	font-size:70%;
+}
+.mp-families p:hover {
   color: #ec625f;
   cursor: pointer;
 }
+
 /* Header Component*/
 .header {
   width: 100%;
