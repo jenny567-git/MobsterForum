@@ -1,4 +1,5 @@
 import { React, useEffect, useState } from "react";
+import { useNavigate} from "react-router-dom";
 import axios from "axios";
 
 function MyFamilies() {
@@ -7,6 +8,8 @@ function MyFamilies() {
   useEffect(() => {
     fetchTop5();
   }, []);
+
+  let navigate = useNavigate();
 
   const fetchTop5 = async () => {
     axios

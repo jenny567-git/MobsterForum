@@ -103,7 +103,6 @@ const EditFamily = () => {
           />
         </FloatingLabel>
         <p>Current admin: {context.currentAdmin.userName}</p>
-        <p>TODO: update context only after select-button</p>
         <Button variant="success" onClick={handleShow}>
           Change admin
         </Button>
