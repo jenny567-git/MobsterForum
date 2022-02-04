@@ -34,8 +34,8 @@ const SingleThreadView = () => {
 
   const fetchBlockedMembersByFamilyId = (async () => {
     let response = await axios.get(`https://localhost:44304/api/Block?familyId=${thread.family.familyId}`)
-    setBlockedMembers(response.data)
-    console.log(response.data);
+    response.data ? setBlockedMembers(response.data) : setBlockedMembers([])
+    console.log(response.data); 
   })
 
   const deleteThread = (async () => {

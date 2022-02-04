@@ -121,7 +121,7 @@ useEffect(()=>{
                 <div className='single-post' key={post.postId}>
                     <div className="avatar-container">
                     {!post.author.isBanned && !checkIfBlockedFromFamily(post.author)&& post.author.isActive && <img className='avatar' src={userPic} alt="profile picture" />}
-                    {post.author.isBanned || checkIfBlockedFromFamily(post.author) && post.author.isActive && <img className='avatar' src={bannedPic} alt="profile picture" />}
+                    {(post.author.isBanned || checkIfBlockedFromFamily(post.author)) && post.author.isActive && <img className='avatar' src={bannedPic} alt="profile picture" />}
                     {!post.author.isActive && !post.author.isBanned && <img className='avatar' src={inactivePic} alt="profile picture" />}
                     </div>
                     
