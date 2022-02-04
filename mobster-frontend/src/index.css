@@ -162,6 +162,7 @@
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
+	
 }
 .search-bar-input input {
 	border: 0.2rem solid #ec625f;
@@ -181,4 +182,27 @@
 	border-radius: 0 5px 5px 0;
 	cursor: pointer;
 	font-size: 20px;
+	margin-right: 2vh;
+}
+.select-type{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+.radio-button{
+	display: flex;
+	flex-direction: column;
+	width: 10%;
+}
+.radio-button label{
+	color:white;	
+}
+
+.radio-button input{
+	filter:grayscale(1);
+}
+.select-type p{
+	padding-left: 0.5vh;
+	padding-right: 1.5vh;
+	padding-top: 0.5vh;
 }
