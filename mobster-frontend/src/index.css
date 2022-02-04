@@ -1,7 +1,18 @@
+/* font-family: 'Lekton', sans-serif;
+font-family: 'Special Elite', cursive; */
+
 #root {
 	margin: 0;
 	background-color: #313131;
 	min-height: 100vh;
+}
+
+p, a, li, strong {
+	font-family: 'Lekton', sans-serif;
+}
+
+h1, h2, h3, h4 {
+	font-family: 'Special Elite';
 }
 
 .flex{
@@ -112,6 +123,10 @@
 	width: 100%;
 	background-color: #505050;
 	border-top: 0.2rem solid #ec625f;
+}
+
+.footer a {
+	text-decoration: none;
 }
 
 .footer-left, .footer-middle, .footer-right {
