@@ -53,20 +53,19 @@ function SearchBar() {
 
   return (
     <div className="search-bar-input">
-      <form className="select-type" onSubmit={onSubmit}>
-        <input
-          id="searchText"
-          type="text"
-          placeholder="Search..."
-          autoComplete="off"
-          onChange={(e) => setSearchString(e.target.value)}
-        />
-
-        <button type="button" onClick={search}>
-          <i className="fas fa-search"></i>
-        </button>
-
-       
+      <div className="select-type">
+        <form  onSubmit={onSubmit}>
+          <input
+            id="searchText"
+            type="text"
+            placeholder="Search..."
+            autoComplete="off"
+            onChange={(e) => setSearchString(e.target.value)}
+          />
+          <button type="button" onClick={search}>
+            <i className="fas fa-search"></i>
+          </button>
+        
           <p>Select:</p>
           <div className="radio-button">
             <input
@@ -76,14 +75,14 @@ function SearchBar() {
               value="families"
               defaultChecked
             />
-            <label  htmlFor="huey">Family</label>
+            <label htmlFor="huey">Family</label>
           </div>
           <div className="radio-button">
             <input type="radio" id="dewey" name="drone" value="threads" />
             <label htmlFor="dewey">Thread</label>
           </div>
-        
-      </form>
+        </form>
+      </div>
     </div>
   );
 }
