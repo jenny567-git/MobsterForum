@@ -15,6 +15,7 @@ namespace mobster_backend.DTOs.Read
         public Guid AdminUserId { get; set; }
         public string AdminName { get; set; }
         public IEnumerable<UserDto> FamilyMembers { get; set; }
+        public IEnumerable<ThreadDtoOverview> Threads { get; set; }
 
     }
 }

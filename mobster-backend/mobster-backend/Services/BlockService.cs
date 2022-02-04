@@ -38,16 +38,16 @@ namespace mobster_backend.Services
             await context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<UserDto>> GetBlockedUserByFamily(Guid familyId)
+        public async Task<IEnumerable<UserDto>> GetBlockedUsersByFamily(Guid familyId)
         {
             var blockedUsers = context.BlockedMembers
                 .Where(u => u.FamilyId == familyId);
 
             var innerJoin = from blockedUser in blockedUsers
                             join user in context.Users on blockedUser.UserId equals user.UserId
-                            select new UserDto { UserId = blockedUser.UserId, UserName = user.UserName };
-
-            return await innerJoin.ToListAsync();
+                            select new UserDto { UserId = blockedUser.UserId, UserName = user.UserName, AuthId = user.AuthId, IsBanned = user.IsBanned };
+            var users = await innerJoin.ToListAsync();
+            return users.Count >0 ? users : null;
         }
 
         public async Task RemoveBlockedUserFromFamily(Guid userId, Guid familyId)
@@ -57,9 +57,9 @@ namespace mobster_backend.Services
             await context.SaveChangesAsync();
         }
 
-        public async Task ToggleUserBlockInApplication(SetUserDto model)
+        public async Task ToggleUserBlockInApplication(Guid userId)
         {
-            var user = await context.Users.FirstOrDefaultAsync(u => u.UserId == model.Id);
+            var user = await context.Users.FirstOrDefaultAsync(u => u.UserId == userId);
 
             user.IsBanned = !user.IsBanned;
 

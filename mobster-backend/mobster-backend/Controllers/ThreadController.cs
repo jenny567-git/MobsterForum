@@ -24,7 +24,7 @@ namespace mobster_backend.Controllers
         /// </summary>
         /// <param name="threadId">The given id for the thread</param>
         /// <returns>A single thread</returns>
-        [HttpGet]
+        [HttpGet("{threadId}")]
         public async Task<IActionResult> Get(Guid threadId)
         {
             try
@@ -44,11 +44,36 @@ namespace mobster_backend.Controllers
         }
 
         /// <summary>
+        /// Gets all threads or search by thread title
+        /// </summary>
+        /// <returns>A single thread</returns>
+#nullable enable
+        [HttpGet()]
+        public async Task<IActionResult> GetThreads(string? searchstring)
+#nullable disable
+        {
+            try
+            {
+                var thread = await threadService.GetThreads(searchstring);
+                return Ok(thread);
+            }
+            catch (DbNotFoundException e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+
+        }
+
+        /// <summary>
         /// Get all threads belonging to the given family
         /// </summary>
         /// <param name="familyId">The provided family id</param>
         /// <returns></returns>
-        [HttpGet("{familyId}")]
+        [HttpGet("threads/{familyId}")]
         public async Task<IActionResult> GetThreadsByFamilyId(Guid familyId)
         {
             try

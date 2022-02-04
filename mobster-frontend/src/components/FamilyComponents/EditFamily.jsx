@@ -1,22 +1,22 @@
 import axios from "axios";
 import React, { useState, useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Button, Form, FloatingLabel, Modal } from "react-bootstrap";
+import { Button, Form, FloatingLabel, Modal, Alert } from "react-bootstrap";
 import { Context } from "../../utils/store";
-import Searchbar from "./Searchbar2";
+import { Typeahead } from "react-bootstrap-typeahead";
+import "react-bootstrap-typeahead/css/Typeahead.css";
 
 const EditFamily = () => {
   const [context, updateContext] = useContext(Context);
-  const [loading, setloading] = useState(true);
   const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [members, setmembers] = useState();
+  const [selected, setSelected] = useState([]);
 
   //useState with object, how to partial update object
   //https://stackoverflow.com/questions/54150783/react-hooks-usestate-with-object
   const [familyName, setfamilyName] = useState("");
   const [description, setDescription] = useState("");
-  const [admin, setAdmin] = useState("");
   const { id } = useParams();
 
   useEffect(() => {
@@ -29,8 +29,12 @@ const EditFamily = () => {
     );
     setfamilyName(response.data.name);
     setDescription(response.data.description);
-    updateContext({currentAdmin: {userName: response.data.adminName, userId:response.data.adminUserId}})
-    setloading(false);
+    updateContext({
+      currentAdmin: {
+        userName: response.data.adminName,
+        userId: response.data.adminUserId,
+      },
+    });
   };
 
   const onSubmit = async () => {
@@ -43,18 +47,27 @@ const EditFamily = () => {
       .put(`https://localhost:44304/api/Family?familyId=${id}`, updatedFamily)
       .then((res) => {
         console.log("Success: ", res.data);
+        setSuccess(true);
       })
       .catch((error) => {
         console.error("Error:", error);
+        setError(true);
       });
     //how to update parent component without refreshing page? context?
-    setSuccess(true);
+
     const timer = setTimeout(() => {
       window.location.reload(false);
-    }, 1500);
+    }, 2000);
   };
 
-  const handleClose = () => setShowModal(false);
+  const onSelectAdmin = (data) => {
+    setSelected(data);
+  };
+  const handleClose = () => {
+    updateContext({ currentAdmin: selected[0] });
+    setShowModal(false);
+  };
+
   const handleShow = async () => {
     const response2 = await axios.get(
       `https://localhost:44304/api/Family/${id}/members`
@@ -65,13 +78,11 @@ const EditFamily = () => {
 
   return (
     <>
-      {/* {!loading && ( */}
       <div>
         {success && (
-          <p style={{ color: "green" }}>
-            Successfully added! Updated in 2 seconds...
-          </p>
+          <Alert variant="success">Success! Update in process...</Alert>
         )}
+        {error && <Alert variant="danger">Error. Please try again</Alert>}
         <FloatingLabel
           controlId="familyNameLabel"
           label="Family name"
@@ -91,8 +102,8 @@ const EditFamily = () => {
             style={{ height: "100px" }}
           />
         </FloatingLabel>
-        <p>Current admin: {context.currentAdmin.userName}</p> 
-       <p>TODO: update context only after select-button</p> 
+        <p>Current admin: {context.currentAdmin.userName}</p>
+        <p>TODO: update context only after select-button</p>
         <Button variant="success" onClick={handleShow}>
           Change admin
         </Button>
@@ -104,7 +115,19 @@ const EditFamily = () => {
           </Modal.Header>
 
           <Modal.Body>
-            <Searchbar />
+            <div>
+              <Form.Group>
+                <Form.Label>Find user</Form.Label>
+                <Typeahead
+                  id="basic-typeahead-single"
+                  labelKey="userName"
+                  onChange={(e) => onSelectAdmin(e)}
+                  options={context.familyMembers}
+                  placeholder="Type an username"
+                  selected={selected}
+                />
+              </Form.Group>
+            </div>
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={handleClose}>Select</Button>

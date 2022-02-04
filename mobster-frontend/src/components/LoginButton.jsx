@@ -10,12 +10,13 @@ const LoginButton = () => {
       loginWithRedirect,
       logout,
   } = useAuth0();
-
-  const logoutWithRedirect = () =>
+  const logoutWithRedirect = () =>{
     logout({
       returnTo: window.location.origin,
-  });
-
+    });
+    localStorage.removeItem("user");
+  }
+    
   if(isLoading) return <>Loading</>
 
   return (

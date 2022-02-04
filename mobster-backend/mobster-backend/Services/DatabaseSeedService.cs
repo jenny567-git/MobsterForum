@@ -28,7 +28,7 @@ namespace mobster_backend.Services
 
             var user1 = new User()
             {
-                UserId = Guid.NewGuid(),
+                UserId = new Guid("f23af8d9-146f-4cb9-8ec0-23708a36ff8c"),
                 AuthId = "auth0|61f296b0c725130071fde31d",
                 UserName = "DonElmis",
                 CreatedAt = new DateTime(2021,02,23),
@@ -40,7 +40,7 @@ namespace mobster_backend.Services
 
             var user2 = new User()
             {
-                UserId = Guid.NewGuid(),
+                UserId = new Guid("77de5d5d-d9fb-4219-8ddd-b797a1327d6e"),
                 AuthId = "auth0|61f29673daa5cc006ace42f0",
                 UserName = "CarmelaSoprano",
                 CreatedAt = new DateTime(2021, 03, 23),
@@ -51,7 +51,7 @@ namespace mobster_backend.Services
 
             var user3 = new User()
             {
-                UserId = Guid.NewGuid(),
+                UserId = new Guid("2995451c-10a0-4a06-bcde-ba46d2342269"),
                 AuthId = "auth0|61f292ba3cd34e006c5839c3",
                 UserName = "DonCalzone",
                 CreatedAt = new DateTime(2020, 02, 23),
@@ -62,7 +62,7 @@ namespace mobster_backend.Services
 
             var user4 = new User()
             {
-                UserId = Guid.NewGuid(),
+                UserId = new Guid("8167ce82-0e18-4a42-bbe1-f54385e56cd7"),
                 AuthId = "auth0|61f292ba3cd34e006c5839c3",
                 UserName = "JackSparrow",
                 CreatedAt = new DateTime(2021, 09, 23),
@@ -73,7 +73,7 @@ namespace mobster_backend.Services
 
             var user5 = new User()
             {
-                UserId = Guid.NewGuid(),
+                UserId = new Guid("0166e440-6784-4163-bc2f-566eb2a149fb"),
                 AuthId = "auth0|61f2900e1a44500069eb7c7a",
                 UserName = "JennyLawless",
                 CreatedAt = new DateTime(2021, 08, 23),
@@ -84,7 +84,7 @@ namespace mobster_backend.Services
 
             var user6 = new User()
             {
-                UserId = Guid.NewGuid(),
+                UserId = new Guid("f8414560-7a99-450d-97d2-aa1d6b6c7cdb"),
                 AuthId = "auth0|61f2904cdaa5cc006ace415b",
                 UserName = "DanniDevito",
                 CreatedAt = new DateTime(2021, 01, 23),
@@ -95,7 +95,7 @@ namespace mobster_backend.Services
 
             var user7 = new User()
             {
-                UserId = Guid.NewGuid(),
+                UserId = new Guid("34c1aaec-aa77-4e49-919f-bf5eb70cec27"),
                 AuthId = "auth0|61f2907fdaa5cc006ace4169",
                 UserName = "ChrillisCorleone",
                 CreatedAt = new DateTime(2021, 11, 23),
@@ -118,7 +118,7 @@ namespace mobster_backend.Services
                 Name = "Cleaner-issues",
                 Description = "When you're in desperate need of assistance regarding clean up",
                 MemberCount = 2,
-                AddedAt = new DateTime(2020 - 11 - 19),
+                AddedAt = new DateTime(2020, 11, 19),
                 UpdatedAt = DateTime.Now,
                 FamilyMembers = new HashSet<User>(){ user1, user2}
             };
@@ -589,6 +589,36 @@ namespace mobster_backend.Services
 
             #endregion
 
+            #region Blocked members
+
+            var bm1 = new BlockedMember()
+            {
+                FamilyId = fam1.FamilyId,
+                UserId = user5.UserId,
+                Description = "Too ugly",
+                BlockedAt = new DateTime(2020, 11, 20),
+            };
+            
+            var bm2 = new BlockedMember()
+            {
+                FamilyId = fam1.FamilyId,
+                UserId = user3.UserId,
+                Description = "Too pretty",
+                BlockedAt = new DateTime(2020, 11, 21),
+            };
+            
+            var bm3 = new BlockedMember()
+            {
+                FamilyId = fam2.FamilyId,
+                UserId = user4.UserId,
+                Description = "Too violent",
+                BlockedAt = new DateTime(2020, 11, 23),
+            };
+
+            context.BlockedMembers.AddRange(bm1, bm2, bm3);
+            context.SaveChanges();
+
+            #endregion
         }
 
 

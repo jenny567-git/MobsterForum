@@ -132,7 +132,7 @@ namespace mobster_backend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("AuthorUserId")
+                    b.Property<Guid>("AuthorUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Content")
@@ -143,7 +143,10 @@ namespace mobster_backend.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("ThreadId")
+                    b.Property<bool>("IsCensored")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("ThreadId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -285,13 +288,13 @@ namespace mobster_backend.Migrations
                 {
                     b.HasOne("mobster_backend.Models.User", "Author")
                         .WithMany()
-                        .HasForeignKey("AuthorUserId");
+                        .HasForeignKey("AuthorUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("mobster_backend.Models.Thread", "Thread")
                         .WithMany("Posts")
-                        .HasForeignKey("ThreadId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ThreadId");
 
                     b.Navigation("Author");
 
