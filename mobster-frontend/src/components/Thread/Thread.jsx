@@ -15,6 +15,7 @@ function Thread({thread}) {
         <h2>{thread.title}</h2>
       </div>
       {thread.title.length>100 ? <p className="thread-text">{thread.content}</p> : <p className="thread-text">{thread.content.slice(0,100)}...</p>}
+      <p className="thread-metadata">Click to go to page</p>
   </div>
   );
   
