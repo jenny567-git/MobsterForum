@@ -3,7 +3,10 @@ import axios from 'axios'
 import { Button, Form, Modal } from 'react-bootstrap';
 // import { useAuth0 } from '@auth0/auth0-react'; 
 import { useLocalStorage } from '../../CustomHooks/useLocalStorage';
-import logo from '../../assets/Mobster-logo.png'
+import adminPic from '../../assets/profile-icons/admin.jpg'
+import userPic from '../../assets/profile-icons/user.jpg'
+import bannedPic from '../../assets/profile-icons/banned.jpg'
+import inactivePic from '../../assets/profile-icons/inactive.png'
 import  "./Post-styling.css"
 
 export const Post = ({ id }) => {
@@ -112,17 +115,20 @@ useEffect(()=>{
             { posts && posts.map((post) => 
                 <div className='single-post' key={post.postId}>
                     <div className="avatar-container">
-                        <img className='avatar' src={logo} alt="profile picture" />
+                      {user.roles.includes("admin") && <img className='avatar' src={adminPic} alt="profile picture" />}
+                      {user.roles.includes("user") && !post.author.isBanned && post.author.isActive && <img className='avatar' src={userPic} alt="profile picture" />}
+                      {post.author.isBanned && post.author.isActive && <img className='avatar' src={bannedPic} alt="profile picture" />}
+                      {!post.author.isActive && !post.author.isBanned && <img className='avatar' src={inactivePic} alt="profile picture" />}
                     </div>
                     
                     <div className="post-content">
                         
-                        {post.author.isBanned && post.author.isActive && <p className='post-metadata'>Posted by <strong className='post-metadata-banned'> &#91;Banned User&#93; </strong> at {post.createdAt}</p>}
-                        {!post.author.isActive && !post.author.isBanned && <p className='post-metadata'>Posted by <strong className='post-metadata-banned'> &#91;Deleted User&#93; </strong> at {post.createdAt}</p>}
+                        {post.author.isBanned && post.author.isActive && <p className='post-metadata'>Posted by <strong className='post-metadata-bold'>{post.author.userName} &#91;In Jail&#93; </strong> at {post.createdAt}</p>}
+                        {!post.author.isActive && !post.author.isBanned && <p className='post-metadata'>Posted by <strong className='post-metadata-bold'>{post.author.userName} &#91;Deceased&#93; </strong> at {post.createdAt}</p>}
                         {!post.author.isBanned && post.author.isActive && <p className='post-metadata'>Posted by <strong className='post-metadata-bold'>{post.author.userName}</strong> at {post.createdAt}</p>}
                         
                         {!post.isCensored && <p>{post.content}</p>}
-                        {post.isCensored && <p className='censored-post'>&#91;The contents of this post have been censored by an admin&#93;</p>}
+                        {post.isCensored && <p className='censored-post'>&#91;This mook disrespected the family; their words are silenced.&#93;</p>}
                         
                     </div>
                     

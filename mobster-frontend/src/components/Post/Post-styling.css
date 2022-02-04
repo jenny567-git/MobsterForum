@@ -21,9 +21,8 @@ p {
 
 .avatar {
     border-radius: 50%;
-	width: 4rem;
-	height: 4rem;
-	background-color: black;
+	width: 5rem;
+	height: 5rem;
 }
 
 .post-content {
@@ -48,11 +47,6 @@ p {
 .post-metadata-bold {
 	color: #ec625f;
 }
-
-.post-metadata-banned {
-    color: rgb(255, 159, 159);
-}
-
 .post-buttons {
     align-self: center;
     margin: 0 auto;
