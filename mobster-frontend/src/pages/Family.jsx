@@ -3,12 +3,17 @@ import { useNavigate, useParams } from "react-router-dom";
 import EditFamily from "../components/FamilyComponents/EditFamily";
 import { Modal, Button } from "react-bootstrap";
 import Thread from "../components/Thread/Thread";
+import InviteMembers from "../components/FamilyComponents/InviteMembers";
+import CreateFamily from "../components/FamilyComponents/CreateFamily";
 import axios from "axios";
 import { useLocalStorage } from '../CustomHooks/useLocalStorage'
 
 const Family = () => {
   const [isEditing, setIsEditing] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showInviteModal, setShowInviteModal] = useState(false);
+  const [showJoinModal, setShowJoinModal] = useState(false);
+  const [showCreateFamilyModal, setShowCreateFamilyModal] = useState(false);
   const [canJoin, setCanJoin] = useState(false);
   const [family, setFamily] = useState({});
   const [isFetching, setIsFetching] = useState(true);
@@ -20,7 +25,7 @@ const Family = () => {
   useEffect(() => {
     fetchFamily();
     checkJoinable();
-  }, []);
+  }, [canJoin]);
 
   const fetchFamily = async () => {
     const response = await axios
@@ -61,6 +66,7 @@ const Family = () => {
   };
 
   const toJoin = () => {
+    setShowJoinModal(true);
     axios
       .post(`https://localhost:44304/addMember?familyId=${id}&userId=${user.userId}`)
       .then((res) => {
@@ -68,8 +74,7 @@ const Family = () => {
         let newfamily = { ...family };
         newfamily.memberCount++;
         setFamily(newfamily);
-        //TODO: fix a different response than alert
-        alert("You have joined the family");
+        setCanJoin(false);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -90,16 +95,25 @@ const Family = () => {
     }, 5000);
   };
 
-  const handleClose = () => setShowModal(false);
-  const handleShow = () => setShowModal(true);
+  const onCreate = async () => {
+    let family = {
+      Name: familyName,
+      Description: description,
+      AdminId: user.userId,
+    };
+
+    await axios
+      .post(`https://localhost:44304/api/Family`, family)
+      .then((res) => {
+        console.log("Success: ", res.data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
 
   return (
     <div className="container">
-      {/* <p>Hämtad från context:</p>
-      <h1>{context.family.name}</h1>
-      <h1>{context.test}</h1>
-      <p>Members: {context.family.memberCount}</p>
-       */}
       <h1>{family.name}</h1>
       <h2>
         <i>{family.description}</i>
@@ -110,13 +124,10 @@ const Family = () => {
 
       {/*if current user == admin or site admin, display Edit button */}
       {
-        (user.roles.includes(
-          "admin"
-        ) ||
-          user.userId ==
-            family.adminUserId) && (
+        (user.roles.includes("admin") || user.userId == family.adminUserId) && (
           <>
-            <Button onClick={() => navigate(`/family/${id}/invite`)}>
+            {/* <Button onClick={() => navigate(`/family/${id}/invite`)}> */}
+            <Button onClick={() => setShowInviteModal(true)}>
               Add members
             </Button>
             <Button onClick={toggleEdit}>Edit</Button>
@@ -124,7 +135,7 @@ const Family = () => {
               {" "}
               Handle members
             </Button>
-            <Button variant="danger" onClick={handleShow}>
+            <Button variant="danger" onClick={() => setShowDeleteModal(true)}>
               Delete family
             </Button>
           </>
@@ -135,23 +146,71 @@ const Family = () => {
       {/* add a check, if current user == admin, display Delete button */}
 
       {/* to be moved */}
-      <Button variant="success" onClick={() => navigate("/family/create")}>
+      <Button variant="success" onClick={() => setShowCreateFamilyModal(true)}>
         Create new family
       </Button>
 
       {isEditing && <EditFamily />}
 
       <ul>
-        {!isFetching &&
+        {!isFetching && family.threads && 
           Array.from(family.threads).map((thread) => (
             <Thread
               key={thread.threadId}
               thread={thread}
             />
           ))}
+          {!family.threads && (<p>There is no threads in this family yet...</p>)}
       </ul>
 
-      <Modal show={showModal} onHide={handleClose} className="dark">
+{/* INVITE MODAL */}
+      <Modal show={showInviteModal} onHide={() => setShowInviteModal(false)} className="dark">
+        <Modal.Header closeButton>
+          <Modal.Title className="dark">Add members</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <InviteMembers familyId={id}/>
+          {/* <p className="dark">This family will be permanently be removed</p> */}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowInviteModal(false)}>
+            Close
+          </Button>
+          {/* <Button variant="primary" onClick={onAdd}>
+            Add
+          </Button> */}
+        </Modal.Footer>
+      </Modal>
+
+{/* JOIN MODAL */}
+      <Modal show={showJoinModal} onHide={() => setShowJoinModal(false)} className="dark">
+        <Modal.Header closeButton>
+          <Modal.Title className="dark">Welcome {user.userName}!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p className="dark">You're now a part of the family :)</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowJoinModal(false)}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+{/* CREATE FAMILY MODAL */}
+      <Modal show={showCreateFamilyModal} onHide={() => setShowCreateFamilyModal(false)} className="dark">
+        <Modal.Header closeButton>
+          <Modal.Title className="dark">Create new family</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <CreateFamily/>
+        </Modal.Body>
+        <Modal.Footer>
+        </Modal.Footer>
+      </Modal>
+
+      {/* DELETE MODAL */}
+      <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)} className="dark">
         <Modal.Header closeButton>
           <Modal.Title className="dark">Are you sure?</Modal.Title>
         </Modal.Header>
@@ -159,7 +218,7 @@ const Family = () => {
           <p className="dark">This family will be permanently be removed</p>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
             Close
           </Button>
           <Button variant="danger" onClick={onDelete}>

@@ -7,11 +7,11 @@ import "react-bootstrap-typeahead/css/Typeahead.css";
 import "./invite.css";
 import axios from "axios";
 
-const InviteMembers = () => {
+const InviteMembers = ({familyId}) => {
   const [context, updateContext] = useContext(Context);
   const [selected, setSelected] = useState([]);
   const [users, setUsers] = useState([]);
-  const { familyId } = useParams();
+  // const { familyId } = useParams();
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
 

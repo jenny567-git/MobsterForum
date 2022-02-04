@@ -30,14 +30,14 @@ namespace mobster_backend.Controllers
         {
             try
             {
-                await familyService.AddFamily(model);
+                var family = await familyService.AddFamily(model);
+                return Ok(family);
             }
             catch (Exception e)
             {
                 return StatusCode(500, e.Message);
             }
 
-            return StatusCode(201);
         }
         
         /// <summary>
