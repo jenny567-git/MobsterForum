@@ -13,6 +13,10 @@ div{
 	flex-direction: row;
 }
 
+.dark{
+	color: black;
+}
+
 .space{
 	justify-content: space-between;
 }
