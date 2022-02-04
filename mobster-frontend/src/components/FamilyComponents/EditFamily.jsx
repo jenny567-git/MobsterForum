@@ -111,13 +111,13 @@ const EditFamily = ({stateChanger, isEdit}) => {
 
         <Modal show={showModal} onHide={handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>Change admin</Modal.Title>
+            <Modal.Title className="dark">Change admin</Modal.Title>
           </Modal.Header>
 
           <Modal.Body>
             <div>
               <Form.Group>
-                <Form.Label>Find user</Form.Label>
+                <Form.Label className="dark">Find user</Form.Label>
                 <Typeahead
                   id="basic-typeahead-single"
                   labelKey="userName"
