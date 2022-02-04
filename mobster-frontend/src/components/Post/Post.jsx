@@ -9,7 +9,7 @@ import bannedPic from '../../assets/profile-icons/banned.jpg'
 import inactivePic from '../../assets/profile-icons/inactive.png'
 import  "./Post-styling.css"
 
-export const Post = ({ id }) => {
+export const Post = ({ id , blockedMembers }) => {
   const [posts, setPosts] = useState([]);
   // const {user, isLoading} = useAuth0();
   const [user, setuser] = useLocalStorage('user', null)
@@ -23,6 +23,11 @@ export const Post = ({ id }) => {
     const fetchPosts = (async () => {
     let response = await axios.get(`https://localhost:44304/api/Posts/thread/${id}`)
     setPosts(response.data)
+  })
+
+  const checkIfBlockedFromFamily = ((author) => {
+    let blockedMembersIds = blockedMembers.map(m => m.userId)
+    return blockedMembersIds.includes(author.userId)
   })
 
   const submitNewPost = async () => {
@@ -115,10 +120,9 @@ useEffect(()=>{
             { posts && posts.map((post) => 
                 <div className='single-post' key={post.postId}>
                     <div className="avatar-container">
-                      {user.roles.includes("admin") && <img className='avatar' src={adminPic} alt="profile picture" />}
-                      {user.roles.includes("user") && !post.author.isBanned && post.author.isActive && <img className='avatar' src={userPic} alt="profile picture" />}
-                      {post.author.isBanned && post.author.isActive && <img className='avatar' src={bannedPic} alt="profile picture" />}
-                      {!post.author.isActive && !post.author.isBanned && <img className='avatar' src={inactivePic} alt="profile picture" />}
+                    {!post.author.isBanned && !checkIfBlockedFromFamily(post.author)&& post.author.isActive && <img className='avatar' src={userPic} alt="profile picture" />}
+                    {post.author.isBanned || checkIfBlockedFromFamily(post.author) && post.author.isActive && <img className='avatar' src={bannedPic} alt="profile picture" />}
+                    {!post.author.isActive && !post.author.isBanned && <img className='avatar' src={inactivePic} alt="profile picture" />}
                     </div>
                     
                     <div className="post-content">

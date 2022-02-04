@@ -16,7 +16,7 @@ function Home() {
         <div className="home">
             {/* {isAuthenticated && (<MyFamilies />)} */}
             <div className="page-center">
-                <AddThread />
+                {/* {user.userId == null && <AddThread />} */}
                 <Thread username="user1" familyName="family 1" threadDate="22/05/2022" title="hej" text="hejdå" ></Thread>
             </div>
             <MostPopularFamilies />
