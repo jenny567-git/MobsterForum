@@ -55,6 +55,7 @@ namespace mobster_backend.Extensions
                 Author = thread.Author.ToUserDto(),
                 Title = thread.Title,
                 CreatedAt = thread.CreatedAt,
+                Content = thread.Content,
             };
         }
 

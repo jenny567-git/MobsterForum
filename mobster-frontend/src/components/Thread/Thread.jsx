@@ -1,14 +1,16 @@
 import React from 'react';
 import  "./thread-styling.css"
 
-function Thread(props) {
+
+function Thread({thread}) {
+  console.log(thread);
   return <div className="thread-container">
       <div className="thread-title">
-        < p className="thread-metadata">posted by {props.username} in {props.familyName} at {props.threadDate}</p>
-        <h2>{props.title}</h2>
+        {/* {thread.author ? < p className="thread-metadata">posted by {thread.author.userName} in {thread.familyName} at {thread.createdAt}</p>: */}
+        < p className="thread-metadata">posted by {thread.author.userName} in {thread.familyName} at {thread.createdAt}</p>
+        <h2>{thread.title}</h2>
       </div>
-        <p className="thread-text">{props.text}</p>
-        <button className="reply-btn">reply</button>
+      {thread.title.length>100 ? <p className="thread-text">{thread.content}</p> : <p className="thread-text">{thread.content.slice(0,100)}...</p>}
   </div>;
   
 }
