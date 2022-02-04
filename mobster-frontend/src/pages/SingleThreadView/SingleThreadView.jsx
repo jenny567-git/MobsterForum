@@ -124,7 +124,7 @@ const SingleThreadView = () => {
                 <Post id={id} />
             </div>
 
-            <Button className='backtotop-button' onClick={scrollToTop}>Back to top</Button>
+        <Button className='backtotop-button' onClick={scrollToTop}><p>Back to top</p></Button>
           </div>
         </div>
     

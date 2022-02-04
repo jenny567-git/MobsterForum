@@ -155,20 +155,20 @@ useEffect(()=>{
                             value={newPostContent}
                             onChange={(e) => setNewPostContent(e.target.value)}
                           />
-                          <Button className="reply-button" onClick={submitNewPost}>Post reply</Button>
+                          <Button className="reply-button" onClick={submitNewPost}><p>Post reply</p></Button>
                   </div>
 
                   {/* Delete modal */}
                   <Modal show={showDeleteModal} onHide={handleCloseDelete} className="delete-modal">
                         <Modal.Header closeButton>
-                            <Modal.Title>Are you sure you want to delete this post?</Modal.Title>
+                          <Modal.Title><h4>Are you sure you want to delete this post?</h4> </Modal.Title>
                         </Modal.Header>
                         <Modal.Footer>
                           <Button variant="secondary" onClick={handleCloseDelete}>
-                            Cancel
+                              <p>Cancel</p> 
                           </Button>
                           <Button variant="danger" onClick={() => deletePost(postToDeleteId)}>
-                            Delete
+                              <p>Delete</p> 
                           </Button>
                         </Modal.Footer>
                   </Modal>
@@ -181,7 +181,7 @@ useEffect(()=>{
                   aria-labelledby="contained-modal-title-vcenter"
                   >
                         <Modal.Header closeButton>
-                          <Modal.Title>Edit post</Modal.Title>
+                          <Modal.Title><h4>Edit post</h4></Modal.Title>
                         </Modal.Header>
                           <Form.Control 
                           as="textarea"
@@ -190,10 +190,10 @@ useEffect(()=>{
                           >{postToEdit.content}</Form.Control>
                         <Modal.Footer>
                           <Button variant="secondary" onClick={handleCloseEdit}>
-                            Close
+                            <p>Close</p> 
                           </Button>
                           <Button variant="primary" onClick={() => saveEditedPost(postToEdit.postId)}>
-                            Save Changes
+                            <p>Save Changes</p>
                           </Button>
                         </Modal.Footer>
                   </Modal>
