@@ -1,6 +1,9 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../../utils/store";
 import { useNavigate } from "react-router-dom";
+import Thread from "../Thread/Thread";
+import FamilyOverview from "../FamilyComponents/FamilyOverview";
+import NotFound from "../../pages/StaticContent/NotFound";
 
 const SearchResult = () => {
   const [context, updateContext] = useContext(Context);
@@ -10,14 +13,12 @@ const SearchResult = () => {
   if (context.searchType == "families") {
     return (
       <>
-        <div>Family results, Found: {context.searchResult.length}</div>
+        <h1>Found: {context.searchResult.length} families</h1>
         {Array.from(context.searchResult).map((family) => (
-            <li
-              key={family.familyId}
-              onClick={() => navigate(`/family/${family.familyId}`)}
-            >
-              {family.name}
-            </li>
+            <FamilyOverview
+            key={family.familyId}
+            family={family}
+          />
           ))}
       </>
     );
@@ -26,20 +27,18 @@ const SearchResult = () => {
   if (context.searchType == "threads") {
     return (
       <>
-        <div>Threads results, Found: {context.searchResult.length}</div>
+        <h1>Found: {context.searchResult.length} threads</h1>
         {Array.from(context.searchResult).map((thread) => (
-            <li
-              key={thread.threadId}
-              onClick={() => navigate(`/thread/${thread.threadId}`)}
-            >
-              {thread.title}
-            </li>
+            <Thread
+            key={thread.threadId}
+            thread={thread}
+          />
           ))}
       </>
     );
   }
 
-  return <div>Error...Something went wrong</div>;
+  return <NotFound/>;
 };
 
 export default SearchResult;

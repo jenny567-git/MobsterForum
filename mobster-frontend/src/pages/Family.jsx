@@ -1,9 +1,9 @@
 import React, { useState, useContext, useEffect } from "react";
-import FakeThread from "../components/Fakes/FakeThread";
 import { Context } from "../utils/store";
 import { useNavigate, useParams } from "react-router-dom";
 import EditFamily from "../components/FamilyComponents/EditFamily";
 import { Modal, Button } from "react-bootstrap";
+import Thread from "../components/Thread/Thread";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -160,12 +160,10 @@ const Family = () => {
       <ul>
         {!isFetching &&
           Array.from(family.threads).map((thread) => (
-            <li
+            <Thread
               key={thread.threadId}
-              onClick={() => navigate(`/thread/${thread.threadId}`)}
-            >
-              {thread.title}
-            </li>
+              thread={thread}
+            />
           ))}
       </ul>
 

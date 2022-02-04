@@ -4,6 +4,10 @@
 	min-height: 100vh;
 }
 
+div{
+	color:white
+}
+
 .flex{
 	display: flex;
 	flex-direction: row;

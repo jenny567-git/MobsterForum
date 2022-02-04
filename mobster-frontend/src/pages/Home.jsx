@@ -17,7 +17,6 @@ function Home() {
             {isAuthenticated && (<MyFamilies />)}
             <div className="page-center">
                 <AddThread />
-                <Thread username="user1" familyName="family 1" threadDate="22/05/2022" title="hej" text="hejdå" ></Thread>
             </div>
             <MostPopularFamilies />
         </div>

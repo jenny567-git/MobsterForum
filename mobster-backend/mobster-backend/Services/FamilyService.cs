@@ -133,6 +133,7 @@ namespace mobster_backend.Services
         {
             var family = await context.Families.Include(f => f.Admin)
                 .Include(t => t.Threads)
+                .ThenInclude(a => a.Author)
                 .FirstOrDefaultAsync(f => f.FamilyId == familyId);
             var familyDto = family.ToFamilyDto();
 
