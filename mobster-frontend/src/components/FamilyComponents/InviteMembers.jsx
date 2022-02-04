@@ -7,7 +7,7 @@ import "react-bootstrap-typeahead/css/Typeahead.css";
 import "./invite.css";
 import axios from "axios";
 
-const InviteMembers = ({familyId}) => {
+const InviteMembers = ({familyId, stateChanger}) => {
   const [context, updateContext] = useContext(Context);
   const [selected, setSelected] = useState([]);
   const [users, setUsers] = useState([]);
@@ -46,23 +46,24 @@ const InviteMembers = ({familyId}) => {
         setUsers(users.filter((user) => !selected.includes(user)));
         setSelected([]);
         setSuccess(true);
+        stateChanger('New data');
       })
       .catch((error) => {
         console.error("Error:", error);
         setError(true);
       });
       
-      //show response for 5s
+      //show response for 2s
       setTimeout(() => {
         setSuccess(false);
         setError(false);
-      }, 5000);
+      }, 2000);
   };
 
   return (
     <div className="container">
       <Form.Group>
-        <Form.Label>Add members</Form.Label>
+        {/* <Form.Label>Add members</Form.Label> */}
         <Typeahead
           id="basic-typeahead-multi"
           multiple

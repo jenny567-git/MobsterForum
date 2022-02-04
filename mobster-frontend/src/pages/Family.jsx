@@ -17,6 +17,7 @@ const Family = () => {
   const [canJoin, setCanJoin] = useState(false);
   const [family, setFamily] = useState({});
   const [isFetching, setIsFetching] = useState(true);
+  const[state, setState]=useState('');
   const { id } = useParams();
   let navigate = useNavigate();
 
@@ -25,7 +26,7 @@ const Family = () => {
   useEffect(() => {
     fetchFamily();
     checkJoinable();
-  }, [canJoin]);
+  }, [canJoin, state]);
 
   const fetchFamily = async () => {
     const response = await axios
@@ -95,23 +96,6 @@ const Family = () => {
     }, 5000);
   };
 
-  const onCreate = async () => {
-    let family = {
-      Name: familyName,
-      Description: description,
-      AdminId: user.userId,
-    };
-
-    await axios
-      .post(`https://localhost:44304/api/Family`, family)
-      .then((res) => {
-        console.log("Success: ", res.data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  };
-
   return (
     <div className="container">
       <h1>{family.name}</h1>
@@ -150,7 +134,7 @@ const Family = () => {
         Create new family
       </Button>
 
-      {isEditing && <EditFamily />}
+      {isEditing && <EditFamily stateChanger={setState} isEdit={setIsEditing}/>}
 
       <ul>
         {!isFetching && family.threads && 
@@ -169,17 +153,17 @@ const Family = () => {
           <Modal.Title className="dark">Add members</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <InviteMembers familyId={id}/>
+          <InviteMembers familyId={id} stateChanger={setState}/>
           {/* <p className="dark">This family will be permanently be removed</p> */}
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowInviteModal(false)}>
+        {/* <Modal.Footer> */}
+          {/* <Button variant="secondary" onClick={() => setShowInviteModal(false)}>
             Close
-          </Button>
+          </Button> */}
           {/* <Button variant="primary" onClick={onAdd}>
             Add
           </Button> */}
-        </Modal.Footer>
+        {/* </Modal.Footer> */}
       </Modal>
 
 {/* JOIN MODAL */}
