@@ -16,7 +16,7 @@ namespace mobster_backend.Models
 
         public virtual Family Family { get; set; }
         public virtual User Author { get; set; }
-        public ICollection<Post> Posts { get; set; }
+        public virtual ICollection<Post> Posts { get; set; }
 
         public Thread(string title, string content, Guid familyId, Guid authorId)
         {

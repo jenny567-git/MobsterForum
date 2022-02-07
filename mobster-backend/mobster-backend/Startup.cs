@@ -13,6 +13,9 @@ using mobster_backend.Database;
 using System.Security.Claims;
 using mobster_backend.Interfaces;
 using mobster_backend.Services;
+using System;
+using System.IO;
+using System.Reflection;
 
 namespace mobster_backend
 {
@@ -63,6 +66,7 @@ namespace mobster_backend
             //real database
             services.AddDbContext<MobsterContext>(options => options.UseSqlServer(connectionString));
             services.AddTransient<IThreadService, ThreadService>();
+            services.AddTransient<IPostService, PostService>();
             services.AddTransient<IFamilyService, FamilyService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IBlockService, BlockService>();
@@ -73,6 +77,9 @@ namespace mobster_backend
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "mobster_backend", Version = "v1" });
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
 
             services.AddAuthorization(options =>

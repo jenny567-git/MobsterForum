@@ -1,6 +1,7 @@
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
 import Header from './components/Header'
 import Home from './pages/Home'
+import SingleThreadView from './pages/SingleThreadView/SingleThreadView'
 import Family from './pages/Family'
 import CreateFamily from './components/FamilyComponents/CreateFamily'
 import Members from './components/FamilyComponents/Members'
@@ -8,6 +9,10 @@ import BlockedMembers from './components/FamilyComponents/BlockedMembers'
 import InviteMembers from './components/FamilyComponents/InviteMembers'
 
 import Profile from './pages/Profile'
+import { About } from './pages/StaticContent/About'
+import { NotFound } from './pages/StaticContent/NotFound'
+import { FAQ } from './pages/StaticContent/FAQ'
+import { Footer } from './components/Footer'
 function App() {
 
   return (
@@ -17,14 +22,21 @@ function App() {
         <div className="content">
           <Routes>
             <Route exact path="/" element={<Home />}></Route>
+            <Route exact path="/thread/:id" element={<SingleThreadView />}></Route>
+            <Route exact path="/family" element={<Family />}></Route>
             <Route exact path="/family/:id" element={<Family />}></Route>
             <Route exact path="/family/create" element={<CreateFamily />}></Route>
             <Route exact path="/family/:familyId/members" element={<Members />}></Route>
             <Route exact path="/family/:familyId/blockedMembers" element={<BlockedMembers />}></Route>
             <Route exact path="/family/:familyId/invite" element={<InviteMembers />}></Route>
             <Route exact path ="/profile" element={<Profile />}></Route>
+            <Route exact path ="/about" element={<About />}></Route>
+            <Route exact path ="/faq" element={<FAQ />}></Route>
+
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
+        <Footer></Footer>
       </div>
     </Router>
   )

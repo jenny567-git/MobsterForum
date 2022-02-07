@@ -1,8 +1,8 @@
 import React from 'react'
 import SearchBar from './SearchBar'
 import logo from '../assets/Mobster-logo.png'
-import LoginButton from './LoginButton'
 import { Link } from 'react-router-dom'
+import LoginButton from './LoginButton'
 
 
 function Header() {

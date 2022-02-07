@@ -1,0 +1,102 @@
+.SingleThreadView {
+	display: flex;
+	margin-bottom: 30px;
+}
+
+.main-container{
+	flex-direction: column;
+	width: 100%;
+}
+
+.thread-container {
+	display: flex;
+	flex-direction: column;
+	background-color: #414141;
+	border-radius: 0;
+	width: 100%;
+	margin-top: 2rem;
+	padding: 1rem;
+}
+
+.thread {
+	display: flex;
+	flex-direction: column;
+	color: #fff;
+}
+
+.thread h2,
+p {
+	margin: 0.2rem;
+}
+
+.thread p {
+	color: #fff;
+}
+
+.thread-metadata {
+	align-self: flex-end;
+}
+
+.thread-metadata-bold {
+	color: #ec625f;
+}
+.thread-data {
+	display: flex;
+	flex-direction: column;
+	padding: 0 1rem 1rem 1rem;
+}
+.thread-data input,
+textarea {
+	border: none;
+	background-color: #414141;
+	color: whitesmoke;
+	resize: none;
+	margin-bottom: 1rem;
+	outline: none;
+	height: auto;
+}
+.thread-data input {
+	font-weight: bold;
+	font-size: 2rem;
+}
+
+.thread-btns {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	flex-direction: row;
+    border: none;
+	height: 5vh;
+	background-color: #ec625f;
+}
+
+.thread-btns Button {
+	cursor: pointer;
+}
+
+.thread-btns Button:hover, .thread-btns Button:active, .thread-btns Button:visited, .thread-btns Button:focus {
+	background-color: #eb4a48;
+	box-shadow: none;
+}
+
+.thread-reply {
+	display: flex;
+	flex-direction: row;
+	margin-top: 2vh;
+	justify-content: center;
+	align-items: center;
+}
+
+/* .invisible {
+	display: none;
+} */
+
+.backtotop-button {
+	display: flex;
+	margin: 10px auto;
+}
+
+.backtotop-button {
+	display: flex;
+	margin: 10px auto;
+}

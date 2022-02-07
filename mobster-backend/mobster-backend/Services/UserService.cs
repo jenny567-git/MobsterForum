@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using mobster_backend.Database;
 using mobster_backend.DTOs.Read;
+using mobster_backend.DTOs.Write;
 using mobster_backend.Extensions;
 using mobster_backend.Interfaces;
 using mobster_backend.Models;
@@ -19,13 +20,13 @@ namespace mobster_backend.Services
             this.context = context;
         }
 
-        public async Task<UserDto> AddUser(string authId, string userName)
+        public async Task<UserDto> AddUser(SetUserDto model)
         {
-            var user = await context.Users.FirstOrDefaultAsync(u => u.AuthId == authId);
+            var user = await context.Users.FirstOrDefaultAsync(u => u.AuthId == model.AuthId);
 
             if (user == null)
             {
-                user = new User(authId, userName);
+                user = new User(model);
                 context.Users.Add(user);
                 await context.SaveChangesAsync();
             }
