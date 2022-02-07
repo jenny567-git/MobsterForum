@@ -9,12 +9,37 @@ import BlockedMembers from './components/FamilyComponents/BlockedMembers'
 import InviteMembers from './components/FamilyComponents/InviteMembers'
 import SearchResult from './components/Search/SearchResult'
 
+import AdminDashboard from './pages/Admin-dashboard'
 import Profile from './pages/Profile'
 import { About } from './pages/StaticContent/About'
 import { NotFound } from './pages/StaticContent/NotFound'
 import { FAQ } from './pages/StaticContent/FAQ'
 import { Footer } from './components/Footer'
+import { useLocalStorage } from './CustomHooks/useLocalStorage'
+
 function App() {
+
+  const [loggedInUser, setLoggedInUser] = (useLocalStorage('user', null));
+
+  function isAuthorizedAsApplicationAdmin() {
+    let isAuthorized = false;
+    if (loggedInUser !== null){
+      for (let i = 0; i < loggedInUser.roles.length; i++){
+        if(loggedInUser.roles[i] === 'admin'){
+          isAuthorized = true;
+        }
+      }
+    }
+    return isAuthorized;
+  }
+
+  // This is mainly for changing the url from /admin-dashboard when user is redirected to "Home"
+  function Redirect() {
+    window.history.pushState('/', '', '/');
+    return (
+      <Home />
+    )
+  }
 
   return (
     <Router>
@@ -30,7 +55,8 @@ function App() {
             <Route exact path="/family/:familyId/members" element={<Members />}></Route>
             <Route exact path="/family/:familyId/blockedMembers" element={<BlockedMembers />}></Route>
             {/* <Route exact path="/family/:familyId/invite" element={<InviteMembers />}></Route> */}
-            <Route exact path="/searchresult" element={<SearchResult />}></Route>
+                      <Route exact path="/searchresult" element={<SearchResult />}></Route>
+                      <Route exact path="/admin-dashboard" element={isAuthorizedAsApplicationAdmin() ? <AdminDashboard /> : <Redirect />} />
             <Route exact path ="/profile" element={<Profile />}></Route>
             <Route exact path ="/about" element={<About />}></Route>
             <Route exact path ="/faq" element={<FAQ />}></Route>
@@ -43,5 +69,4 @@ function App() {
     </Router>
   )
 }
-
 export default App
