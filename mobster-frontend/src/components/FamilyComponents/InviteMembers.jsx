@@ -1,17 +1,13 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Button, Form, Alert } from "react-bootstrap";
-import { useParams } from "react-router-dom";
-import { Context } from "../../utils/store";
 import { Typeahead } from "react-bootstrap-typeahead";
 import "react-bootstrap-typeahead/css/Typeahead.css";
 import "./invite.css";
 import axios from "axios";
 
 const InviteMembers = ({familyId, stateChanger}) => {
-  const [context, updateContext] = useContext(Context);
   const [selected, setSelected] = useState([]);
   const [users, setUsers] = useState([]);
-  // const { familyId } = useParams();
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
 
@@ -34,7 +30,6 @@ const InviteMembers = ({familyId, stateChanger}) => {
   const onSelect = (data) => {
     setSelected(data);
     console.log(data);
-    // updateContext({currentAdmin: data[0]})
   };
 
   const onAdd = async () => {

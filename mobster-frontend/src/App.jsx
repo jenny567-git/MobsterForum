@@ -26,10 +26,10 @@ function App() {
             <Route exact path="/thread/:id" element={<SingleThreadView />}></Route>
             <Route exact path="/family" element={<Family />}></Route>
             <Route exact path="/family/:id" element={<Family />}></Route>
-            <Route exact path="/family/create" element={<CreateFamily />}></Route>
+            {/* <Route exact path="/family/create" element={<CreateFamily />}></Route> */}
             <Route exact path="/family/:familyId/members" element={<Members />}></Route>
             <Route exact path="/family/:familyId/blockedMembers" element={<BlockedMembers />}></Route>
-            <Route exact path="/family/:familyId/invite" element={<InviteMembers />}></Route>
+            {/* <Route exact path="/family/:familyId/invite" element={<InviteMembers />}></Route> */}
             <Route exact path="/searchresult" element={<SearchResult />}></Route>
             <Route exact path ="/profile" element={<Profile />}></Route>
             <Route exact path ="/about" element={<About />}></Route>

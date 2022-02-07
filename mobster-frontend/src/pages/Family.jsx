@@ -6,7 +6,7 @@ import Thread from "../components/Thread/Thread";
 import InviteMembers from "../components/FamilyComponents/InviteMembers";
 import CreateFamily from "../components/FamilyComponents/CreateFamily";
 import axios from "axios";
-import { useLocalStorage } from '../CustomHooks/useLocalStorage'
+import { useLocalStorage } from "../CustomHooks/useLocalStorage";
 
 const Family = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -17,12 +17,12 @@ const Family = () => {
   const [canJoin, setCanJoin] = useState(false);
   const [family, setFamily] = useState({});
   const [isFetching, setIsFetching] = useState(true);
-  const[state, setState]=useState('');
+  const [state, setState] = useState("");
   const { id } = useParams();
   let navigate = useNavigate();
 
-  const [user, setuser] = useLocalStorage('user', null)
- 
+  const [user, setuser] = useLocalStorage("user", null);
+
   useEffect(() => {
     fetchFamily();
     checkJoinable();
@@ -46,14 +46,15 @@ const Family = () => {
     const blockResponse = await axios.get(
       `https://localhost:44304/api/Block?familyId=${id}`
     );
-    
+
     var blocklist = blockResponse.data ? blockResponse.data : [];
-    
+
     const memberResponse = await axios.get(
       `https://localhost:44304/api/Family/${id}/members`
     );
     //check if current user is not a member of the group and not a blocked member
     if (
+      user &&
       !memberResponse.data.some((e) => e.authId === user.authId) &&
       !blocklist.some((e) => e.authId === user.authId)
     ) {
@@ -69,7 +70,9 @@ const Family = () => {
   const toJoin = () => {
     setShowJoinModal(true);
     axios
-      .post(`https://localhost:44304/addMember?familyId=${id}&userId=${user.userId}`)
+      .post(
+        `https://localhost:44304/addMember?familyId=${id}&userId=${user.userId}`
+      )
       .then((res) => {
         console.log("Success: ", res.data);
         let newfamily = { ...family };
@@ -96,6 +99,19 @@ const Family = () => {
     }, 5000);
   };
 
+  if (!user) {
+    return (
+      <div className="container">
+        <h1>{family.name}</h1>
+        <h2>
+          <i>{family.description}</i>
+        </h2>
+        <p>Members: {family.memberCount}</p>
+        <p>Render Welcome component</p>
+      </div>
+    );
+  }
+
   return (
     <div className="container">
       <h1>{family.name}</h1>
@@ -106,11 +122,10 @@ const Family = () => {
 
       {canJoin && <Button onClick={toJoin}>Join</Button>}
 
-      {/*if current user == admin or site admin, display Edit button */}
-      {
+      {/*if current user == admin or site admin, display Add/Edit/Delete button */}
+      {user &&
         (user.roles.includes("admin") || user.userId == family.adminUserId) && (
           <>
-            {/* <Button onClick={() => navigate(`/family/${id}/invite`)}> */}
             <Button onClick={() => setShowInviteModal(true)}>
               Add members
             </Button>
@@ -125,76 +140,85 @@ const Family = () => {
           </>
         )}
 
-      {/* <button onClick={toManipulate}> Mainpulate context</button> */}
-
-      {/* add a check, if current user == admin, display Delete button */}
-
       {/* to be moved */}
-      <Button variant="success" onClick={() => setShowCreateFamilyModal(true)}>
-        Create new family
-      </Button>
+      {user && (
+        <Button
+          variant="success"
+          onClick={() => setShowCreateFamilyModal(true)}
+        >
+          Create new family
+        </Button>
+      )}
 
-      {isEditing && <EditFamily stateChanger={setState} isEdit={setIsEditing}/>}
+      {isEditing && (
+        <EditFamily stateChanger={setState} isEdit={setIsEditing} />
+      )}
 
       <ul>
-        {!isFetching && family.threads && 
+        {!isFetching &&
+          family.threads &&
           Array.from(family.threads).map((thread) => (
-            <Thread
-              key={thread.threadId}
-              thread={thread}
-            />
+            <Thread key={thread.threadId} thread={thread} />
           ))}
-          {!family.threads && (<p>There is no threads in this family yet...</p>)}
+        {!family.threads && <p>There is no threads in this family yet...</p>}
       </ul>
 
-{/* INVITE MODAL */}
-      <Modal show={showInviteModal} onHide={() => setShowInviteModal(false)} className="dark">
+      {/* INVITE MODAL */}
+      <Modal
+        show={showInviteModal}
+        onHide={() => setShowInviteModal(false)}
+        className="dark"
+      >
         <Modal.Header closeButton>
           <Modal.Title className="dark">Add members</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <InviteMembers familyId={id} stateChanger={setState}/>
-          {/* <p className="dark">This family will be permanently be removed</p> */}
+          <InviteMembers familyId={id} stateChanger={setState} />
         </Modal.Body>
-        {/* <Modal.Footer> */}
-          {/* <Button variant="secondary" onClick={() => setShowInviteModal(false)}>
-            Close
-          </Button> */}
-          {/* <Button variant="primary" onClick={onAdd}>
-            Add
-          </Button> */}
-        {/* </Modal.Footer> */}
       </Modal>
 
-{/* JOIN MODAL */}
-      <Modal show={showJoinModal} onHide={() => setShowJoinModal(false)} className="dark">
-        <Modal.Header closeButton>
-          <Modal.Title className="dark">Welcome {user.userName}!</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p className="dark">You're now a part of the family :)</p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowJoinModal(false)}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      {/* JOIN MODAL */}
+      {user && (
+        <Modal
+          show={showJoinModal}
+          onHide={() => setShowJoinModal(false)}
+          className="dark"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title className="dark">Welcome {user.userName}!</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <p className="dark">You're now a part of the family :)</p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShowJoinModal(false)}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      )}
 
-{/* CREATE FAMILY MODAL */}
-      <Modal show={showCreateFamilyModal} onHide={() => setShowCreateFamilyModal(false)} className="dark">
+      {/* CREATE FAMILY MODAL */}
+      <Modal
+        show={showCreateFamilyModal}
+        onHide={() => setShowCreateFamilyModal(false)}
+        className="dark"
+      >
         <Modal.Header closeButton>
           <Modal.Title className="dark">Create new family</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <CreateFamily/>
+          <CreateFamily />
         </Modal.Body>
-        <Modal.Footer>
-        </Modal.Footer>
+        <Modal.Footer></Modal.Footer>
       </Modal>
 
       {/* DELETE MODAL */}
-      <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)} className="dark">
+      <Modal
+        show={showDeleteModal}
+        onHide={() => setShowDeleteModal(false)}
+        className="dark"
+      >
         <Modal.Header closeButton>
           <Modal.Title className="dark">Are you sure?</Modal.Title>
         </Modal.Header>
