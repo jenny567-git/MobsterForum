@@ -51,7 +51,7 @@ const CreateFamily = () => {
           style={{ height: "100px" }}
         />
       </FloatingLabel>
-      <p className="dark">Admin: {user.userName}</p>
+      <p>Admin: {user.userName}</p>
       <Button variant="success" onClick={onSubmit}>
         Save
       </Button>

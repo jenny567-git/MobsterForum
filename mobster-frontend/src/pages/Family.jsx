@@ -7,6 +7,8 @@ import InviteMembers from "../components/FamilyComponents/InviteMembers";
 import CreateFamily from "../components/FamilyComponents/CreateFamily";
 import axios from "axios";
 import { useLocalStorage } from "../CustomHooks/useLocalStorage";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "../components/FamilyComponents/family-override.css";
 
 const Family = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -167,10 +169,13 @@ const Family = () => {
       <Modal
         show={showInviteModal}
         onHide={() => setShowInviteModal(false)}
-        className="dark"
+        centered
+        className="modal"
+        // contentClassName="modal"
+        // bsPrefix="modal"
       >
         <Modal.Header closeButton>
-          <Modal.Title className="dark">Add members</Modal.Title>
+          <Modal.Title>Add members</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <InviteMembers familyId={id} stateChanger={setState} />
@@ -182,13 +187,12 @@ const Family = () => {
         <Modal
           show={showJoinModal}
           onHide={() => setShowJoinModal(false)}
-          className="dark"
         >
           <Modal.Header closeButton>
-            <Modal.Title className="dark">Welcome {user.userName}!</Modal.Title>
+            <Modal.Title>Welcome {user.userName}!</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <p className="dark">You're now a part of the family :)</p>
+            <p>You're now a part of the family :)</p>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={() => setShowJoinModal(false)}>
@@ -202,10 +206,9 @@ const Family = () => {
       <Modal
         show={showCreateFamilyModal}
         onHide={() => setShowCreateFamilyModal(false)}
-        className="dark"
       >
         <Modal.Header closeButton>
-          <Modal.Title className="dark">Create new family</Modal.Title>
+          <Modal.Title>Create new family</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <CreateFamily />
@@ -217,13 +220,12 @@ const Family = () => {
       <Modal
         show={showDeleteModal}
         onHide={() => setShowDeleteModal(false)}
-        className="dark"
       >
         <Modal.Header closeButton>
-          <Modal.Title className="dark">Are you sure?</Modal.Title>
+          <Modal.Title>Are you sure?</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p className="dark">This family will be permanently be removed</p>
+          <p>This family will be permanently be removed</p>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
