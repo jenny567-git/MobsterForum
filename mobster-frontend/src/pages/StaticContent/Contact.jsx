@@ -40,10 +40,10 @@ export const Contact = () => {
   return (
     <div className="contact-container">
       <h1>Contact or Report</h1>
-      <h6>Contact us or report member or post.</h6>
+      <h6>Contact us, or report member or post.</h6>
       <h6>For report we need username and what post it's regarding</h6>
       <div className="contact-form">
-            <input type="text" placeholder="Your Name" value={name} onChange={e => setName(e.target.value)} />
+            <input type="text" placeholder="Your name" value={name} onChange={e => setName(e.target.value)} />
             <input type="email" placeholder="Your email address" value={email} onChange={e => setEmail(e.target.value)} />
             <textarea placeholder="Your message" value={message} onChange={e => setMessage(e.target.value)}></textarea>
             <button onClick={submit}>Send Message</button>
