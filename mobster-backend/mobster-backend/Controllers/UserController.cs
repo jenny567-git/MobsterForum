@@ -84,6 +84,37 @@ namespace mobster_backend.Controllers
             }
         }
 
+        [HttpPost("ChangeUserEmail")]
+        public async Task<IActionResult> ChangeUserEmail(Guid userId, string email)
+        {
+            try
+            {
+                var user = await userService.GetUser(userId);
+                var response = Auth0.Methods.ChangeEmail(user.AuthId, email);
+                return Ok(response);
+                
+            }
+            catch(Exception e)
+            {
+                return StatusCode(500, e);
+            }
+        }
+
+        [HttpPost("ChangePassword")]
+        public async Task<IActionResult> ChangePassword(Guid userId)
+        {
+            try
+            {
+                var user = await userService.GetUser(userId);
+                var response = Auth0.Methods.CreateChangePasswordTicket(user.AuthId);
+                return Ok(response.Content);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         
 
     }

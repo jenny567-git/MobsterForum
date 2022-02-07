@@ -1,4 +1,5 @@
 ﻿using RestSharp;
+using System.Security.Claims;
 using System.Text.Json;
 
 namespace mobster_backend.Auth0
@@ -56,6 +57,31 @@ namespace mobster_backend.Auth0
             string jsonString = JsonSerializer.Serialize(auth0User, options: jsonSerializerOptions);
             request.AddJsonBody(jsonString);
             IRestResponse response = client.Execute(request);
+        }
+
+        public static IRestResponse ChangeEmail(string userId, string email)
+        {
+            var urlEncoded = System.Web.HttpUtility.UrlEncode(userId);
+            RestClient client = new RestClient($"https://outlaw-forum.eu.auth0.com/api/v2/users/" + urlEncoded);
+            var request = new RestRequest(Method.PATCH);
+            request.AddHeader("authorization", $"Bearer {Token}");
+            var auth0User = new Auth0.Objects.Auth0User() { email = email};
+            string jsonString = JsonSerializer.Serialize(auth0User, options: jsonSerializerOptions);
+            request.AddJsonBody(jsonString);
+            IRestResponse response = client.Execute(request);
+            return response;
+        }
+
+        public static IRestResponse CreateChangePasswordTicket(string userId)
+        {
+            RestClient client = new RestClient($"https://outlaw-forum.eu.auth0.com/api/v2/tickets/password-change");
+            var request = new RestRequest(Method.POST);
+            request.AddHeader("authorization", $"Bearer {Token}");
+            var passwordTicket = new Auth0.Objects.PasswordTicket() { user_id = userId };
+            string jsonString = JsonSerializer.Serialize(passwordTicket, options: jsonSerializerOptions);
+            request.AddJsonBody(jsonString);
+            IRestResponse response = client.Execute(request);
+            return response;
         }
 
     }

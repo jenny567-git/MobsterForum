@@ -40,6 +40,12 @@ namespace mobster_backend.Services
             return users.ToUserDtos();
         }
 
+        public async Task<UserDto> GetUser(Guid userId)
+        {
+            var user = await context.Users.FirstOrDefaultAsync(u => u.UserId == userId);
+            return user.ToUserDto();
+        }
+
         public async Task<UserDto> ToggleUserActive(Guid userId)
         {
             var user = await context.Users.FirstOrDefaultAsync(u => u.UserId == userId);
