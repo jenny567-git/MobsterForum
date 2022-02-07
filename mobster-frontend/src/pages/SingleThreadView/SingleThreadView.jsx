@@ -80,6 +80,9 @@ const SingleThreadView = () => {
     // setVisible(!isVisible);
     scrollToBottom();
   }
+  function logThread(){
+    console.log(thread)
+  }
 
   function getThreadLink() {
     navigator.clipboard.writeText(window.location.href);
@@ -141,7 +144,7 @@ const SingleThreadView = () => {
         </div>
         )}
         <div className="thread-posts">
-          <Post id={id} blockedMembers = {blockedMembers} />
+          <Post id={id} blockedMembers = {blockedMembers} thread ={thread} />
         </div>
 
         <Button className='backtotop-button' onClick={scrollToTop}><p>Back to top</p></Button>
