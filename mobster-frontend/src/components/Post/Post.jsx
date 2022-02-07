@@ -158,7 +158,7 @@ useEffect(()=>{
                 </div>
             )}
 
-                  {!checkIfUserInFamily() && !checkIfBlockedFromFamily(user) && <div className='thread-reply'>
+                  {checkIfUserInFamily() && <div className='thread-reply'>
                           <Form.Control
                             className="reply-textarea"
                             as="textarea"
