@@ -65,7 +65,7 @@ export const Contact = () => {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
         ></textarea>
-        <button onClick={submit}>Send Message</button>
+        <button onClick={submit}><p>Send Message</p></button>
         {emailSent && (
           <span>
             Thank you for your message, we will be in touch in no time!

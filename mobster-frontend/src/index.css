@@ -11,6 +11,7 @@ p,
 a,
 li,
 strong,
+span,
 label {
 	font-family: 'Lekton', sans-serif;
 }
@@ -120,10 +121,11 @@ div{
 }
 .mp-families li {
   margin-bottom: 1rem;
+  margin-left: 1rem;
   color: whitesmoke;
 }
 .mp-families span{
-	font-size:70%;
+	font-size:90%;
 }
 .mp-families p:hover {
   color: #ec625f;
