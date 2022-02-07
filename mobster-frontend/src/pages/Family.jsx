@@ -4,18 +4,19 @@ import EditFamily from "../components/FamilyComponents/EditFamily";
 import { Modal, Button } from "react-bootstrap";
 import Thread from "../components/Thread/Thread";
 import InviteMembers from "../components/FamilyComponents/InviteMembers";
-import CreateFamily from "../components/FamilyComponents/CreateFamily";
+// import CreateFamily from "../components/FamilyComponents/CreateFamily";
 import axios from "axios";
 import { useLocalStorage } from "../CustomHooks/useLocalStorage";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../components/FamilyComponents/family-override.css";
+import "/src/index.css";
 
 const Family = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showInviteModal, setShowInviteModal] = useState(false);
   const [showJoinModal, setShowJoinModal] = useState(false);
-  const [showCreateFamilyModal, setShowCreateFamilyModal] = useState(false);
+  // const [showCreateFamilyModal, setShowCreateFamilyModal] = useState(false);
   const [canJoin, setCanJoin] = useState(false);
   const [family, setFamily] = useState({});
   const [isFetching, setIsFetching] = useState(true);
@@ -114,6 +115,17 @@ const Family = () => {
     );
   }
 
+  const buttonStyles = {
+    color: "white",
+    backgroundColor: "#ec625f",
+    border: "none",
+    fontFamily: "Lekton",
+    margin: "2px",
+    width:"10%",
+    fontWeight: "bold",
+    cursor: "pointer",
+    borderRadius: "0.5rem"
+  }
   return (
     <div className="container">
       <h1>{family.name}</h1>
@@ -122,35 +134,35 @@ const Family = () => {
       </h2>
       <p>Members: {family.memberCount}</p>
 
-      {canJoin && <Button onClick={toJoin}>Join</Button>}
+      {canJoin && <Button style={buttonStyles} onClick={toJoin}>Join</Button>}
 
       {/*if current user == admin or site admin, display Add/Edit/Delete button */}
       {user &&
         (user.roles.includes("admin") || user.userId == family.adminUserId) && (
           <>
-            <Button onClick={() => setShowInviteModal(true)}>
+            <Button style={buttonStyles} onClick={() => setShowInviteModal(true)}>
               Add members
             </Button>
-            <Button onClick={toggleEdit}>Edit</Button>
-            <Button onClick={() => navigate(`/family/${id}/members`)}>
+            <Button style={buttonStyles} onClick={toggleEdit}>Edit</Button>
+            <Button style={buttonStyles} onClick={() => navigate(`/family/${id}/members`)}>
               {" "}
               Handle members
             </Button>
-            <Button variant="danger" onClick={() => setShowDeleteModal(true)}>
+            <Button style={buttonStyles} variant="danger" onClick={() => setShowDeleteModal(true)}>
               Delete family
             </Button>
           </>
         )}
 
       {/* to be moved */}
-      {user && (
-        <Button
+      {/* {user && (
+        <Button style={buttonStyles}
           variant="success"
           onClick={() => setShowCreateFamilyModal(true)}
         >
           Create new family
         </Button>
-      )}
+      )} */}
 
       {isEditing && (
         <EditFamily stateChanger={setState} isEdit={setIsEditing} />
@@ -196,27 +208,27 @@ const Family = () => {
             <p>You're now a part of the family :)</p>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={() => setShowJoinModal(false)}>
+            <Button style={buttonStyles} variant="secondary" onClick={() => setShowJoinModal(false)}>
               Close
             </Button>
           </Modal.Footer>
         </Modal>
       )}
 
-      {/* CREATE FAMILY MODAL */}
+      {/* CREATE FAMILY MODAL
       <Modal
         show={showCreateFamilyModal}
         onHide={() => setShowCreateFamilyModal(false)}
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title>Create new family</Modal.Title>
+          <Modal.Title><p>Create new family</p></Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <CreateFamily />
         </Modal.Body>
         <Modal.Footer></Modal.Footer>
-      </Modal>
+      </Modal> */}
 
       {/* DELETE MODAL */}
       <Modal
@@ -231,10 +243,10 @@ const Family = () => {
           <p>This family will be permanently be removed</p>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
+          <Button style={buttonStyles} variant="secondary" onClick={() => setShowDeleteModal(false)}>
             Close
           </Button>
-          <Button variant="danger" onClick={onDelete}>
+          <Button style={buttonStyles} variant="danger" onClick={onDelete}>
             Confirm delete
           </Button>
         </Modal.Footer>

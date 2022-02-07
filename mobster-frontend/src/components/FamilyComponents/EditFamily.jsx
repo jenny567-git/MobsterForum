@@ -77,6 +77,14 @@ const EditFamily = ({stateChanger, isEdit}) => {
     setShowModal(true);
   };
 
+  const buttonStyles = {
+    color: "white",
+    fontFamily: "Lekton",
+    margin: "10px",
+    fontWeight: "bold",
+    cursor: "pointer",
+    borderRadius: "0.5rem"
+  }
   return (
     <>
       <div>
@@ -104,10 +112,10 @@ const EditFamily = ({stateChanger, isEdit}) => {
           />
         </FloatingLabel>
         <p>Current admin: {context.currentAdmin.userName}</p>
-        <Button variant="success" onClick={handleShow}>
+        <Button style={buttonStyles} variant="success" onClick={handleShow}>
           Change admin
         </Button>
-        <Button onClick={onSubmit}>Save changes</Button>
+        <Button style={buttonStyles} onClick={onSubmit}>Save changes</Button>
 
         <Modal show={showModal} onHide={handleClose}>
           <Modal.Header closeButton>
@@ -123,14 +131,14 @@ const EditFamily = ({stateChanger, isEdit}) => {
                   labelKey="userName"
                   onChange={(e) => onSelectAdmin(e)}
                   options={context.familyMembers}
-                  placeholder="Type an username"
+                  placeholder="Type a username"
                   selected={selected}
                 />
               </Form.Group>
             </div>
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={handleClose}>Select</Button>
+            <Button style={buttonStyles} onClick={handleClose}>Select</Button>
           </Modal.Footer>
         </Modal>
       </div>

@@ -29,6 +29,14 @@ const CreateFamily = () => {
         console.error("Error:", error);
       });
   };
+  const buttonStyles = {
+    color: "white",
+    fontFamily: "Lekton",
+    margin: "10px",
+    fontWeight: "bold",
+    cursor: "pointer",
+    borderRadius: "0.5rem"
+  }
 
   return (
     <div className="container">
@@ -52,7 +60,7 @@ const CreateFamily = () => {
         />
       </FloatingLabel>
       <p>Admin: {user.userName}</p>
-      <Button variant="success" onClick={onSubmit}>
+      <Button style={buttonStyles} variant="success" onClick={onSubmit}>
         Save
       </Button>
     </div>
