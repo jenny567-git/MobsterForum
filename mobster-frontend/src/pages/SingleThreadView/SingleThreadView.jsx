@@ -52,7 +52,9 @@ const SingleThreadView = () => {
 
   })
 
-
+  function log(){
+    console.log(thread)
+  }
 
   const editThread = (async () => {
     if (isReadOnly && thread.author.authId == user.userId) {
@@ -148,6 +150,7 @@ const SingleThreadView = () => {
         </div>
 
         <Button className='backtotop-button' onClick={scrollToTop}><p>Back to top</p></Button>
+        <Button className='backtotop-button' onClick={log}><p> top</p></Button>
       </div>
     </div>
 

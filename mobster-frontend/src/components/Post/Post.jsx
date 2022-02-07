@@ -29,9 +29,14 @@ export const Post = ({ id , blockedMembers , thread }) => {
     let blockedMembersIds = blockedMembers.map(m => m.userId)
     return blockedMembersIds.includes(author.userId)
   })
+  function log(){
+    console.log(thread);
+  }
   const checkIfUserInFamily = (() => {
-     let familyMembersIds = thread.family.familyMembers.map(m => m.userId)
-     return familyMembersIds.includes(user.userId)
+    if(thread){
+      let familyMembersIds = thread.family.familyMembers.map(m => m.userId)
+      return familyMembersIds.includes(user.userId)
+    }
   })
 
   const submitNewPost = async () => {
@@ -205,7 +210,7 @@ useEffect(()=>{
                           </Button>
                         </Modal.Footer>
                   </Modal>
-        
+                            <button onClick={log}>log</button>
         </div>;
 };
 
