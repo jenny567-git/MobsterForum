@@ -9,7 +9,7 @@ import bannedPic from '../../assets/profile-icons/banned.jpg'
 import inactivePic from '../../assets/profile-icons/inactive.png'
 import  "./Post-styling.css"
 
-export const Post = ({ id , blockedMembers }) => {
+export const Post = ({ id , blockedMembers , thread }) => {
   const [posts, setPosts] = useState([]);
   // const {user, isLoading} = useAuth0();
   const [user, setuser] = useLocalStorage('user', null)
@@ -28,6 +28,10 @@ export const Post = ({ id , blockedMembers }) => {
   const checkIfBlockedFromFamily = ((author) => {
     let blockedMembersIds = blockedMembers.map(m => m.userId)
     return blockedMembersIds.includes(author.userId)
+  })
+  const checkIfUserInFamily = (() => {
+     let familyMembersIds = thread.family.familyMembers.map(m => m.userId)
+     return familyMembersIds.includes(user.userId)
   })
 
   const submitNewPost = async () => {
@@ -149,7 +153,7 @@ useEffect(()=>{
                 </div>
             )}
 
-                  {!checkIfBlockedFromFamily(user) && <div className='thread-reply'>
+                  {!checkIfUserInFamily() && !checkIfBlockedFromFamily(user) && <div className='thread-reply'>
                           <Form.Control
                             className="reply-textarea"
                             as="textarea"

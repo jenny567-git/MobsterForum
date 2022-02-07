@@ -98,6 +98,8 @@ namespace mobster_backend.Services
         {
             var thread = await context.Threads
                 .Include(t => t.Family)
+                .ThenInclude(f => f.FamilyMembers)
+                .Include(t => t.Family)
                 .ThenInclude(f => f.Admin)
                 .Include(t => t.Author)
                 .Include(t => t.Posts)
