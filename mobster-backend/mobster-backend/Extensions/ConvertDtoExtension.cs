@@ -139,6 +139,7 @@ namespace mobster_backend.Extensions
             {
                 UserId = user.UserId,
                 UserName = user.UserName,
+                IsActive = user.IsActive,
                 IsBanned = user.IsBanned,
                 AuthId = user.AuthId
             };
@@ -163,7 +164,7 @@ namespace mobster_backend.Extensions
             return new UserDto
             {
                 UserId = user.UserId,
-                //UserName = user.UserName
+                CreatedAt = user.BlockedAt
             };
         }
 

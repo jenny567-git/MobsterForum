@@ -8,11 +8,13 @@
 }
 
 .about-header {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  margin-bottom: 10px;
-  padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 10px;
+    margin-top: 20px;
+    padding-bottom: 10px;
+    color: white;
 }
 
 .aboutme {
@@ -68,11 +70,10 @@
   color: #ec625f;
 }
 
-.single-card {
-  width: 20rem;
-  padding: 10px;
-  margin: 10px auto;
-  font-family: "Courier New", Courier, monospace;
+.single-card{
+    width: 22rem;
+    padding: 10px;
+    margin: 10px auto;
 }
 
 .notfound-container {
@@ -84,6 +85,10 @@
   margin: 10vh auto;
   width: 80%;
   color: #ec625f;
+}
+
+.notfound-container img {
+    padding-bottom: 20px;
 }
 
 .faq-container {
@@ -98,14 +103,18 @@
 }
 
 .faq-question {
-  color: white;
-  font-family: "Courier New", Courier, monospace;
-  font-size: 28px;
+    color: white;
+    font-size: 28px;
+    font-family: 'Lekton', sans-serif;
 }
 
 .faq-answer {
   color: #ec625f;
   font-size: 18px;
+}
+
+.faq-answer li {
+    font-family: 'Lekton', sans-serif;
 }
 
 details {

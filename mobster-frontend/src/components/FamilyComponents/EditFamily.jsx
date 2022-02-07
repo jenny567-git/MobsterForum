@@ -6,7 +6,7 @@ import { Context } from "../../utils/store";
 import { Typeahead } from "react-bootstrap-typeahead";
 import "react-bootstrap-typeahead/css/Typeahead.css";
 
-const EditFamily = () => {
+const EditFamily = ({stateChanger, isEdit}) => {
   const [context, updateContext] = useContext(Context);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
@@ -48,16 +48,17 @@ const EditFamily = () => {
       .then((res) => {
         console.log("Success: ", res.data);
         setSuccess(true);
+        stateChanger('Updated');
       })
       .catch((error) => {
         console.error("Error:", error);
         setError(true);
       });
-    //how to update parent component without refreshing page? context?
-
-    const timer = setTimeout(() => {
-      window.location.reload(false);
-    }, 2000);
+      setTimeout( () => {
+        setSuccess(false);
+        setError(false);
+        isEdit(false);
+      },1500);
   };
 
   const onSelectAdmin = (data) => {
@@ -80,9 +81,9 @@ const EditFamily = () => {
     <>
       <div>
         {success && (
-          <Alert variant="success">Success! Update in process...</Alert>
+          <Alert variant="success">Success</Alert>
         )}
-        {error && <Alert variant="danger">Error. Please try again</Alert>}
+        {error && <Alert variant="danger">Error. Please try again.</Alert>}
         <FloatingLabel
           controlId="familyNameLabel"
           label="Family name"
@@ -110,13 +111,13 @@ const EditFamily = () => {
 
         <Modal show={showModal} onHide={handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>Change admin</Modal.Title>
+            <Modal.Title className="dark">Change admin</Modal.Title>
           </Modal.Header>
 
           <Modal.Body>
             <div>
               <Form.Group>
-                <Form.Label>Find user</Form.Label>
+                <Form.Label className="dark">Find user</Form.Label>
                 <Typeahead
                   id="basic-typeahead-single"
                   labelKey="userName"

@@ -103,9 +103,20 @@ namespace mobster_backend.Services
                 IsActive = true,
                 IsBanned = false,
             };
+            
+            var siteAdmin = new User()
+            {
+                UserId = new Guid("2a9b6f7b-d767-4629-a38b-77e3a3e6b83e"),
+                AuthId = "auth0|61f2ee87c725130071fdfc25",
+                UserName = "admin.jen",
+                CreatedAt = new DateTime(2022, 01, 23),
+                UpdatedAt = DateTime.Now,
+                IsActive = true,
+                IsBanned = false,
+            };
 
             context.Users.AddRange(user1, user2, user3, user4, 
-                user5, user6, user7);
+                user5, user6, user7, siteAdmin);
             context.SaveChanges();
 
             #endregion

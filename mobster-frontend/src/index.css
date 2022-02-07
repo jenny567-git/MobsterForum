@@ -1,11 +1,30 @@
+/* font-family: 'Lekton', sans-serif;
+font-family: 'Special Elite', cursive; */
+
 #root {
   margin: 0;
   background-color: #313131;
   min-height: 100vh;
 }
 
-div {
-  color: white;
+p,
+a,
+li,
+strong,
+label {
+	font-family: 'Lekton', sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h6 {
+	font-family: 'Special Elite';
+}
+
+div{
+	color:white
 }
 
 .flex {
@@ -13,8 +32,12 @@ div {
   flex-direction: row;
 }
 
-.space {
-  justify-content: space-between;
+.dark{
+	color: black;
+}
+
+.space{
+	justify-content: space-between;
 }
 /* Home Page */
 .home {
@@ -28,6 +51,13 @@ div {
   align-items: center;
   justify-content: center;
   width: 60%;
+}
+.home-welcome {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	color: #ec625f;
 }
 /* MyFamilies component*/
 
@@ -126,12 +156,15 @@ div {
   
 }
 
+.footer a {
+	text-decoration: none;
+}
+
 .footer-left,
 .footer-middle,
 .footer-right {
-  padding: 10px;
-  margin: 0 auto;
-  text-decoration: none;
+	padding: 10px;
+	margin: 0 auto;
 }
 
 

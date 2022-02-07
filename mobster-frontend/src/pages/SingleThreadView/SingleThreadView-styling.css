@@ -40,6 +40,11 @@ p {
 .thread-metadata-bold {
 	color: #ec625f;
 }
+
+.thread-metadata-banned {
+	color: white;
+}
+
 .thread-data {
 	display: flex;
 	flex-direction: column;

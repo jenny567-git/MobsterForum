@@ -26,7 +26,7 @@ namespace mobster_backend.Services
             this.userService = userService;
         }
 
-        public async Task AddFamily(SetFamilyDto model)
+        public async Task<FamilyDto> AddFamily(SetFamilyDto model)
         {
             //create family
             var family = new Family(model.Name, model.Description);
@@ -42,6 +42,8 @@ namespace mobster_backend.Services
             context.Admins.Add(admin);
 
             await context.SaveChangesAsync();
+
+            return family.ToFamilyDto();
         }
 
         public async Task AddFamilyMember(Guid familyId, Guid userId)
@@ -118,13 +120,13 @@ namespace mobster_backend.Services
                 .ToListAsync();
 
 
-            if (!families.Any())
-            {
-                throw new DbNotFoundException($"The user with id {user} is not currently a member of any families.");
-            }
+            //if (!families.Any())
+            //{
+            //    throw new DbNotFoundException($"The user with id {user} is not currently a member of any families.");
+            //}
 
 
-            return families.ToFamilyDtos();
+            return families.Count>0 ? families.ToFamilyDtos() : null;
 
 
         }
@@ -157,7 +159,9 @@ namespace mobster_backend.Services
             var allUsers = await userService.GetUsers();
             var blockedUsers = await blockService.GetBlockedUsersByFamily(familyId);
             var familyMembers = await GetFamilyMembers(familyId);
-            
+
+            if (blockedUsers == null) blockedUsers = new List<UserDto>();
+
             var inviteList = new List<UserDto>();
             foreach (var user in allUsers)
             {

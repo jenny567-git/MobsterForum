@@ -57,7 +57,7 @@ namespace mobster_backend.Controllers
             }
             catch (DbNotFoundException e)
             {
-                return NotFound(e.Message);
+                return StatusCode(204);
             }
             catch (Exception e)
             {
