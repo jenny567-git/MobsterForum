@@ -187,6 +187,7 @@ const Family = () => {
         <Modal
           show={showJoinModal}
           onHide={() => setShowJoinModal(false)}
+          centered
         >
           <Modal.Header closeButton>
             <Modal.Title>Welcome {user.userName}!</Modal.Title>
@@ -206,6 +207,7 @@ const Family = () => {
       <Modal
         show={showCreateFamilyModal}
         onHide={() => setShowCreateFamilyModal(false)}
+        centered
       >
         <Modal.Header closeButton>
           <Modal.Title>Create new family</Modal.Title>
@@ -220,6 +222,7 @@ const Family = () => {
       <Modal
         show={showDeleteModal}
         onHide={() => setShowDeleteModal(false)}
+        centered
       >
         <Modal.Header closeButton>
           <Modal.Title>Are you sure?</Modal.Title>
