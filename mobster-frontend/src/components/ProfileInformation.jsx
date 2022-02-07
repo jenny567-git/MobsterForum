@@ -12,21 +12,24 @@ const ProfileInformation = () => {
   useEffect(() => {
     console.log("working");
     //TODO: solve error 500
+    console.log(useAuth0.token)
     axios.post(`https://localhost:44304/api/User?authId=${user.sub}&userName=${user["https://mobster.com/username"]}`);
   }, []);
 
   return (
     <div className="=">
-        <div className="d-flex flex-column border">
+        <div style={{ width: '40%', margin: "0 auto" }}>
+        <div  className="d-flex  flex-column border flex-fill">
             <div className="d-flex flex-row border justify-content-center">
-                <div className="p-2 border">Username: </div>
-                <div className="p-2 border">{user.nickname}</div>
+                <div className="p-2 ">Username: </div>
+                <div className="p-2">{user["https://mobster.com/username"]}</div>
             </div>
             <div className="d-flex flex-row border justify-content-center">
-                <div className="p-2 border">Email: </div>
-                <div className="p-2 border">{user.email}</div>
+                <div className="mr-auto p-2">Email: </div>
+                <div className="p-2 ">{user.email}</div>
             </div>
             
+        </div>
         </div>
     </div>
 )

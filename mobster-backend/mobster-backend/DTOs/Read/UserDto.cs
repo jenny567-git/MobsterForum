@@ -10,5 +10,7 @@ namespace mobster_backend.DTOs.Read
 
         public bool IsBanned { get; set; }
 
+        public bool IsActive { get; set; }
+
     }
 }

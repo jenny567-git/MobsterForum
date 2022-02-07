@@ -13,5 +13,7 @@ namespace mobster_backend.Interfaces
         Task<UserDto> AddUser(string authId, string userName);
 
         Task<IEnumerable<UserDto>> GetUsers();
+
+        Task<UserDto> ToggleUserActive(Guid userId);
     }
 }
