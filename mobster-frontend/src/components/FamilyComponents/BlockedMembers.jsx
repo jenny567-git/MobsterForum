@@ -61,7 +61,7 @@ const BlockedMembers = () => {
           <thead>
             <tr>
               <th>User name</th>
-              <th>Date</th>
+              <th>Blocked since</th>
               <th></th>
             </tr>
           </thead>
@@ -69,9 +69,9 @@ const BlockedMembers = () => {
             {Array.from(members).map((member) => (
               <tr key={member.userId}>
                 <td>{member.userName}</td>
-                <td> TODO</td>
+                <td> {member.createdAt}</td>
                 <td>
-                  <Button>Description (TODO)</Button>
+                  {/* <Button>Description (TODO)</Button> */}
                   <Button
                     variant="danger"
                     onClick={() => onRemove(member.userId)}
