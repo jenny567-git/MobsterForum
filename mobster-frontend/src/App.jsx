@@ -13,7 +13,9 @@ import Profile from './pages/Profile'
 import { About } from './pages/StaticContent/About'
 import { NotFound } from './pages/StaticContent/NotFound'
 import { FAQ } from './pages/StaticContent/FAQ'
+import { Contact } from './pages/StaticContent/Contact'
 import { Footer } from './components/Footer'
+
 function App() {
 
   return (
@@ -34,6 +36,7 @@ function App() {
             <Route exact path ="/profile" element={<Profile />}></Route>
             <Route exact path ="/about" element={<About />}></Route>
             <Route exact path ="/faq" element={<FAQ />}></Route>
+            <Route exact path ="/contact" element={<Contact />}></Route>
 
             <Route path="*" element={<NotFound />} />
           </Routes>

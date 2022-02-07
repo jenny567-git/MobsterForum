@@ -123,6 +123,7 @@ div {
   width: 100%;
   background-color: #505050;
   border-top: 0.2rem solid #ec625f;
+  
 }
 
 .footer-left,
@@ -130,7 +131,9 @@ div {
 .footer-right {
   padding: 10px;
   margin: 0 auto;
+  text-decoration: none;
 }
+
 
 .search-bar {
   width: 33%;
