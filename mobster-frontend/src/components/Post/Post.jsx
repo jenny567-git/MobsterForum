@@ -137,19 +137,19 @@ useEffect(()=>{
                     </div>
                     
                     <div className="post-buttons">
-                        {post.author.userId == user.userId && 
+                        {!checkIfBlockedFromFamily(user) && post.author.userId == user.userId && 
                         <div>
                             <Button className='post-btn' onClick={() => handleShowEdit(post)}><i className='fas fa-edit' title="Edit post"></i></Button>
                             <Button className='post-btn' title='Delete post' onClick={() => handleShowDelete(post.postId)}><i className="fas fa-trash-alt"></i></Button>
                         </div>}
-                        {post.author.userId != user.userId && <Button className='post-btn' title='Report post'><i className="fas fa-exclamation"></i></Button>}
-                        {user.roles.includes("admin") && (<Button className='post-btn' onClick={() => toggleCensorPost(post.postId)} title='Censor post content'><i className="fas fa-comment-slash"></i></Button>)}
+                        {!checkIfBlockedFromFamily(user) && post.author.userId != user.userId && <Button className='post-btn' title='Report post'><i className="fas fa-exclamation"></i></Button>}
+                        {!checkIfBlockedFromFamily(user) && user.roles.includes("admin") && (<Button className='post-btn' onClick={() => toggleCensorPost(post.postId)} title='Censor post content'><i className="fas fa-comment-slash"></i></Button>)}
                         
                     </div>
                 </div>
             )}
 
-                  <div className='thread-reply'>
+                  {!checkIfBlockedFromFamily(user) && <div className='thread-reply'>
                           <Form.Control
                             className="reply-textarea"
                             as="textarea"
@@ -160,7 +160,7 @@ useEffect(()=>{
                             onChange={(e) => setNewPostContent(e.target.value)}
                           />
                           <Button className="reply-button" onClick={submitNewPost}><p>Post reply</p></Button>
-                  </div>
+                  </div>}
 
                   {/* Delete modal */}
                   <Modal show={showDeleteModal} onHide={handleCloseDelete} className="delete-modal">

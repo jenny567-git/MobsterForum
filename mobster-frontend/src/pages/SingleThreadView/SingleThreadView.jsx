@@ -38,6 +38,11 @@ const SingleThreadView = () => {
     console.log(response.data); 
   })
 
+  const checkIfBlockedFromFamily = ((author) => {
+    let blockedMembersIds = blockedMembers.map(m => m.userId)
+    return blockedMembersIds.includes(author.userId)
+  })
+
   const deleteThread = (async () => {
     let response = await axios.delete(`https://localhost:44304/api/Thread?id=${id}`)
     console.log(response);
@@ -121,16 +126,16 @@ const SingleThreadView = () => {
           </div>)}
 
           <div className="thread-btns">
-            {thread.author.userId == user.userId && (
+            {!checkIfBlockedFromFamily(user) && thread.author.userId == user.userId && (
               <div className='thread-btns'>
                 <Button className='thread-btns' onClick={editThread}>{btnText}</Button>
                 <Button className='thread-btns' onClick={deleteThread} title="Delete thread"><i className="fas fa-trash-alt"></i></Button>
               </div>
             )}
             <Button className='thread-btns' title='Post reply' onClick={toggleReplyBox}><i className="fas fa-reply"></i></Button>
-            <Button className='thread-btns' title='Share link' onClick={getThreadLink}><i className="fas fa-share-square"></i></Button>
+            {!checkIfBlockedFromFamily(user) && <Button className='thread-btns' title='Share link' onClick={getThreadLink}><i className="fas fa-share-square"></i></Button>}
             {/* <Button className='thread-btns' title='Report thread' ><i className="fas fa-exclamation"></i></Button> */}
-            {user.roles.includes("admin") && (<Button className='thread-btns' title='Censor thread content'><i className="fas fa-comment-slash"></i></Button>)}
+            {!checkIfBlockedFromFamily(user) && user.roles.includes("admin") && (<Button className='thread-btns' title='Censor thread content'><i className="fas fa-comment-slash"></i></Button>)}
 
           </div>
         </div>
