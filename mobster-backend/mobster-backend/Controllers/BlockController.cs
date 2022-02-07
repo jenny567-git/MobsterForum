@@ -17,12 +17,17 @@ namespace mobster_backend.Controllers
             this.blockService = blockService;
         }
 
+        /// <summary>
+        /// Get all blocked members by family id
+        /// </summary>
+        /// <param name="familyId">Id of family</param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetBlockUserByFamily(Guid familyId)
         {
             try
             {
-                var blockedUsers = await blockService.GetBlockedUserByFamily(familyId);
+                var blockedUsers = await blockService.GetBlockedUsersByFamily(familyId);
                 return Ok(blockedUsers);
             }
             catch (Exception e)
@@ -31,6 +36,11 @@ namespace mobster_backend.Controllers
             }
         }
         
+        /// <summary>
+        /// Blocks an user from a family
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> BlockUserFromFamilyAsync(SetBlockedMemberDto model)
         {
@@ -46,6 +56,12 @@ namespace mobster_backend.Controllers
             return StatusCode(201);
         }
         
+        /// <summary>
+        /// Removes a currently blocked user from the family's black list
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="familyId"></param>
+        /// <returns></returns>
         [HttpDelete]
         public async Task<IActionResult> RemoveBlockUserFromFamilyAsync(Guid userId, Guid familyId)
         {

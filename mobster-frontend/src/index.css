@@ -22,12 +22,20 @@ h4 {
 	font-family: 'Special Elite';
 }
 
-.flex {
+div{
+	color:white
+}
+
+.flex{
 	display: flex;
 	flex-direction: row;
 }
 
-.space {
+.dark{
+	color: black;
+}
+
+.space{
 	justify-content: space-between;
 }
 /* Home Page */

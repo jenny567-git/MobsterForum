@@ -1,13 +1,13 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Context } from "../../utils/store";
 import { FloatingLabel, Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useLocalStorage } from '../../CustomHooks/useLocalStorage'
 
 const CreateFamily = () => {
   const [familyName, setfamilyName] = useState("");
   const [description, setDescription] = useState("");
-  const [context, updateContext] = useContext(Context);
+  const [user, setuser] = useLocalStorage('user', null)
 
   let navigate = useNavigate();
 
@@ -15,13 +15,15 @@ const CreateFamily = () => {
     let family = {
       Name: familyName,
       Description: description,
-      AdminId: context.user.userid,
+      AdminId: user.userId,
     };
 
     await axios
       .post(`https://localhost:44304/api/Family`, family)
       .then((res) => {
         console.log("Success: ", res.data);
+        navigate(`/family/${res.data.familyId}`)
+        window.location.reload(false);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -30,30 +32,18 @@ const CreateFamily = () => {
 
   return (
     <div className="container">
-      <Button onClick={() => navigate(-1)}>Back</Button>
-      <h2>Create new family</h2>
-      {/* <p>Name:</p> */}
-      {/* <input
-        type="text"
-        value={familyName}
-        onChange={(e) => setfamilyName(e.target.value)}
-      /> */}
-      {/* <p>Description:</p>
-      <input
-        type="text"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-      /> */}
-      <FloatingLabel controlId="inputName" label="Name" className="mb-3">
+      <FloatingLabel controlId="inputName" label="Name" className="mb-3" className="dark">
         <Form.Control
+        className="dark"
           as="textarea"
           placeholder="Family Name"
           value={familyName}
           onChange={(e) => setfamilyName(e.target.value)}
         />
       </FloatingLabel>
-      <FloatingLabel controlId="inputDescription" label="Description">
+      <FloatingLabel controlId="inputDescription" label="Description" className="dark">
         <Form.Control
+        className="dark"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           as="textarea"
@@ -61,7 +51,7 @@ const CreateFamily = () => {
           style={{ height: "100px" }}
         />
       </FloatingLabel>
-      <p>Admin: {context.user.username}</p>
+      <p>Admin: {user.userName}</p>
       <Button variant="success" onClick={onSubmit}>
         Save
       </Button>

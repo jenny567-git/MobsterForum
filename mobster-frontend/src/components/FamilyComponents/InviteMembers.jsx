@@ -1,38 +1,78 @@
-import { useState, useContext } from "react";
-import { Button, InputGroup, FormControl, Form } from "react-bootstrap";
-import { Context } from "../../utils/store";
-import { Typeahead } from 'react-bootstrap-typeahead'
-import 'react-bootstrap-typeahead/css/Typeahead.css';
-import './invite.css'
+import { useState, useEffect } from "react";
+import { Button, Form, Alert } from "react-bootstrap";
+import { Typeahead } from "react-bootstrap-typeahead";
+import "react-bootstrap-typeahead/css/Typeahead.css";
+import "./invite.css";
+import axios from "axios";
 
-
-
-const InviteMembers = () => {
-  const [context, updateContext] = useContext(Context);
+const InviteMembers = ({familyId, stateChanger}) => {
   const [selected, setSelected] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
 
-  const onSelect = (data) =>{
-    setSelected(data)
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  const fetchUsers = async () => {
+    const response = await axios
+      .get(`https://localhost:44304/api/Family/${familyId}/invite`)
+      .then((res) => {
+        console.log("Success: ", res.data);
+        setUsers(res.data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
+  const onSelect = (data) => {
+    setSelected(data);
     console.log(data);
-    // updateContext({currentAdmin: data[0]})
-  }
-  
+  };
+
+  const onAdd = async () => {
+    console.log("in add", selected);
+    const response = await axios
+      .post(`https://localhost:44304/addMembers?familyId=${familyId}`, selected)
+      .then((res) => {
+        console.log("Success: ", res.data);
+        setUsers(users.filter((user) => !selected.includes(user)));
+        setSelected([]);
+        setSuccess(true);
+        stateChanger('New data');
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        setError(true);
+      });
+      
+      //show response for 2s
+      setTimeout(() => {
+        setSuccess(false);
+        setError(false);
+      }, 2000);
+  };
+
   return (
-  <div className="container">
+    <div className="container">
       <Form.Group>
-        <Form.Label>Invite user</Form.Label>
+        {/* <Form.Label>Add members</Form.Label> */}
         <Typeahead
           id="basic-typeahead-multi"
           multiple
           labelKey="userName"
           onChange={(e) => onSelect(e)}
-          options={context.allUsers}
+          options={users}
           placeholder="Type an username"
           selected={selected}
         />
       </Form.Group>
-      <Button onClick={() => alert('To fix')}>Send invitation</Button>
-  </div>
+      <Button onClick={onAdd}>Add</Button>
+      {success && <Alert variant="success">Success</Alert>}
+      {error && <Alert variant="danger">Error</Alert>}
+    </div>
   );
 };
 

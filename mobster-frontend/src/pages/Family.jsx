@@ -1,125 +1,229 @@
-import React, { useState, useContext, useEffect } from "react";
-import FakeThread from "../components/Fakes/FakeThread";
-import { Context } from "../utils/store";
-import { useNavigate,useParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import EditFamily from "../components/FamilyComponents/EditFamily";
 import { Modal, Button } from "react-bootstrap";
-import axios from 'axios';
-import { useAuth0 } from "@auth0/auth0-react";
-
+import Thread from "../components/Thread/Thread";
+import InviteMembers from "../components/FamilyComponents/InviteMembers";
+import CreateFamily from "../components/FamilyComponents/CreateFamily";
+import axios from "axios";
+import { useLocalStorage } from "../CustomHooks/useLocalStorage";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "../components/FamilyComponents/family-override.css";
 
 const Family = () => {
-  const [context, updateContext] = useContext(Context);
   const [isEditing, setIsEditing] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showInviteModal, setShowInviteModal] = useState(false);
+  const [showJoinModal, setShowJoinModal] = useState(false);
+  const [showCreateFamilyModal, setShowCreateFamilyModal] = useState(false);
+  const [canJoin, setCanJoin] = useState(false);
   const [family, setFamily] = useState({});
+  const [isFetching, setIsFetching] = useState(true);
+  const [state, setState] = useState("");
   const { id } = useParams();
   let navigate = useNavigate();
 
-  const {user} = useAuth0();
-  // console.log(user);
+  const [user, setuser] = useLocalStorage("user", null);
+
   useEffect(() => {
     fetchFamily();
-  }, [])
-  
+    checkJoinable();
+  }, [canJoin, state]);
+
   const fetchFamily = async () => {
-    const response = await axios.get(
-      `https://localhost:44304/api/Family/${id}`
+    const response = await axios
+      .get(`https://localhost:44304/api/Family/${id}`)
+      .then((res) => {
+        console.log("Success: ", res.data);
+        setFamily(res.data);
+        setIsFetching(false);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
+  const checkJoinable = async () => {
+    console.log("user", user);
+    const blockResponse = await axios.get(
+      `https://localhost:44304/api/Block?familyId=${id}`
     );
-    setFamily(response.data);
-    console.log(response.data);
-    // setloading(false);
+
+    var blocklist = blockResponse.data ? blockResponse.data : [];
+
+    const memberResponse = await axios.get(
+      `https://localhost:44304/api/Family/${id}/members`
+    );
+    //check if current user is not a member of the group and not a blocked member
+    if (
+      user &&
+      !memberResponse.data.some((e) => e.authId === user.authId) &&
+      !blocklist.some((e) => e.authId === user.authId)
+    ) {
+      console.log("can join");
+      setCanJoin(true);
+    }
   };
 
   const toggleEdit = () => {
     isEditing ? setIsEditing(false) : setIsEditing(true);
   };
 
-  //working
-  const toManipulate = () => {
-    //test to manipulate context
-    let family = {
-      ...context.family,
-    };
-    family.memberCount = -10;
-    updateContext({
-      family: family,
-      test: "new",
-    });
-};
-
   const toJoin = () => {
-    //hard coded, to be replaced
-    let userid = "507DED86-5B40-4A96-ACAF-F847AB7AE72E";
+    setShowJoinModal(true);
     axios
-      .post(`https://localhost:44304/addMember?familyId=${id}&userId=${userid}`)
+      .post(
+        `https://localhost:44304/addMember?familyId=${id}&userId=${user.userId}`
+      )
       .then((res) => {
         console.log("Success: ", res.data);
-        alert('You have joined the family');
+        let newfamily = { ...family };
+        newfamily.memberCount++;
+        setFamily(newfamily);
+        setCanJoin(false);
       })
       .catch((error) => {
         console.error("Error:", error);
       });
-      // let family = {...family};
-      // family.memberCount++;
-      // setFamily(family);
+    console.log(family);
   };
 
   const onDelete = () => {
-    axios.delete(`https://localhost:44304/api/Family?familyId=${id}`).then( () => {
-      alert('Family deleted');
-    })
+    axios
+      .delete(`https://localhost:44304/api/Family?familyId=${id}`)
+      .then(() => {
+        alert("Family deleted");
+      });
     //add message: will be redirected after 5 sec
-    const timer = setTimeout( () => {
+    const timer = setTimeout(() => {
       handleClose();
-      navigate('/');
+      navigate("/");
     }, 5000);
   };
 
-  const handleClose = () => setShowModal(false);
-  const handleShow = () => setShowModal(true);
-
-  let myStyle = {
-    backgroundColor: 'gray'
-  };
+  if (!user) {
+    return (
+      <div className="container">
+        <h1>{family.name}</h1>
+        <h2>
+          <i>{family.description}</i>
+        </h2>
+        <p>Members: {family.memberCount}</p>
+        <p>Render Welcome component</p>
+      </div>
+    );
+  }
 
   return (
     <div className="container">
+      <h1>{family.name}</h1>
+      <h2>
+        <i>{family.description}</i>
+      </h2>
+      <p>Members: {family.memberCount}</p>
 
-        {/* <p>Hämtad från context:</p>
-      <h1>{context.family.name}</h1>
-      <h1>{context.test}</h1>
-      <p>Members: {context.family.memberCount}</p>
-       */}
-       <h1>{family.name}</h1>
-       <h2><i>{family.description}</i></h2>
-       <p>Members: {family.memberCount}</p>
-      <Button style={myStyle} onClick={() => navigate("/")}>Home</Button>
-      <Button onClick={() => navigate(`/family/${id}/invite`)}>Invite</Button>
+      {canJoin && <Button onClick={toJoin}>Join</Button>}
 
-      {/* add a check, if current user is not a family member - display Join button */}
-      {/* add a check, if blocked member, cant join */}
-      <Button onClick={toJoin}>Join</Button>
-
-      {/* add a check, if current user == admin, display Edit button */}
-      <Button onClick={toggleEdit}>Edit</Button>
-
-      {/* <button onClick={toManipulate}> Mainpulate context</button> */}
-      <Button onClick={() => navigate(`/family/${id}/members`)}> Handle members</Button>
-
-      {/* add a check, if current user == admin, display Delete button */}
-      <Button variant="danger" onClick={handleShow}>Delete family</Button>
+      {/*if current user == admin or site admin, display Add/Edit/Delete button */}
+      {user &&
+        (user.roles.includes("admin") || user.userId == family.adminUserId) && (
+          <>
+            <Button onClick={() => setShowInviteModal(true)}>
+              Add members
+            </Button>
+            <Button onClick={toggleEdit}>Edit</Button>
+            <Button onClick={() => navigate(`/family/${id}/members`)}>
+              {" "}
+              Handle members
+            </Button>
+            <Button variant="danger" onClick={() => setShowDeleteModal(true)}>
+              Delete family
+            </Button>
+          </>
+        )}
 
       {/* to be moved */}
-      <Button variant="success" onClick={() => navigate("/family/create")}>Create new family</Button>
+      {user && (
+        <Button
+          variant="success"
+          onClick={() => setShowCreateFamilyModal(true)}
+        >
+          Create new family
+        </Button>
+      )}
 
-      {isEditing && <EditFamily />}
-      
-      <FakeThread />
-      <FakeThread />
-      <FakeThread />
-      
-      <Modal show={showModal} onHide={handleClose}>
+      {isEditing && (
+        <EditFamily stateChanger={setState} isEdit={setIsEditing} />
+      )}
+
+      <ul>
+        {!isFetching &&
+          family.threads &&
+          Array.from(family.threads).map((thread) => (
+            <Thread key={thread.threadId} thread={thread} />
+          ))}
+        {!family.threads && <p>There is no threads in this family yet...</p>}
+      </ul>
+
+      {/* INVITE MODAL */}
+      <Modal
+        show={showInviteModal}
+        onHide={() => setShowInviteModal(false)}
+        centered
+        className="modal"
+        // contentClassName="modal"
+        // bsPrefix="modal"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Add members</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <InviteMembers familyId={id} stateChanger={setState} />
+        </Modal.Body>
+      </Modal>
+
+      {/* JOIN MODAL */}
+      {user && (
+        <Modal
+          show={showJoinModal}
+          onHide={() => setShowJoinModal(false)}
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Welcome {user.userName}!</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <p>You're now a part of the family :)</p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShowJoinModal(false)}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      )}
+
+      {/* CREATE FAMILY MODAL */}
+      <Modal
+        show={showCreateFamilyModal}
+        onHide={() => setShowCreateFamilyModal(false)}
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Create new family</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <CreateFamily />
+        </Modal.Body>
+        <Modal.Footer></Modal.Footer>
+      </Modal>
+
+      {/* DELETE MODAL */}
+      <Modal
+        show={showDeleteModal}
+        onHide={() => setShowDeleteModal(false)}
+        centered
+      >
         <Modal.Header closeButton>
           <Modal.Title>Are you sure?</Modal.Title>
         </Modal.Header>
@@ -127,7 +231,7 @@ const Family = () => {
           <p>This family will be permanently be removed</p>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
             Close
           </Button>
           <Button variant="danger" onClick={onDelete}>
