@@ -210,7 +210,6 @@ useEffect(()=>{
                           </Button>
                         </Modal.Footer>
                   </Modal>
-                            <button onClick={log}>log</button>
         </div>;
 };
 
