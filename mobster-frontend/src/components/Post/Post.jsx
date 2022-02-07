@@ -128,7 +128,7 @@ useEffect(()=>{
                     <div className="post-content">
                         
                         {post.author.isBanned && post.author.isActive && <p className='post-metadata'>Posted by <strong className='post-metadata-bold'>{post.author.userName} &#91;In Jail&#93; </strong> at {post.createdAt}</p>}
-                        {!post.author.isActive && !post.author.isBanned && <p className='post-metadata'>Posted by <strong className='post-metadata-bold'>{post.author.userName} &#91;Deceased&#93; </strong> at {post.createdAt}</p>}
+                        {!post.author.isActive && !post.author.isBanned && <p className='post-metadata'>Posted by <strong className='post-metadata-bold'>&#91;Deceased&#93;</strong> at {post.createdAt}</p>}
                         {!post.author.isBanned && post.author.isActive && <p className='post-metadata'>Posted by <strong className='post-metadata-bold'>{post.author.userName}</strong> at {post.createdAt}</p>}
                         
                         {!post.isCensored && <p>{post.content}</p>}
