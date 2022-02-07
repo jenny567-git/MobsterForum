@@ -70,6 +70,7 @@ namespace mobster_backend
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IBlockService, BlockService>();
             services.AddTransient<IDatabaseSeedService, DatabaseSeedService>();
+            services.AddTransient<IReportService, ReportService>();
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );

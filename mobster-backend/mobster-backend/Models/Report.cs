@@ -1,4 +1,5 @@
-﻿using System;
+﻿using mobster_backend.DTOs.Write;
+using System;
 
 namespace mobster_backend.Models
 {
@@ -16,5 +17,17 @@ namespace mobster_backend.Models
         public virtual User ObjectUser { get; set; }
         public virtual Thread Thread { get; set; }
         public virtual Post Post { get; set; }
+
+        public Report() {}
+
+        public Report(SetReportDto model)
+        {
+            SubjectUserId = model.SubjectUserId;
+            ObjectUserId = model.ObjectUserId;
+            Reason = model.Reason;
+            CreatedAt = DateTime.Now;
+            ThreadId = model.ThreadId;
+            PostId = model.PostId;
+        }
     }
 }

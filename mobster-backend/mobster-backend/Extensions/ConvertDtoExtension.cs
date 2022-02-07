@@ -154,6 +154,7 @@ namespace mobster_backend.Extensions
 
             return users.Select(f => f.ToUserDto());
         }
+        
         public static UserDto ToUserDto(this BlockedMember user)
         {
             if (user == null)
@@ -176,6 +177,35 @@ namespace mobster_backend.Extensions
             }
 
             return users.Select(f => f.ToUserDto());
+        }
+        
+        public static ReportDto ToReportDto(this Report report)
+        {
+            if (report == null)
+            {
+                return null;
+            }
+
+            return new ReportDto
+            {
+                ReportId = report.ReportId,
+                SubjectUserId = report.SubjectUserId,
+                ObjectUserId = report.ObjectUserId,
+                Reason = report.Reason,
+                CreatedAt = report.CreatedAt,
+                ThreadId = report.ThreadId,
+                PostId = report.PostId,
+            };
+        }
+
+        public static IEnumerable<ReportDto> ToReportDtos(this IEnumerable<Report> reports)
+        {
+            if (reports == null)
+            {
+                return null;
+            }
+
+            return reports.Select(f => f.ToReportDto());
         }
     }
 }
