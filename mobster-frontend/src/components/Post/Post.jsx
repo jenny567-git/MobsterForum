@@ -106,7 +106,7 @@ export const Post = ({ id , blockedMembers , thread }) => {
 
     const toggleCensorPost = async (postId) => {
       await axios
-        .put(`https://localhost:44304/censor/${postId}`)
+        .put(`https://localhost:44304/api/Posts/censor/${postId}`)
         .catch((error) => {
           console.error("Error:", error);
         });
