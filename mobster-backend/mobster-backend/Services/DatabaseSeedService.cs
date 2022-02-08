@@ -656,7 +656,8 @@ namespace mobster_backend.Services
                 ObjectUserId = user5.UserId,
                 Reason = "Unrespectful langauage",
                 CreatedAt = new DateTime(2022, 01, 03),
-                PostId = post7.PostId
+                PostId = post7.PostId,
+                ThreadId = thread6.ThreadId
             };
 
             var report2 = new Report()
