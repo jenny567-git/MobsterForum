@@ -25,7 +25,7 @@ namespace mobster_backend.Extensions
                 Author = thread.Author?.ToUserDto(),
                 Title = thread.Title,
                 Content = thread.Content,
-                CreatedAt = thread.CreatedAt,
+                CreatedAt = thread.CreatedAt.ToString("yyyy/MM/dd HH:mm"),
                 Posts = thread.Posts?.ToPostDtos(),
                 IsCensored = thread.IsCensored
             };
@@ -55,7 +55,7 @@ namespace mobster_backend.Extensions
                 FamilyId = thread.FamilyId,
                 Author = thread.Author.ToUserDto(),
                 Title = thread.Title,
-                CreatedAt = thread.CreatedAt,
+                CreatedAt = thread.CreatedAt.ToString("yyyy/MM/dd HH:mm"),
                 Content = thread.Content,
                 IsCensored = thread.IsCensored
             };
@@ -84,7 +84,7 @@ namespace mobster_backend.Extensions
                 ThreadId = post.ThreadId,
                 Content = post.Content,
                 IsCensored = post.IsCensored,
-                CreatedAt = post.CreatedAt,
+                CreatedAt = post.CreatedAt.ToString("yyyy/MM/dd HH:mm"),
                 Author = post.Author.ToUserDto(),
             };
         }
@@ -111,8 +111,8 @@ namespace mobster_backend.Extensions
                 FamilyId = family.FamilyId,
                 Name = family.Name,
                 Description = family.Description,
-                AddedAt = family.AddedAt,
-                UpdatedAt = family.UpdatedAt,
+                AddedAt = family.AddedAt.ToString("yyyy/MM/dd HH:mm"),
+                UpdatedAt = family.UpdatedAt.ToString("yyyy/MM/dd HH:mm"),
                 MemberCount = family.MemberCount,
                 AdminUserId = family.Admin.UserId,
                 FamilyMembers = family.FamilyMembers?.ToUserDtos(),
@@ -167,7 +167,7 @@ namespace mobster_backend.Extensions
             return new UserDto
             {
                 UserId = user.UserId,
-                CreatedAt = user.BlockedAt
+                CreatedAt = user.BlockedAt.ToString("yyyy/MM/dd HH:mm")
             };
         }
 
@@ -194,7 +194,7 @@ namespace mobster_backend.Extensions
                 SubjectUserId = report.SubjectUserId,
                 ObjectUserId = report.ObjectUserId,
                 Reason = report.Reason,
-                CreatedAt = report.CreatedAt,
+                CreatedAt = report.CreatedAt.ToString("yyyy/MM/dd HH:mm"),
                 ThreadId = report.ThreadId,
                 PostId = report.PostId,
                 SubjectUser = report.SubjectUser?.ToUserDto(),
