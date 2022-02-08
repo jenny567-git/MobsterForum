@@ -9,7 +9,6 @@ function AdminDashboard() {
     let [isLoaded, setLoadedState] = useState(false);
     let searchbar = document.querySelector('#searchbar');
     let searchString = '';
-    let auth0 = useAuth0();
 
     useEffect(() => {
         if(isLoaded == false){

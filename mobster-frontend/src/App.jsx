@@ -22,12 +22,11 @@ function App() {
   const [loggedInUser, setLoggedInUser] = (useLocalStorage('user', null));
 
   function isAuthorizedAsApplicationAdmin() {
+    console.log('Inloggad användare APP: ', loggedInUser);
     let isAuthorized = false;
     if (loggedInUser !== null){
-      for (let i = 0; i < loggedInUser.roles.length; i++){
-        if(loggedInUser.roles.includes('admin')){
-          isAuthorized = true;
-        }
+      if(loggedInUser.roles.includes('admin')){
+        isAuthorized = true;
       }
     }
     return isAuthorized;
