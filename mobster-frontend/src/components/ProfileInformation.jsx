@@ -2,6 +2,7 @@ import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import {useState, useEffect} from 'react'
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const ProfileInformation = () => {
   const {
@@ -41,7 +42,9 @@ const ProfileInformation = () => {
                 <div className="p-2 border">Email: </div>
                 <div className="p-2 border">{user.email}</div>
             </div>
-            
+            <div>
+              <Link to="/admin-dashboard" onClick={() => localStorage.setItem("user", JSON.stringify(loggedInUser))}>Admin</Link>
+            </div>
         </div>
     </div>
 )
