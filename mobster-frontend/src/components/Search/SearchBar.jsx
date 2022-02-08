@@ -38,6 +38,7 @@ function SearchBar() {
         });
         break;
     }
+    setSearchString('');
     navigate("/searchresult");
   };
 
@@ -54,6 +55,7 @@ function SearchBar() {
           type="text"
           placeholder="Search..."
           autoComplete="off"
+          value={searchString}
           onChange={(e) => setSearchString(e.target.value)}
         />
 
