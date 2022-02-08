@@ -79,6 +79,8 @@ const EditFamily = ({stateChanger, isEdit}) => {
 
   const buttonStyles = {
     color: "white",
+    backgroundColor: "#ec625f",
+    border: "none",
     fontFamily: "Lekton",
     margin: "10px",
     fontWeight: "bold",

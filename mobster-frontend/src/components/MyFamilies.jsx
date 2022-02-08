@@ -44,7 +44,10 @@ function MyFamilies() {
       margin: "10px",
       fontWeight: "bold",
       cursor: "pointer",
-      borderRadius: "0.5rem"
+      border: "none",
+      borderRadius: "0.5rem",
+      backgroundColor: "#ec625f",
+      
     }
 
   // { error && <h2>you haven't joined any families.</h2> }

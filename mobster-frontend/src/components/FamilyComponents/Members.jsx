@@ -72,7 +72,7 @@ const Members = () => {
   if(isLoading) return <>Loading...</>
 
   return (
-    <div className="container">
+    <div>
       <div className="flex space">
       <h1>List of members({members.length})</h1>
       <Button

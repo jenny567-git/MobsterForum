@@ -49,6 +49,7 @@ function SearchBar() {
   const onSubmit = async (e) => {
     e.preventDefault();
     search(e);
+
   };
 
   return (

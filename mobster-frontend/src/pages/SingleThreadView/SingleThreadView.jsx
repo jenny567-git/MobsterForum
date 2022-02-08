@@ -108,7 +108,7 @@ const SingleThreadView = () => {
   return <div className="SingleThreadView">
 
     <div className="main-container">
-      <div className="thread-container">
+      <div className="single-thread-container">
 
         {thread && (<div className="thread">
           {thread.author.isBanned && <p className="thread-metadata">Posted by <strong className='thread-metadata-banned'> &#91;Banned User&#93; </strong> in <em className='thread-metadata-bold'>{thread.family.name}</em>  at {thread.createdAt}</p>}

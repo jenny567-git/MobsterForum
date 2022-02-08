@@ -120,8 +120,8 @@ const Family = () => {
     backgroundColor: "#ec625f",
     border: "none",
     fontFamily: "Lekton",
-    margin: "2px",
-    width:"10%",
+    margin: "4px",
+    width:"15%",
     fontWeight: "bold",
     cursor: "pointer",
     borderRadius: "0.5rem"
@@ -154,15 +154,7 @@ const Family = () => {
           </>
         )}
 
-      {/* to be moved */}
-      {/* {user && (
-        <Button style={buttonStyles}
-          variant="success"
-          onClick={() => setShowCreateFamilyModal(true)}
-        >
-          Create new family
-        </Button>
-      )} */}
+      
 
       {isEditing && (
         <EditFamily stateChanger={setState} isEdit={setIsEditing} />
@@ -215,20 +207,6 @@ const Family = () => {
         </Modal>
       )}
 
-      {/* CREATE FAMILY MODAL
-      <Modal
-        show={showCreateFamilyModal}
-        onHide={() => setShowCreateFamilyModal(false)}
-        centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title><p>Create new family</p></Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <CreateFamily />
-        </Modal.Body>
-        <Modal.Footer></Modal.Footer>
-      </Modal> */}
 
       {/* DELETE MODAL */}
       <Modal

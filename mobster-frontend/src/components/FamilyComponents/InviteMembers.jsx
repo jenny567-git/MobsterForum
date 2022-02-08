@@ -65,7 +65,7 @@ const InviteMembers = ({familyId, stateChanger}) => {
   }
 
   return (
-    <div className="container">
+    <div>
       <Form.Group>
         {/* <Form.Label>Add members</Form.Label> */}
         <Typeahead
