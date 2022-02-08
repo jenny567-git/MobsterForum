@@ -38,14 +38,13 @@ const Report = () => {
 
   const onDelete = () => {
     //delete report
-    // axios.delete(`https://localhost:44304/api/Report?reportId=${selectedReport.reportId}`)
-    // .then((res) => {
-    //     console.log("Success: Delete report", res.data);
-    // })
-    // .catch((error) => {
-    //     console.error("Error: Delete report", error);
-    //   });
-    console.log("deleted report");
+    axios.delete(`https://localhost:44304/api/Report?reportId=${selectedReport.reportId}`)
+    .then((res) => {
+        console.log("Success: Delete report", res.data);
+    })
+    .catch((error) => {
+        console.error("Error: Delete report", error);
+      });
     setReports(reports.filter(function(report){
         return report.reportId !== selectedReport.reportId;
       }) );
@@ -53,13 +52,12 @@ const Report = () => {
   };
 
   const onCensur = () => {
-    console.log("censur and delete report");
-    //censur post/thread
-    //delete report
-    setReports(reports.filter(function(report){
-        return report.reportId !== selectedReport.reportId;
-      }) );
-      setShowContentModal(false);
+    if(selectedReport.postId == null){
+      axios.put(`https://localhost:44304/api/Thread/censor/${selectedReport.threadId}`)
+    } else{
+      axios.put(`https://localhost:44304/api/Posts/censor/${selectedReport.postId}`)
+    }
+    onDelete();
   };
 
   let count = 1;
