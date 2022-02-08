@@ -151,7 +151,7 @@ useEffect(()=>{
                             <Button className='post-btn' onClick={() => handleShowEdit(post)}><i className='fas fa-edit' title="Edit post"></i></Button>
                             <Button className='post-btn' title='Delete post' onClick={() => handleShowDelete(post.postId)}><i className="fas fa-trash-alt"></i></Button>
                         </div>}
-                  {!checkIfBlockedFromFamily(user) && post.author.userId != user.userId && !user.roles.includes("admin") && <Button className='post-btn' title='Report post'><i className="fas fa-exclamation"></i></Button>}
+                        {!checkIfBlockedFromFamily(user) && post.author.userId != user.userId && !user.roles.includes("admin") && <Button className='post-btn' title='Report post'><i className="fas fa-exclamation"></i></Button>}
                         {!checkIfBlockedFromFamily(user) && user.roles.includes("admin") && post.author.userId != user.userId && (<Button className='post-btn' onClick={() => toggleCensorPost(post.postId)} title='Censor post content'><i className="fas fa-comment-slash"></i></Button>)}
                         
                     </div>
