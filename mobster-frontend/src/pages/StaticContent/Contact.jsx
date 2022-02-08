@@ -44,9 +44,8 @@ export const Contact = () => {
 
   return (
     <div className="contact-container">
-      <h1>Contact or Report</h1>
-      <h6>Contact us, or report member or post.</h6>
-      <h6>For report we need username and what post it's regarding</h6>
+      <h1>Contact us</h1>
+      <h6>If you need the Mobster Family's support or protection</h6>
       <div className="contact-form">
         <input
           type="text"
@@ -71,7 +70,6 @@ export const Contact = () => {
             Thank you for your message, we will be in touch in no time!
           </span>
         )}
-        {/* TODO make span disappear after a few seconds */}
       </div>
     </div>
   );
