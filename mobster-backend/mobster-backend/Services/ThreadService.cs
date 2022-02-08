@@ -136,5 +136,22 @@ namespace mobster_backend.Services
                 return threads.ToThreadDtos();
             }
         }
+
+        public async Task ToggleCensorThread(Guid threadId)
+        {
+            var thread = await context.Threads
+                .FirstOrDefaultAsync(t => t.ThreadId == threadId);
+
+            if (thread == null)
+            {
+                throw new DbNotFoundException($"No thread with id {thread} exists in the database.");
+            }
+            else
+            {
+                thread.IsCensored = !thread.IsCensored;
+
+                await context.SaveChangesAsync();
+            }
+        }
     }
 }

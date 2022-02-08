@@ -141,6 +141,30 @@ namespace mobster_backend.Controllers
         }
 
         /// <summary>
+        /// Toggles the IsCensored flag on a single post
+        /// </summary>
+        /// <param name="threadId">The id of the post to be censored/uncensored</param>
+        /// <returns></returns>
+        [HttpPut("censor/{threadId}")]
+        public async Task<IActionResult> ToggleCensorThread(Guid threadId)
+        {
+            try
+            {
+                await threadService.ToggleCensorThread(threadId);
+            }
+            catch (DbNotFoundException e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+
+            return Ok();
+        }
+
+        /// <summary>
         /// Deletes an existing thread
         /// </summary>
         /// <param name="id">The id of the thread to be deleted</param>

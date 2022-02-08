@@ -26,7 +26,8 @@ namespace mobster_backend.Extensions
                 Title = thread.Title,
                 Content = thread.Content,
                 CreatedAt = thread.CreatedAt,
-                Posts = thread.Posts?.ToPostDtos()
+                Posts = thread.Posts?.ToPostDtos(),
+                IsCensored = thread.IsCensored
             };
         }
 
@@ -56,6 +57,7 @@ namespace mobster_backend.Extensions
                 Title = thread.Title,
                 CreatedAt = thread.CreatedAt,
                 Content = thread.Content,
+                IsCensored = thread.IsCensored
             };
         }
 
