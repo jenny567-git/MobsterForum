@@ -3,7 +3,7 @@ import axios from 'axios'
 import { Button, Form, Modal } from 'react-bootstrap';
 // import { useAuth0 } from '@auth0/auth0-react'; 
 import { useLocalStorage } from '../../CustomHooks/useLocalStorage';
-import adminPic from '../../assets/profile-icons/admin.jpg'
+// import adminPic from '../../assets/profile-icons/admin.jpg'
 import userPic from '../../assets/profile-icons/user.jpg'
 import bannedPic from '../../assets/profile-icons/banned.jpg'
 import inactivePic from '../../assets/profile-icons/inactive.png'
@@ -151,8 +151,8 @@ useEffect(()=>{
                             <Button className='post-btn' onClick={() => handleShowEdit(post)}><i className='fas fa-edit' title="Edit post"></i></Button>
                             <Button className='post-btn' title='Delete post' onClick={() => handleShowDelete(post.postId)}><i className="fas fa-trash-alt"></i></Button>
                         </div>}
-                        {!checkIfBlockedFromFamily(user) && post.author.userId != user.userId && <Button className='post-btn' title='Report post'><i className="fas fa-exclamation"></i></Button>}
-                        {!checkIfBlockedFromFamily(user) && user.roles.includes("admin") && (<Button className='post-btn' onClick={() => toggleCensorPost(post.postId)} title='Censor post content'><i className="fas fa-comment-slash"></i></Button>)}
+                  {!checkIfBlockedFromFamily(user) && post.author.userId != user.userId && !user.roles.includes("admin") && <Button className='post-btn' title='Report post'><i className="fas fa-exclamation"></i></Button>}
+                        {!checkIfBlockedFromFamily(user) && user.roles.includes("admin") && post.author.userId != user.userId && (<Button className='post-btn' onClick={() => toggleCensorPost(post.postId)} title='Censor post content'><i className="fas fa-comment-slash"></i></Button>)}
                         
                     </div>
                 </div>
