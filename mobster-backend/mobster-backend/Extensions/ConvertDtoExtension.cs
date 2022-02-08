@@ -195,6 +195,8 @@ namespace mobster_backend.Extensions
                 CreatedAt = report.CreatedAt,
                 ThreadId = report.ThreadId,
                 PostId = report.PostId,
+                SubjectUser = report.SubjectUser?.ToUserDto(),
+                ObjectUser = report.ObjectUser?.ToUserDto()
             };
         }
 

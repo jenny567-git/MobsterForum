@@ -21,7 +21,7 @@ namespace mobster_backend.Services
         }
         public async Task<IEnumerable<ReportDto>> GetAllReports()
         {
-            var reports = await context.Reports.ToListAsync();
+            var reports = await context.Reports.Include(u => u.ObjectUser).Include(u => u.SubjectUser).ToListAsync();
 
             return reports.ToReportDtos();
         }
