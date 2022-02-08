@@ -11,5 +11,6 @@ namespace mobster_backend.DTOs.Read
         public string Title { get; set; }
         public DateTime CreatedAt { get; set; }
         public string Content { get; set; }
+        public bool IsCensored { get; set; }
     }
 }

@@ -17,5 +17,6 @@ namespace mobster_backend.Interfaces
         Task<ThreadDto> GetThread(Guid threadId);
         Task UpdateThread(Guid threadId, SetThreadDto model);
         Task DeleteThread(Guid threadId);
+        Task ToggleCensorThread(Guid threadId);
     }
 }
