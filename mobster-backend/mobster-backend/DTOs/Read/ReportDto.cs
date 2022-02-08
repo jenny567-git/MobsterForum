@@ -12,6 +12,7 @@ namespace mobster_backend.DTOs.Read
         public Guid? ThreadId { get; set; }
         public Guid? PostId { get; set; }
         public string Content { get; set; }
+        public string ThreadTitle { get; set; }
 
         public UserDto SubjectUser { get; set; }
         public UserDto ObjectUser { get; set; }

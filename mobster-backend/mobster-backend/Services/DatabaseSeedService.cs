@@ -652,9 +652,7 @@ namespace mobster_backend.Services
 
             var report1 = new Report()
             {
-                //SubjectUser = user6,
                 SubjectUserId = user6.UserId,
-                //ObjectUser = user5,
                 ObjectUserId = user5.UserId,
                 Reason = "Unrespectful langauage",
                 CreatedAt = new DateTime(2022, 01, 03),

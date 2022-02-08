@@ -7,6 +7,7 @@ using mobster_backend.Interfaces;
 using mobster_backend.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace mobster_backend.Services
@@ -22,8 +23,26 @@ namespace mobster_backend.Services
         public async Task<IEnumerable<ReportDto>> GetAllReports()
         {
             var reports = await context.Reports.Include(u => u.ObjectUser).Include(u => u.SubjectUser).ToListAsync();
-
-            return reports.ToReportDtos();
+            var reportDtos = reports.ToReportDtos();
+            var result = new List<ReportDto>();
+            foreach (var report in reportDtos)
+            {
+                if (report.PostId != null)
+                {
+                    //TODO: find a better solution
+                    var post = await context.Posts.FindAsync(report.PostId);
+                    report.Content = post.Content;
+                    result.Add(report);
+                }
+                else
+                {
+                    var thread = await context.Threads.FindAsync(report.ThreadId);
+                    report.Content = thread.Content;
+                    report.ThreadTitle = thread.Title;
+                    result.Add(report);
+                }
+            }
+            return result;
         }
 
         public async Task AddReport(SetReportDto model)
