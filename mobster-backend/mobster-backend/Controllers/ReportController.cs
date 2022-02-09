@@ -47,11 +47,11 @@ namespace mobster_backend.Controllers
         }
         
         [HttpDelete]
-        public async Task<IActionResult> DeleteReport(Guid reportId)
+        public async Task<IActionResult> DeleteReport(Guid reportId, bool censur)
         {
             try
             {
-                 await reportService.DeleteReport(reportId);
+                 await reportService.DeleteReport(reportId, censur);
             }
             catch (Exception e)
             {

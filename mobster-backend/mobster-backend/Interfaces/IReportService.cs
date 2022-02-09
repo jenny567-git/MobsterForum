@@ -12,7 +12,7 @@ namespace mobster_backend.Interfaces
 
         Task AddReport(SetReportDto model);
 
-        Task DeleteReport(Guid reportId);
+        Task DeleteReport(Guid reportId, bool censur);
 
     }
 }

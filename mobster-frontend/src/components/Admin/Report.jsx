@@ -5,6 +5,7 @@ import { Modal, Button } from "react-bootstrap";
 
 const Report = () => {
   const [reports, setReports] = useState([]);
+  // const [isCensur, setIsCensur] = useState(false);
   const [selectedReport, setSelectedReport] = useState(null);
   const [showReasonModal, setShowReasonModal] = useState(false);
   const [showContentModal, setShowContentModal] = useState(false);
@@ -14,6 +15,10 @@ const Report = () => {
   useEffect(() => {
     fetchReports();
   }, []);
+
+  useEffect(() => {}, [reports]);
+
+  let isCensur = false;
 
   const fetchReports = async () => {
     axios
@@ -38,25 +43,44 @@ const Report = () => {
 
   const onDelete = () => {
     //delete report
-    axios.delete(`https://localhost:44304/api/Report?reportId=${selectedReport.reportId}`)
-    .then((res) => {
+    axios
+      .delete(
+        `https://localhost:44304/api/Report?reportId=${selectedReport.reportId}&censur${isCensur}`
+      )
+      .then((res) => {
         console.log("Success: Delete report", res.data);
-    })
-    .catch((error) => {
+      })
+      .catch((error) => {
         console.error("Error: Delete report", error);
       });
-    setReports(reports.filter(function(report){
-        return report.reportId !== selectedReport.reportId;
-      }) );
-      setShowContentModal(false);
+    if (isCensur) {
+      setReports(
+        reports.filter(function (report) {
+          return (report.postId !== selectedReport.postId && report.threadId !== selectedReport.threadId);
+        })
+      );
+    } else {
+      setReports(
+        reports.filter(function (report) {
+          return report.reportId !== selectedReport.reportId;
+        })
+      );
+    }
+    setShowContentModal(false);
+    isCensur = false;
   };
 
   const onCensur = () => {
-    if(selectedReport.postId == null){
-      axios.put(`https://localhost:44304/api/Thread/censor/${selectedReport.threadId}`)
-    } else{
-      axios.put(`https://localhost:44304/api/Posts/censor/${selectedReport.postId}`)
+    if (selectedReport.postId == null) {
+      axios.put(
+        `https://localhost:44304/api/Thread/censor/${selectedReport.threadId}`
+      );
+    } else {
+      axios.put(
+        `https://localhost:44304/api/Posts/censor/${selectedReport.postId}`
+      );
     }
+    isCensur = true;
     onDelete();
   };
 
@@ -75,9 +99,7 @@ const Report = () => {
             <hr></hr>
           </div>
           <div className="users-list">
-              {reports && reports.length<1 && (
-                  <p>No reports found...</p>
-              )}
+            {reports && reports.length < 1 && <p>No reports found...</p>}
             {reports.map((report) => (
               <div key={report.reportId} className="report-detail flex space">
                 <div>
@@ -87,10 +109,16 @@ const Report = () => {
                   <p>Date: {report.createdAt}</p>
                 </div>
                 <div>
-                  <button onClick={() => onShowContentModal(report)} className="m-2 button block">
+                  <button
+                    onClick={() => onShowContentModal(report)}
+                    className="m-2 button block"
+                  >
                     Evidence
                   </button>
-                  <button onClick={() => onShowReasonModal(report)} className="button block">
+                  <button
+                    onClick={() => onShowReasonModal(report)}
+                    className="button block"
+                  >
                     Motive
                   </button>
                 </div>
@@ -130,7 +158,13 @@ const Report = () => {
                   <Modal.Footer>
                     <Button onClick={onCensur}>Guilty</Button>
                     <Button onClick={onDelete}>Not guilty</Button>
-                    <Button onClick={() => navigate(`/thread/${selectedReport.threadId}`)}>Go to thread</Button>
+                    <Button
+                      onClick={() =>
+                        navigate(`/thread/${selectedReport.threadId}`)
+                      }
+                    >
+                      Go to thread
+                    </Button>
                   </Modal.Footer>
                 </Modal>
               </div>

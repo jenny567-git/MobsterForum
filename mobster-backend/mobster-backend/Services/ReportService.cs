@@ -52,10 +52,19 @@ namespace mobster_backend.Services
             await context.SaveChangesAsync();
         }
 
-        public async Task DeleteReport(Guid reportId)
+        public async Task DeleteReport(Guid reportId, bool censur)
         {
             var report = await context.Reports.FindAsync(reportId);
-            context.Reports.Remove(report);
+            
+            if (censur)
+            {
+                var sameReports = await context.Reports.Where(x => x.PostId == report.PostId && x.ThreadId == report.ThreadId).ToListAsync();
+                context.Reports.RemoveRange(sameReports);
+            }
+            else
+            {
+                context.Reports.Remove(report);
+            }
             await context.SaveChangesAsync();
         }
 
