@@ -16,8 +16,10 @@ const Family = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showInviteModal, setShowInviteModal] = useState(false);
   const [showJoinModal, setShowJoinModal] = useState(false);
-  // const [showCreateFamilyModal, setShowCreateFamilyModal] = useState(false);
+  const [showLeaveModal, setShowLeaveModal] = useState(false);
+  //const [showCreateFamilyModal, setShowCreateFamilyModal] = useState(false);
   const [canJoin, setCanJoin] = useState(false);
+  const [canLeave, setCanLeave] = useState(false);
   const [family, setFamily] = useState({});
   const [isFetching, setIsFetching] = useState(true);
   const [state, setState] = useState("");
@@ -29,6 +31,7 @@ const Family = () => {
   useEffect(() => {
     fetchFamily();
     checkJoinable();
+    checkLeave();
   }, [canJoin, state]);
 
   const fetchFamily = async () => {
@@ -65,6 +68,17 @@ const Family = () => {
       setCanJoin(true);
     }
   };
+  
+  const checkLeave = async () => {
+    const memberResponse = await axios.get(
+      `https://localhost:44304/api/Family/${id}/members`
+    );
+    //check if current user is not a member of the group and not a blocked member
+    if (user && memberResponse.data.some((e) => e.authId === user.authId)) {
+      console.log("can leave");
+      setCanLeave(true);
+    }
+  };
 
   const toggleEdit = () => {
     isEditing ? setIsEditing(false) : setIsEditing(true);
@@ -82,6 +96,27 @@ const Family = () => {
         newfamily.memberCount++;
         setFamily(newfamily);
         setCanJoin(false);
+        setCanLeave(true);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+    console.log(family);
+  };
+  
+  const toLeave = async () => {
+    setShowLeaveModal(true);
+    await axios
+      .delete(
+        `https://localhost:44304/removeUser?familyId=${id}&userId=${user.userId}`
+      )
+      .then((res) => {
+        console.log("Success: ", res.data);
+        let newfamily = { ...family };
+        newfamily.memberCount--;
+        setFamily(newfamily);
+        setCanJoin(true);
+        setCanLeave(false);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -134,9 +169,9 @@ const Family = () => {
       </h2>
       <p>Members: {family.memberCount}</p>
 
-      {canJoin && <Button style={buttonStyles} onClick={toJoin}>Join</Button>}
-
-      {/*if current user == admin or site admin, display Add/Edit/Delete button */}
+          {canJoin && <Button style={buttonStyles} onClick={toJoin}>Join</Button>}
+{canLeave && (<Button onClick={toLeave}>Leave</Button>)} 
+      {/*if current user == admin or site admin, display Add/Edit/Delete button*/}
       {user &&
         (user.roles.includes("admin") || user.userId == family.adminUserId) && (
           <>
@@ -201,6 +236,26 @@ const Family = () => {
           </Modal.Body>
           <Modal.Footer>
             <Button style={buttonStyles} variant="secondary" onClick={() => setShowJoinModal(false)}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      )}
+{/* LEAVE MODAL */}
+      {user && (
+        <Modal
+          show={showLeaveModal}
+          onHide={() => setShowLeaveModal(false)}
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Goodbye {user.userName}!</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <p>You're no longer a part of the family</p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShowLeaveModal(false)}>
               Close
             </Button>
           </Modal.Footer>
