@@ -3,17 +3,43 @@ import Header from './components/Header'
 import Home from './pages/Home'
 import SingleThreadView from './pages/SingleThreadView/SingleThreadView'
 import Family from './pages/Family'
-import CreateFamily from './components/FamilyComponents/CreateFamily'
+// import CreateFamily from './components/FamilyComponents/CreateFamily'
 import Members from './components/FamilyComponents/Members'
 import BlockedMembers from './components/FamilyComponents/BlockedMembers'
-import InviteMembers from './components/FamilyComponents/InviteMembers'
+// import InviteMembers from './components/FamilyComponents/InviteMembers'
+import SearchResult from './components/Search/SearchResult'
 
+import AdminDashboard from './pages/Admin-dashboard'
 import Profile from './pages/Profile'
 import { About } from './pages/StaticContent/About'
 import { NotFound } from './pages/StaticContent/NotFound'
 import { FAQ } from './pages/StaticContent/FAQ'
+import { Contact } from './pages/StaticContent/Contact'
 import { Footer } from './components/Footer'
+import { useLocalStorage } from './CustomHooks/useLocalStorage'
+
 function App() {
+
+  const [loggedInUser, setLoggedInUser] = (useLocalStorage('user', null));
+
+  function isAuthorizedAsApplicationAdmin() {
+    console.log('Inloggad användare APP: ', loggedInUser);
+    let isAuthorized = false;
+    if (loggedInUser !== null){
+      if(loggedInUser.roles.includes('admin')){
+        isAuthorized = true;
+      }
+    }
+    return isAuthorized;
+  }
+
+  // This is mainly for changing the url from /admin-dashboard when user is redirected to "Home"
+  function Redirect() {
+    window.history.pushState('/profile', '', '/profile');
+    return (
+      <Profile />
+    )
+  }
 
   return (
     <Router>
@@ -25,13 +51,22 @@ function App() {
             <Route exact path="/thread/:id" element={<SingleThreadView />}></Route>
             <Route exact path="/family" element={<Family />}></Route>
             <Route exact path="/family/:id" element={<Family />}></Route>
-            <Route exact path="/family/create" element={<CreateFamily />}></Route>
+            {/* <Route exact path="/family/create" element={<CreateFamily />}></Route> */}
             <Route exact path="/family/:familyId/members" element={<Members />}></Route>
             <Route exact path="/family/:familyId/blockedMembers" element={<BlockedMembers />}></Route>
-            <Route exact path="/family/:familyId/invite" element={<InviteMembers />}></Route>
+            {/* <Route exact path="/family/:familyId/invite" element={<InviteMembers />}></Route> */}
+            <Route exact path="/searchresult" element={<SearchResult />}></Route>
+            <Route exact path="/admin-dashboard" element={isAuthorizedAsApplicationAdmin() ? <AdminDashboard /> : <Redirect />} />
+<<<<<<< HEAD
             <Route exact path ="/profile" element={<Profile />}></Route>
             <Route exact path ="/about" element={<About />}></Route>
             <Route exact path ="/faq" element={<FAQ />}></Route>
+            <Route exact path ="/contact" element={<Contact />}></Route>
+=======
+            <Route exact path="/profile" element={<Profile />}></Route>
+            <Route exact path="/about" element={<About />}></Route>
+            <Route exact path="/faq" element={<FAQ />}></Route>
+>>>>>>> main
 
             <Route path="*" element={<NotFound />} />
           </Routes>
@@ -41,5 +76,4 @@ function App() {
     </Router>
   )
 }
-
 export default App

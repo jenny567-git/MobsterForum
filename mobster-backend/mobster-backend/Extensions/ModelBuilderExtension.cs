@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using mobster_backend.Models;
+using System.Collections.Generic;
 
 namespace mobster_backend.Extensions
 {
@@ -8,7 +9,7 @@ namespace mobster_backend.Extensions
         public static ModelBuilder AddRestrictions(this ModelBuilder builder)
         {
             #region User
-            
+
             builder.Entity<User>(e =>
                 e.Property(p => p.UserName)
                     .IsRequired()
@@ -19,7 +20,7 @@ namespace mobster_backend.Extensions
             #endregion
 
             #region BlockedMember
-            
+
             builder.Entity<BlockedMember>(e =>
                 e.Property(p => p.Description).HasMaxLength(200)
                 );
@@ -56,7 +57,7 @@ namespace mobster_backend.Extensions
                 e.Property(p => p.Title)
                     .HasMaxLength(500)
             );
-            
+
             builder.Entity<Thread>(e =>
                 e.Property(p => p.Content)
                     .HasMaxLength(15000)
@@ -65,6 +66,16 @@ namespace mobster_backend.Extensions
             #endregion
 
             return builder;
+        }
+
+        public static bool AddRange<T>(this HashSet<T> source, IEnumerable<T> items)
+        {
+            bool allAdded = true;
+            foreach (T item in items)
+            {
+                allAdded &= source.Add(item);
+            }
+            return allAdded;
         }
     }
 }

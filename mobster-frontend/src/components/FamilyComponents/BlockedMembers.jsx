@@ -22,17 +22,30 @@ const BlockedMembers = () => {
 
   const onRemove = async (userId) => {
     console.log("in delete");
-    // const response = await axios
-    //   .delete(
-    //     `https://localhost:44304/api/Block?userId=${userId}&familyId=${familyId}`
-    //   )
-    //   .then((res) => {
-    //     console.log("Success: ", res.data);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error:", error);
-    //   });
+    const response = await axios
+      .delete(
+        `https://localhost:44304/api/Block?userId=${userId}&familyId=${familyId}`
+      )
+      .then((res) => {
+        console.log("Success: ", res.data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+      
+    setmembers(members.filter(function(user){
+      return user.userId !== userId;
+    }) );
+
   };
+  const buttonStyles = {
+    color: "white",
+    fontFamily: "Lekton",
+    margin: "10px",
+    fontWeight: "bold",
+    cursor: "pointer",
+    borderRadius: "0.5rem"
+  }
 
   return (
     <div className="container">
@@ -52,11 +65,11 @@ const BlockedMembers = () => {
       {!members.length ? 
       ( <>No users found...</> ) : 
       (
-        <Table striped bordered hover>
+        <Table striped bordered hover variant="dark">
           <thead>
             <tr>
               <th>User name</th>
-              <th>Date</th>
+              <th>Blocked since</th>
               <th></th>
             </tr>
           </thead>
@@ -64,10 +77,11 @@ const BlockedMembers = () => {
             {Array.from(members).map((member) => (
               <tr key={member.userId}>
                 <td>{member.userName}</td>
-                <td> TODO</td>
+                <td> {member.createdAt}</td>
                 <td>
-                  <Button>Description (TODO)</Button>
+                  {/* <Button>Description (TODO)</Button> */}
                   <Button
+                  style={buttonStyles}
                     variant="danger"
                     onClick={() => onRemove(member.userId)}
                   >

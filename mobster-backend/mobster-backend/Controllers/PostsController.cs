@@ -57,7 +57,7 @@ namespace mobster_backend.Controllers
             }
             catch (DbNotFoundException e)
             {
-                return NotFound(e.Message);
+                return StatusCode(204);
             }
             catch (Exception e)
             {
@@ -138,7 +138,12 @@ namespace mobster_backend.Controllers
             return Ok();
         }
 
-        [HttpPut("/censor/{postId}")]
+        /// <summary>
+        /// Toggles the IsCensored flag on a single post
+        /// </summary>
+        /// <param name="postId">The id of the post to be censored/uncensored</param>
+        /// <returns></returns>
+        [HttpPut("censor/{postId}")]
         public async Task<IActionResult> ToggleCensorPost(Guid postId)
         {
             try

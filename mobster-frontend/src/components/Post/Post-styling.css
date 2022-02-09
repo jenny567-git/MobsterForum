@@ -5,6 +5,7 @@
     margin-bottom: 2vh;
     background-color: #636363ea;
     width: 100%;
+    border-radius: 1rem;
 }
 
 p {
@@ -21,9 +22,8 @@ p {
 
 .avatar {
     border-radius: 50%;
-	width: 4rem;
-	height: 4rem;
-	background-color: black;
+	width: 5rem;
+	height: 5rem;
 }
 
 .post-content {
@@ -35,6 +35,11 @@ p {
     /* border: 1px solid green; */
 }
 
+.censored-post {
+    color: rgb(255, 79, 79);
+    font-style: italic;
+}
+
 .post-metadata {
     font-size: 0.9rem;
     text-decoration: white underline dotted 0.1px;
@@ -43,7 +48,6 @@ p {
 .post-metadata-bold {
 	color: #ec625f;
 }
-
 .post-buttons {
     align-self: center;
     margin: 0 auto;

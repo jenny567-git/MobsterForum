@@ -8,20 +8,25 @@
 	width: 100%;
 }
 
-.thread-container {
+.single-thread-container {
 	display: flex;
 	flex-direction: column;
 	background-color: #414141;
 	border-radius: 0;
 	width: 100%;
 	margin-top: 2rem;
+	margin-left: -2rem;
+	margin-left: 2rem;
 	padding: 1rem;
+	cursor: pointer;
 }
 
 .thread {
 	display: flex;
 	flex-direction: column;
 	color: #fff;
+	font-family: 'Special Elite';
+	
 }
 
 .thread h2,
@@ -34,12 +39,40 @@ p {
 }
 
 .thread-metadata {
+	display: flex;
 	align-self: flex-end;
+
 }
 
 .thread-metadata-bold {
 	color: #ec625f;
 }
+
+.thread-metadata-tofamily {
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+.thread-metadata-tofamily:hover {
+	color: #f8201c;
+}
+
+.thread-metadata-banned {
+	color: white;
+}
+.thread-metadata span{
+	display: flex;
+	padding-right: 0.5em;
+	align-items: center;
+	
+}
+.thread-metadata p{
+	display: flex;
+	color:#ec625f;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+}
+
 .thread-data {
 	display: flex;
 	flex-direction: column;
@@ -87,16 +120,16 @@ textarea {
 	align-items: center;
 }
 
-/* .invisible {
-	display: none;
-} */
 
 .backtotop-button {
 	display: flex;
 	margin: 10px auto;
+	background-color: #ec625f;
+	border: none;
 }
 
-.backtotop-button {
-	display: flex;
-	margin: 10px auto;
+.backtotop-button:hover, .backtotop-button:active, .backtotop-button:visited, .backtotop-button:focus {
+	background-color: #eb4a48;
+	box-shadow: none;
 }
+

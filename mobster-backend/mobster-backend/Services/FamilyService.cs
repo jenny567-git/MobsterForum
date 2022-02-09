@@ -16,12 +16,17 @@ namespace mobster_backend.Services
     public class FamilyService : IFamilyService
     {
         private readonly MobsterContext context;
-        public FamilyService(MobsterContext context)
+        private readonly IBlockService blockService;
+        private readonly IUserService userService;
+
+        public FamilyService(MobsterContext context, IBlockService blockService, IUserService userService)
         {
             this.context = context;
+            this.blockService = blockService;
+            this.userService = userService;
         }
 
-        public async Task AddFamily(SetFamilyDto model)
+        public async Task<FamilyDto> AddFamily(SetFamilyDto model)
         {
             //create family
             var family = new Family(model.Name, model.Description);
@@ -37,6 +42,8 @@ namespace mobster_backend.Services
             context.Admins.Add(admin);
 
             await context.SaveChangesAsync();
+
+            return family.ToFamilyDto();
         }
 
         public async Task AddFamilyMember(Guid familyId, Guid userId)
@@ -52,13 +59,13 @@ namespace mobster_backend.Services
             await context.SaveChangesAsync();
         }
 
-        public async Task AddFamilyMembers(Guid familyId, IEnumerable<Guid> userIds)
+        public async Task AddFamilyMembers(Guid familyId, IEnumerable<UserDto> users)
         {
             var family = await context.Families.Include(f => f.FamilyMembers).FirstOrDefaultAsync(f => f.FamilyId == familyId);
 
-            foreach (var userId in userIds)
+            foreach (var user in users)
             {
-                var newMember = await context.Users.FindAsync(userId);
+                var newMember = await context.Users.FindAsync(user.UserId);
                 family.FamilyMembers.Add(newMember);
             }
             family.MemberCount = family.FamilyMembers.Count;
@@ -66,10 +73,35 @@ namespace mobster_backend.Services
             await context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<FamilyDto>> GetFamilies()
+#nullable enable
+        public async Task<IEnumerable<FamilyDto>> GetFamilies(string? searchstring)
         {
-            var families = await context.Families.Include(f => f.Admin).ToListAsync();
+#nullable disable
+            var families = new HashSet<Family>();
+
+            if (string.IsNullOrWhiteSpace(searchstring))
+            {
+                var result = await context.Families.Include(f => f.Admin).ToListAsync();
+                families = new HashSet<Family>(result);
+            }
+            else
+            {
+                string[] subs = searchstring.ToLower().Split();
+                foreach(string sub in subs)
+                {
+                    var result = await context.Families.Include(f => f.Admin).Where(f => f.Name.ToLower().Contains(sub)).ToListAsync();
+                    families.AddRange(result);
+                }
+            }
+
             return families.ToFamilyDtos();
+        }
+       
+        public async Task<IEnumerable<FamilyDto>> GetTop5Families()
+        {
+            var top5 = await context.Families.Include(a => a.Admin).OrderByDescending(m => m.MemberCount).Take(5).ToListAsync();
+
+            return top5.ToFamilyDtos();
         }
 
         public async Task<IEnumerable<FamilyDto>> GetFamiliesByUserId(Guid userId)
@@ -88,20 +120,23 @@ namespace mobster_backend.Services
                 .ToListAsync();
 
 
-            if (!families.Any())
-            {
-                throw new DbNotFoundException($"The user with id {user} is not currently a member of any families.");
-            }
+            //if (!families.Any())
+            //{
+            //    throw new DbNotFoundException($"The user with id {user} is not currently a member of any families.");
+            //}
 
 
-            return families.ToFamilyDtos();
+            return families.Count>0 ? families.ToFamilyDtos() : null;
 
 
         }
 
         public async Task<FamilyDto> GetFamily(Guid familyId)
         {
-            var family = await context.Families.Include(f => f.Admin).FirstOrDefaultAsync(f => f.FamilyId == familyId);
+            var family = await context.Families.Include(f => f.Admin)
+                .Include(t => t.Threads)
+                .ThenInclude(a => a.Author)
+                .FirstOrDefaultAsync(f => f.FamilyId == familyId);
             var familyDto = family.ToFamilyDto();
 
             var admin = await context.Users.FindAsync(family.Admin.UserId);
@@ -117,6 +152,25 @@ namespace mobster_backend.Services
                 .FirstOrDefaultAsync(f => f.FamilyId == familyId);
 
             return family.FamilyMembers.ToList().ToUserDtos();
+        }
+
+        public async Task<IEnumerable<UserDto>> GetInvitableUsers(Guid familyId)
+        {
+            var allUsers = await userService.GetUsers();
+            var blockedUsers = await blockService.GetBlockedUsersByFamily(familyId);
+            var familyMembers = await GetFamilyMembers(familyId);
+
+            if (blockedUsers == null) blockedUsers = new List<UserDto>();
+
+            var inviteList = new List<UserDto>();
+            foreach (var user in allUsers)
+            {
+                if (!blockedUsers.Any(u => u.UserId == user.UserId) && !familyMembers.Any(u => u.UserId == user.UserId))
+                {
+                    inviteList.Add(user);
+                }
+            }
+            return inviteList;
         }
 
         public async Task RemoveUserFromFamily(Guid familyId, Guid userId)
@@ -189,7 +243,5 @@ namespace mobster_backend.Services
             context.Families.Remove(family);
             await context.SaveChangesAsync();
         }
-
-
     }
 }

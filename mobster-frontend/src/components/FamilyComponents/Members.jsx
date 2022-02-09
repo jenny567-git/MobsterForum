@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useContext, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { Button, Table} from "react-bootstrap";
@@ -13,8 +13,8 @@ const Members = () => {
   const { familyId } = useParams();
 
   useEffect(() => {
-    if(familyId) fetchFamily();
-  }, [members]);
+    fetchFamily();
+  }, []);
   
   const fetchFamily = async () => {
     const response = await axios.get(
@@ -39,6 +39,10 @@ const Members = () => {
       .catch((error) => {
         console.error("Error:", error);
       });
+
+      setmembers(members.filter(function(user){
+        return user.userId !== member.userId;
+      }) );
   };
 
   const onRemove = async (member) => {
@@ -50,15 +54,29 @@ const Members = () => {
     .catch((error) => {
       console.error("Error:", error);
     });
+
+    setmembers(members.filter(function(user){
+      return user.userId !== member.userId;
+    }) );
   };
+
+  const buttonStyles = {
+    color: "white",
+    fontFamily: "Lekton",
+    margin: "10px",
+    fontWeight: "bold",
+    cursor: "pointer",
+    borderRadius: "0.5rem"
+  }
 
   if(isLoading) return <>Loading...</>
 
   return (
-    <div className="container">
+    <div>
       <div className="flex space">
       <h1>List of members({members.length})</h1>
       <Button
+      style={buttonStyles}
         variant="dark"
         onClick={() => navigate(`/family/${familyId}/blockedMembers`)}
         >
@@ -68,7 +86,7 @@ const Members = () => {
       {/* {Array.from(members).map((member) => (
         <Member key={member.userId} member={member} familyId={familyId} />
       ))} */}
-      <Table striped bordered hover size="sm">
+      <Table striped bordered hover size="sm" variant="dark">
         <thead>
           <tr>
             <th>User Name</th>
@@ -80,8 +98,8 @@ const Members = () => {
             <tr key={member.userId}>
               <td>{member.userName}</td>
               <td>      
-                <Button onClick={() => onBlock(member)}>Block</Button>
-                <Button variant="danger" onClick={() => onRemove(member)}>Remove</Button>
+                <Button style={buttonStyles} onClick={() => onBlock(member)}>Block</Button>
+                <Button style={buttonStyles} variant="danger" onClick={() => onRemove(member)}>Remove</Button>
               </td>
             </tr>
           ))}

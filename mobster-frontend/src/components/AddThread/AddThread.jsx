@@ -1,6 +1,7 @@
 import React,{useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAuth0 } from '@auth0/auth0-react'; 
+// import { useAuth0 } from '@auth0/auth0-react';
+import { useLocalStorage } from '../../CustomHooks/useLocalStorage';
 import axios from 'axios'
 import logo from '../../assets/Mobster-logo.png'
 import './add-thread-styling.css'
@@ -8,7 +9,8 @@ import './add-thread-styling.css'
 
 
 const AddThread = () => {
-    const {user, isLoading} = useAuth0();
+    // const {user, isLoading} = useAuth0();
+    const [user, setuser] = useLocalStorage('user', null)
     const[isFetching, setIsFetching] = useState(true)
     const [myFamilies, setMyFamilies] = useState();
     const [thread, setThread] = useState({familyId:"",title:"",content:"",authorId:""});
@@ -16,7 +18,7 @@ const AddThread = () => {
 
     // needs to update userId after merge
     const fetchFamiliesByUserId = (async () => {
-        let response = await axios.get(`https://localhost:44304/api/Family/user/4B1EAC2A-4A60-42B8-8C42-31B66D5466BA`)
+        let response = await axios.get(`https://localhost:44304/api/Family/user/${user.userId}`)
         setMyFamilies(response.data) 
         setIsFetching(false);
         console.log(response)
@@ -30,19 +32,18 @@ const AddThread = () => {
     })
 
     useEffect(()=>{
-        if(!isLoading){
             fetchFamiliesByUserId();
-            // setThread({
-            //     ...thread, authorId: user["https://rules.com/claims/user_metadata"].uuid})
+            setThread({
+                ...thread, authorId: user.userId})
         
-        }
         
-      },[isLoading])
+        
+      },[])
 
 
-    if(isLoading){
-        return <div> <p>Loading thread...</p></div>
-    }
+    // if(isLoading){
+    //     return <div> <p>Loading thread...</p></div>
+    // }
     
     return (
         <div className="add-thread">
@@ -71,7 +72,7 @@ const AddThread = () => {
                 <textarea placeholder="Text" name="thread-content"cols="70" rows="4" onChange={(e)=> setThread({
                     ...thread, content: e.target.value
                 })} value={thread.content}></textarea>
-                <button onClick={postThread} className="post-button">Post</button>
+                <button onClick={postThread} className="post-button"><p>Post</p></button>
             
             </div>
         </div>

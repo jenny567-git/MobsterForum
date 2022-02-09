@@ -22,11 +22,12 @@ namespace mobster_backend.Extensions
             {
                 ThreadId = thread.ThreadId,
                 Family = thread.Family.ToFamilyDto(),
-                Author = thread.Author.ToUserDto(),
+                Author = thread.Author?.ToUserDto(),
                 Title = thread.Title,
                 Content = thread.Content,
                 CreatedAt = thread.CreatedAt,
-                Posts = thread.Posts.ToPostDtos()
+                Posts = thread.Posts?.ToPostDtos(),
+                IsCensored = thread.IsCensored
             };
         }
 
@@ -38,6 +39,36 @@ namespace mobster_backend.Extensions
             }
 
             return threads.Select(f => f.ToThreadDto());
+        }
+        
+        public static ThreadDtoOverview ToThreadDtoOverview(this Thread thread)
+        {
+            if (thread == null)
+            {
+                return null;
+            }
+
+            return new ThreadDtoOverview
+            {
+                ThreadId = thread.ThreadId,
+                FamilyName = thread.Family.Name,
+                FamilyId = thread.FamilyId,
+                Author = thread.Author.ToUserDto(),
+                Title = thread.Title,
+                CreatedAt = thread.CreatedAt,
+                Content = thread.Content,
+                IsCensored = thread.IsCensored
+            };
+        }
+
+        public static IEnumerable<ThreadDtoOverview> ToThreadDtosOverview(this IEnumerable<Thread> threads)
+        {
+            if (!threads.Any())
+            {
+                return null;
+            }
+
+            return threads.Select(f => f.ToThreadDtoOverview());
         }
 
         public static PostDto ToPostDto(this Post post)
@@ -83,7 +114,9 @@ namespace mobster_backend.Extensions
                 AddedAt = family.AddedAt,
                 UpdatedAt = family.UpdatedAt,
                 MemberCount = family.MemberCount,
-                AdminUserId = family.Admin.UserId
+                AdminUserId = family.Admin.UserId,
+                FamilyMembers = family.FamilyMembers?.ToUserDtos(),
+                Threads = family.Threads?.ToThreadDtosOverview()
             };
         }
 
@@ -108,6 +141,7 @@ namespace mobster_backend.Extensions
             {
                 UserId = user.UserId,
                 UserName = user.UserName,
+                IsActive = user.IsActive,
                 IsBanned = user.IsBanned,
                 AuthId = user.AuthId,
                 IsActive = user.IsActive
@@ -133,7 +167,7 @@ namespace mobster_backend.Extensions
             return new UserDto
             {
                 UserId = user.UserId,
-                //UserName = user.UserName
+                CreatedAt = user.BlockedAt
             };
         }
 

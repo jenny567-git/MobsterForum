@@ -1,11 +1,17 @@
 import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
+import {useState, useEffect} from 'react'
+import { Link, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios, { Axios } from "axios";
 import { useLocalStorage } from '../CustomHooks/useLocalStorage'; 
 
 const ProfileInformation = () => {
-  const { user, isAuthenticated } = useAuth0();
+  let [isLoggedIn, setIsLoggedIn] = useState(true);
+  const {
+      user,
+      isAuthenticated,
+  } = useAuth0();
 
   useEffect(() => {
     let userObj = {
@@ -24,6 +30,13 @@ const ProfileInformation = () => {
       updatedAt: user.updated_at,
     };
     localStorage.setItem("user", JSON.stringify(loggedInUser));
+
+    if(loggedInUser.roles.includes('admin')){
+      setIsLoggedIn(true);
+    }
+    else {
+      setIsLoggedIn(false);
+    }
   }, []);
 
   const changePassword = async () => {

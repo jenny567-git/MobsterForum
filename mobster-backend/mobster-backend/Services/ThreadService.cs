@@ -52,7 +52,7 @@ namespace mobster_backend.Services
         {
             var thread = await context.Threads
                 .Include(t => t.Posts)
-                .FirstOrDefaultAsync(t=> t.ThreadId == threadId);
+                .FirstOrDefaultAsync(t => t.ThreadId == threadId);
 
             if (thread == null)
             {
@@ -69,9 +69,36 @@ namespace mobster_backend.Services
             }
         }
 
+#nullable enable
+        public async Task<IEnumerable<ThreadDtoOverview>> GetThreads(string? searchstring)
+#nullable disable
+        {
+            var threads = new HashSet<Thread>();
+
+
+            if (string.IsNullOrWhiteSpace(searchstring))
+            {
+                var result = await context.Threads.Include(t => t.Family).Include(a => a.Author).ToListAsync();
+                threads = new HashSet<Thread>(result);
+            }
+            else
+            {
+                string[] subs = searchstring.ToLower().Split();
+                foreach (string sub in subs)
+                {
+                    var result = await context.Threads.Include(t => t.Family).Include(a => a.Author).Where(f => f.Title.ToLower().Contains(sub)).ToListAsync();
+                    threads.AddRange(result);
+                }
+            }
+
+            return threads.ToThreadDtosOverview();
+        }
+
         public async Task<ThreadDto> GetThread(Guid threadId)
         {
             var thread = await context.Threads
+                .Include(t => t.Family)
+                .ThenInclude(f => f.FamilyMembers)
                 .Include(t => t.Family)
                 .ThenInclude(f => f.Admin)
                 .Include(t => t.Author)
@@ -110,6 +137,21 @@ namespace mobster_backend.Services
             }
         }
 
+        public async Task ToggleCensorThread(Guid threadId)
+        {
+            var thread = await context.Threads
+                .FirstOrDefaultAsync(t => t.ThreadId == threadId);
 
+            if (thread == null)
+            {
+                throw new DbNotFoundException($"No thread with id {thread} exists in the database.");
+            }
+            else
+            {
+                thread.IsCensored = !thread.IsCensored;
+
+                await context.SaveChangesAsync();
+            }
+        }
     }
 }
