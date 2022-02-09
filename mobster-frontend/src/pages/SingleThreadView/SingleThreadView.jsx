@@ -12,6 +12,7 @@ const SingleThreadView = () => {
   const [isReadOnly, setIsReadOnly] = useState(true)
   const [thread, setThread] = useState();
   const [isThreadLoaded, setIsThreadLoaded] = useState(false)
+  const [isThreadCensored, setIsThreadCensored] = useState()
   const [threadTitle, setThreadTitle] = useState("")
   const [threadContent, setThreadContent] = useState("")
   const [blockedMembers, setBlockedMembers] = useState([])
@@ -27,6 +28,7 @@ const SingleThreadView = () => {
     setThread(response.data)
     setThreadContent(response.data.content)
     setThreadTitle(response.data.title)
+    setIsThreadCensored(response.data.isCensored)
     if(response.data){
       setIsThreadLoaded(true)
     }
@@ -43,6 +45,13 @@ const SingleThreadView = () => {
     return blockedMembersIds.includes(author.userId)
   })
 
+  const checkIfUserInFamily = (() => {
+    if (thread) {
+      let familyMembersIds = thread.family.familyMembers.map(m => m.userId)
+      return familyMembersIds.includes(user.userId)
+    }
+  })
+
   const deleteThread = (async () => {
     let response = await axios.delete(`https://localhost:44304/api/Thread?id=${id}`)
     console.log(response);
@@ -52,15 +61,18 @@ const SingleThreadView = () => {
 
   })
 
-
+  function log(){
+    console.log(thread)
+  }
 
   const editThread = (async () => {
-    if (isReadOnly && thread.author.authId == user.userId) {
+    console.log('hello')
+    if (isReadOnly && thread.author.userId == user.userId) {
 
       setIsReadOnly(false)
       setBtnText(<i className="fas fa-save"></i>)
     }
-    else if (!isReadOnly && thread.author.authId == user.userId) {
+    else if (!isReadOnly && thread.author.userId == user.userId) {
       let updatedThread = {
         familyId: thread.family.familyId,
         title: threadTitle,
@@ -76,9 +88,22 @@ const SingleThreadView = () => {
 
   })
 
+  const toggleCensorThread = async () => {
+    await axios
+      .put(`https://localhost:44304/api/Thread/censor/${id}`)
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+
+      setIsThreadCensored(!thread.isCensored);
+  }
+
   const toggleReplyBox = () => {
     // setVisible(!isVisible);
     scrollToBottom();
+  }
+  function logThread(){
+    console.log(thread)
   }
 
   function getThreadLink() {
@@ -100,8 +125,9 @@ const SingleThreadView = () => {
     if(isThreadLoaded){
 
       fetchBlockedMembersByFamilyId();
+      
     }
-  }, [isThreadLoaded])
+  }, [isThreadLoaded, isThreadCensored])
   // if(isLoading){
   //   return <div> <p>Loading thread...</p></div>
   // }
@@ -111,13 +137,18 @@ const SingleThreadView = () => {
       <div className="single-thread-container">
 
         {thread && (<div className="thread">
-          {thread.author.isBanned && <p className="thread-metadata">Posted by <strong className='thread-metadata-banned'> &#91;Banned User&#93; </strong> in <em className='thread-metadata-bold'>{thread.family.name}</em>  at {thread.createdAt}</p>}
-          {!thread.author.isActive && <p className="thread-metadata">Posted by <strong className='thread-metadata-bold'>&#91;Deleted User&#93;</strong> in <em className='thread-metadata-bold'>{thread.family.name}</em>  at {thread.createdAt}</p>}
-          {!thread.author.isBanned && thread.author.isActive && <p className="thread-metadata">Posted by <strong className='thread-metadata-bold'>{thread.author.userName}</strong> in <em className='thread-metadata-bold'>{thread.family.name}</em>  at {thread.createdAt}</p>}
+          {thread.author.isBanned && <p className="thread-metadata">Posted by <strong className='thread-metadata-banned'> &#91;Banned User&#93; </strong> in <strong title='Go to family' className='thread-metadata-bold thread-metadata-tofamily'  onClick={() => navigate(`/family/${thread.family.familyId}`)}>{thread.family.name}</strong>  at {thread.createdAt}</p>}
+          {!thread.author.isActive && <p className="thread-metadata">Posted by <strong className='thread-metadata-bold'>&#91;Deleted User&#93;</strong> in <strong title='Go to family' className='thread-metadata-bold thread-metadata-tofamily' onClick={() => navigate(`/family/${thread.family.familyId}`)}>{thread.family.name}</strong>  at {thread.createdAt}</p>}
+          {!thread.author.isBanned && thread.author.isActive && <p className="thread-metadata">Posted by <strong className='thread-metadata-bold'>{thread.author.userName}</strong> in <strong title='Go to family' className='thread-metadata-bold thread-metadata-tofamily' onClick={() => navigate(`/family/${thread.family.familyId}`)}>{thread.family.name}</strong>  at {thread.createdAt}</p>}
 
-          {isReadOnly && (<div className='thread-data'>
+          {isReadOnly && !isThreadCensored && (<div className='thread-data'>
             <input value={threadTitle} readOnly></input>
             <textarea value={threadContent} readOnly></textarea>
+          </div>)}
+
+          {isThreadCensored && (<div className='thread-data'>
+            <input value="&#91;Silenced&#93;" readOnly></input>
+            <textarea value="&#91;This mook disrespected the family; their words are silenced.&#93;" readOnly></textarea>
           </div>)}
 
           {!isReadOnly && (<div className='thread-data'>
@@ -126,22 +157,22 @@ const SingleThreadView = () => {
           </div>)}
 
           <div className="thread-btns">
-            {!checkIfBlockedFromFamily(user) && thread.author.userId == user.userId && (
+            {!checkIfBlockedFromFamily(user) && thread.author.userId == user.userId && !isThreadCensored && (
               <div className='thread-btns'>
                 <Button className='thread-btns' onClick={editThread}>{btnText}</Button>
                 <Button className='thread-btns' onClick={deleteThread} title="Delete thread"><i className="fas fa-trash-alt"></i></Button>
               </div>
             )}
-            <Button className='thread-btns' title='Post reply' onClick={toggleReplyBox}><i className="fas fa-reply"></i></Button>
+            {checkIfUserInFamily() && <Button className='thread-btns' title='Post reply' onClick={toggleReplyBox}><i className="fas fa-reply"></i></Button>}
             {!checkIfBlockedFromFamily(user) && <Button className='thread-btns' title='Share link' onClick={getThreadLink}><i className="fas fa-share-square"></i></Button>}
-            {/* <Button className='thread-btns' title='Report thread' ><i className="fas fa-exclamation"></i></Button> */}
-            {!checkIfBlockedFromFamily(user) && user.roles.includes("admin") && (<Button className='thread-btns' title='Censor thread content'><i className="fas fa-comment-slash"></i></Button>)}
+            {checkIfUserInFamily() && !user.roles.includes("admin") && thread.author.userId != user.userId && (<Button className='thread-btns' title='Report thread' ><i className="fas fa-exclamation"></i></Button>)}
+            {!checkIfBlockedFromFamily(user) && user.roles.includes("admin") && thread.author.userId != user.userId && (<Button className='thread-btns' title='Toggle censor thread' onClick={toggleCensorThread}><i className="fas fa-comment-slash"></i></Button>)}
 
           </div>
         </div>
         )}
         <div className="thread-posts">
-          <Post id={id} blockedMembers = {blockedMembers} />
+          <Post id={id} blockedMembers = {blockedMembers} thread ={thread} />
         </div>
 
         <Button className='backtotop-button' onClick={scrollToTop}><p>Back to top</p></Button>

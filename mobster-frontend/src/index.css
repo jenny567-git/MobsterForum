@@ -292,3 +292,21 @@ div{
 .container ul{
   margin-bottom: 2.5vh;
 }
+
+/* DANIEL PROFILE INFORMATION DESIGN */
+.mobster-std-btn {
+	border: none;
+	background-color: #ec625f;
+	color: #fff;
+	font-weight: bold;
+	font-size: 1rem;
+	text-align: center;
+	text-decoration: none;
+	cursor: pointer;
+	padding: 1rem 2rem;
+	border-radius: 0.5rem;
+}
+
+.mobster-std-container {
+	padding: .5rem 0 .5rem 0;
+}

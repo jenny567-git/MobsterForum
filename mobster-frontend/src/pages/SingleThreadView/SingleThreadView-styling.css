@@ -48,6 +48,15 @@ p {
 	color: #ec625f;
 }
 
+.thread-metadata-tofamily {
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+.thread-metadata-tofamily:hover {
+	color: #f8201c;
+}
+
 .thread-metadata-banned {
 	color: white;
 }
@@ -115,10 +124,12 @@ textarea {
 .backtotop-button {
 	display: flex;
 	margin: 10px auto;
+	background-color: #ec625f;
+	border: none;
 }
 
-.backtotop-button {
-	display: flex;
-	margin: 10px auto;
+.backtotop-button:hover, .backtotop-button:active, .backtotop-button:visited, .backtotop-button:focus {
+	background-color: #eb4a48;
+	box-shadow: none;
 }
 
