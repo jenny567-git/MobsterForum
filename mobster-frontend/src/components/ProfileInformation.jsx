@@ -96,6 +96,9 @@ const ProfileInformation = () => {
             Deactivate my account.
           </button>
         </div>
+        <div className="d-flex flex-row justify-content-center mobster-std-container">
+              <Link to="/admin-dashboard">{isLoggedIn && (<button className="mobster-std-btn" onClick="/admin-dashboard">Admin Dashboard</button>)}</Link>
+            </div>
       </div>
     </div>
   );
