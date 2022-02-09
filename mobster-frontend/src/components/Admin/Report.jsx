@@ -5,7 +5,6 @@ import { Modal, Button } from "react-bootstrap";
 
 const Report = () => {
   const [reports, setReports] = useState([]);
-  // const [isCensur, setIsCensur] = useState(false);
   const [selectedReport, setSelectedReport] = useState(null);
   const [showReasonModal, setShowReasonModal] = useState(false);
   const [showContentModal, setShowContentModal] = useState(false);
@@ -16,9 +15,8 @@ const Report = () => {
     fetchReports();
   }, []);
 
-  useEffect(() => {}, [reports]);
-
   let isCensur = false;
+  let count = 1;
 
   const fetchReports = async () => {
     axios
@@ -31,6 +29,7 @@ const Report = () => {
         console.error("Error:", error);
       });
   };
+
   const onShowReasonModal = (report) => {
     setSelectedReport(report);
     setShowReasonModal(true);
@@ -84,8 +83,6 @@ const Report = () => {
     onDelete();
   };
 
-  let count = 1;
-
   return (
     <div className="outer-wrapper">
       <div className="inner-wrapper">
@@ -123,6 +120,7 @@ const Report = () => {
                   </button>
                 </div>
 
+{/* REPORT REASON */}
                 <Modal
                   show={showReasonModal}
                   onHide={() => setShowReasonModal(false)}
@@ -136,6 +134,8 @@ const Report = () => {
                     {selectedReport && <p>{selectedReport.reason}</p>}
                   </Modal.Body>
                 </Modal>
+                
+{/* REPORT CONTENT */}
                 <Modal
                   show={showContentModal}
                   onHide={() => setShowContentModal(false)}
@@ -144,10 +144,7 @@ const Report = () => {
                 >
                   <Modal.Header closeButton>
                     {selectedReport && selectedReport.threadTitle ? (
-                      <Modal.Title>Content: Thread</Modal.Title>
-                    ) : (
-                      <Modal.Title>Content: Post</Modal.Title>
-                    )}
+                      <Modal.Title>Content: Thread</Modal.Title>) : (<Modal.Title>Content: Post</Modal.Title> )}
                   </Modal.Header>
                   <Modal.Body>
                     {selectedReport && selectedReport.threadTitle && (
@@ -158,13 +155,7 @@ const Report = () => {
                   <Modal.Footer>
                     <Button onClick={onCensur}>Guilty</Button>
                     <Button onClick={onDelete}>Not guilty</Button>
-                    <Button
-                      onClick={() =>
-                        navigate(`/thread/${selectedReport.threadId}`)
-                      }
-                    >
-                      Go to thread
-                    </Button>
+                    <Button onClick={() => navigate(`/thread/${selectedReport.threadId}`)}>Go to thread</Button>
                   </Modal.Footer>
                 </Modal>
               </div>
