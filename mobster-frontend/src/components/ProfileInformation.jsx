@@ -1,15 +1,11 @@
 import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import {useState, useEffect} from 'react'
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import axios, { Axios } from "axios";
-import { useLocalStorage } from "../CustomHooks/useLocalStorage";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
-const ProfileInformation = () => {
-  let [isLoggedIn, setIsLoggedIn] = useState(true);
-
-  let navigate = useNavigate();
-
+const ProfileInformation = ({setIsAuthorized}) => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const {
       user,
       isAuthenticated,
@@ -37,10 +33,11 @@ const ProfileInformation = () => {
     localStorage.setItem("user", JSON.stringify(loggedInUser));
 
     if(loggedInUser.roles.includes('admin')){
+      setIsAuthorized(true);
       setIsLoggedIn(true);
     }
     else {
-      setIsLoggedIn(false);
+      setIsAuthorized(false);
     }
   }, []);
 
@@ -59,7 +56,7 @@ const ProfileInformation = () => {
   const deactivateAccount = () => {
     axios.post("https://localhost:44304/api/User/ToggleUserActive?authId=" + user.sub);
   }
-  const [user2, setuser] = useLocalStorage('user', null)
+  //const [user2, setuser] = useLocalStorage('user', null)
 
   const [newEmail, setEmail] = useState("");
 
@@ -74,6 +71,9 @@ const ProfileInformation = () => {
           <div className="d-flex flex-row border justify-content-center">
             <div className="mr-auto p-2">Email: </div>
             <div className="p-2 ">{user.email}</div>
+          </div>
+          <div className="d-flex flex-row justify-content-center mobster-std-container">
+            <Link to="/admin-dashboard">{ isLoggedIn && (<button className="mobster-std-btn" >Admin Dashboard</button>)}</Link>
           </div>
         </div>
         <div className="d-flex flex-column">
@@ -96,9 +96,6 @@ const ProfileInformation = () => {
           <button className="button" onClick={deactivateAccount}>
             Deactivate my account.
           </button>
-        </div>
-        <div className="d-flex flex-row justify-content-center mobster-std-container">
-            {isLoggedIn && (<button className="mobster-std-btn" onClick={() =>navigate(`/admin-dashboard`)}>Admin Dashboard</button>)}
         </div>
       </div>
     </div>

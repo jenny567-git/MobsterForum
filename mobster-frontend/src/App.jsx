@@ -1,38 +1,23 @@
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
+import { useEffect , useState } from 'react'
 import Header from './components/Header'
 import Home from './pages/Home'
 import SingleThreadView from './pages/SingleThreadView/SingleThreadView'
 import Family from './pages/Family'
-// import CreateFamily from './components/FamilyComponents/CreateFamily'
 import Members from './components/FamilyComponents/Members'
 import BlockedMembers from './components/FamilyComponents/BlockedMembers'
-// import InviteMembers from './components/FamilyComponents/InviteMembers'
 import SearchResult from './components/Search/SearchResult'
 import AdminDashboard from './pages/AdminDashboard'
-
-// import AdminDashboard from './pages/Admin-dashboard'
 import Profile from './pages/Profile'
 import { About } from './pages/StaticContent/About'
 import { NotFound } from './pages/StaticContent/NotFound'
 import { FAQ } from './pages/StaticContent/FAQ'
 import { Contact } from './pages/StaticContent/Contact'
 import { Footer } from './components/Footer'
-import { useLocalStorage } from './CustomHooks/useLocalStorage'
 
 function App() {
 
-  const [loggedInUser, setLoggedInUser] = useLocalStorage('user', null);
-
-  function isAuthorizedAsApplicationAdmin() {
-    console.log('Inloggad användare APP: ', loggedInUser);
-    let isAuthorized = false;
-    if (loggedInUser !== null){
-      if(loggedInUser.roles.includes('admin')){
-        isAuthorized = true;
-      }
-    }
-    return isAuthorized;
-  }
+  const [isAuthorized, setIsAuthorized] = useState(false)
 
   // This is mainly for changing the url from /admin-dashboard when user is redirected to "Home"
   function Redirect() {
@@ -41,6 +26,9 @@ function App() {
       <Profile />
     )
   }
+
+  useEffect(() => {
+  }, [isAuthorized]);
 
   return (
     <Router>
@@ -55,12 +43,11 @@ function App() {
             <Route exact path="/family/:familyId/members" element={<Members />}></Route>
             <Route exact path="/family/:familyId/blockedMembers" element={<BlockedMembers />}></Route>
             <Route exact path="/searchresult" element={<SearchResult />}></Route>
-            <Route exact path="/admin-dashboard" element={isAuthorizedAsApplicationAdmin() ? <AdminDashboard /> : <Redirect />} />
-            <Route exact path ="/profile" element={<Profile />}></Route>
-            <Route exact path ="/about" element={<About />}></Route>
-            <Route exact path ="/faq" element={<FAQ />}></Route>
+            <Route exact path="/admin-dashboard" element={isAuthorized ? <AdminDashboard /> : <Redirect />} />
+            <Route exact path="/profile" element={<Profile setIsAuthorized = {setIsAuthorized} />}></Route>
+            <Route exact path="/about" element={<About />}></Route>
+            <Route exact path="/faq" element={<FAQ />}></Route>
             <Route exact path ="/contact" element={<Contact />}></Route>
-
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
