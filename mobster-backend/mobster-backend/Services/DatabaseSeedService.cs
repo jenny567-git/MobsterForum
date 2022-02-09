@@ -652,6 +652,7 @@ namespace mobster_backend.Services
 
             var report1 = new Report()
             {
+                ReportId = new Guid("85bd03ea-c40f-47c2-bded-9a3c5cf4eb07"),
                 SubjectUserId = user6.UserId,
                 ObjectUserId = user5.UserId,
                 Reason = "Unrespectful langauage",
@@ -662,6 +663,7 @@ namespace mobster_backend.Services
 
             var report2 = new Report()
             {
+                ReportId = new Guid("3cb3a15d-cf63-42a1-97b4-00481d38df79"),
                 SubjectUserId = user4.UserId,
                 ObjectUserId = user6.UserId,
                 Reason = "Unlawful content",

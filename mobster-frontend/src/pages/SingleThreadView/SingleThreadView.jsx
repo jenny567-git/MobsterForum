@@ -128,13 +128,13 @@ const SingleThreadView = () => {
   }
 
   const onReport = async () => {
-    console.log("on report");
     let report = {
       subjectUserId: user.userId,
       objectUserId: thread.author.userId,
       reason: reportReason,
       threadId: thread.threadId,
     };
+    console.log("on report", report);
     await axios.post(`https://localhost:44304/api/Report/`, report);
     setIsReported(true);
     setReportReason("");
