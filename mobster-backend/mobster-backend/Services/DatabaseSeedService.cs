@@ -63,7 +63,7 @@ namespace mobster_backend.Services
             var user4 = new User()
             {
                 UserId = new Guid("8167ce82-0e18-4a42-bbe1-f54385e56cd7"),
-                AuthId = "auth0|61f2921b3cd34e006c583978",
+                AuthId = "auth0|61f8f405b40a810068797b85",
                 UserName = "JackSparrow",
                 CreatedAt = new DateTime(2021, 09, 23),
                 UpdatedAt = DateTime.Now,
