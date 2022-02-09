@@ -11,7 +11,6 @@ import  "./Post-styling.css"
 
 export const Post = ({ id , blockedMembers , thread }) => {
   const [posts, setPosts] = useState([]);
-  // const {user, isLoading} = useAuth0();
   const [user, setuser] = useLocalStorage('user', null)
   const [newPostContent, setNewPostContent] = useState("");
   const [postToEdit, setPostToEdit] = useState({});
@@ -19,6 +18,11 @@ export const Post = ({ id , blockedMembers , thread }) => {
   const [postToDeleteId, setPostToDeleteId] = useState("");
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [isReported, setIsReported] = useState(false);
+  const [reportReason, setReportReason] = useState("");
+  const [showReportModal, setShowReportModal] = useState(false);
+  const [selectedPost, setSelectedPost] = useState();
+
 
     const fetchPosts = (async () => {
     let response = await axios.get(`https://localhost:44304/api/Posts/thread/${id}`)
@@ -63,6 +67,10 @@ export const Post = ({ id , blockedMembers , thread }) => {
   const handleShowEdit = (post) => {
     setPostToEdit(post);
     setShowEditModal(true);
+  } 
+  const handleReport = (post) => {
+    setSelectedPost(post);
+    setShowReportModal(true);
   } 
   
   const saveEditedPost = async (postId) => {
@@ -114,6 +122,24 @@ export const Post = ({ id , blockedMembers , thread }) => {
       fetchPosts();
     }
 
+    const onReport = async () => {
+      setShowReportModal(true);
+      console.log("on report", selectedPost);
+      let report = {
+        subjectUserId: user.userId,
+        objectUserId: selectedPost.author.userId,
+        reason: reportReason,
+        threadId: selectedPost.threadId,
+        postId: selectedPost.postId
+      };
+      console.log('report', report);
+      await axios.post(`https://localhost:44304/api/Report/`, report);
+      setIsReported(true);
+      setReportReason("");
+      setTimeout(() => {
+        setIsReported(false);
+      }, 5000);
+    };
 
 useEffect(()=>{
     fetchPosts();
@@ -151,7 +177,7 @@ useEffect(()=>{
                             <Button className='post-btn' onClick={() => handleShowEdit(post)}><i className='fas fa-edit' title="Edit post"></i></Button>
                             <Button className='post-btn' title='Delete post' onClick={() => handleShowDelete(post.postId)}><i className="fas fa-trash-alt"></i></Button>
                         </div>}
-                        {!checkIfBlockedFromFamily(user) && post.author.userId != user.userId && !user.roles.includes("admin") && <Button className='post-btn' title='Report post'><i className="fas fa-exclamation"></i></Button>}
+                        {!checkIfBlockedFromFamily(user) && post.author.userId != user.userId && !user.roles.includes("admin") && !post.isCensored && <Button className='post-btn' title='Report post' onClick={() => handleReport(post)}><i className="fas fa-exclamation"></i></Button>}
                         {!checkIfBlockedFromFamily(user) && user.roles.includes("admin") && post.author.userId != user.userId && (<Button className='post-btn' onClick={() => toggleCensorPost(post.postId)} title='Censor post content'><i className="fas fa-comment-slash"></i></Button>)}
                         
                     </div>
@@ -210,6 +236,29 @@ useEffect(()=>{
                           </Button>
                         </Modal.Footer>
                   </Modal>
+{/* Report modal */}
+                  <Modal
+        show={showReportModal}
+        onHide={() => setShowReportModal(false)}
+        centered
+        className="modal"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Report</Modal.Title>
+        </Modal.Header>
+        <div className="thread-data">
+          <p>Why are you snitching?</p>
+          <input
+            type="text"
+            onChange={(e) => setReportReason(e.target.value)}
+          />
+          {isReported && <p>Success</p>}
+        </div>
+        <Modal.Body></Modal.Body>
+        <Modal.Footer>
+          <Button onClick={onReport}>Confirm</Button>
+        </Modal.Footer>
+      </Modal>
         </div>;
 };
 

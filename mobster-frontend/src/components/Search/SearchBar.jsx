@@ -43,6 +43,7 @@ function SearchBar() {
           });
         break;
     }
+    setSearchString('');
     navigate("/searchresult");
   };
 

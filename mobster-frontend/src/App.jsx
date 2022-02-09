@@ -9,6 +9,7 @@ import Members from './components/FamilyComponents/Members'
 import BlockedMembers from './components/FamilyComponents/BlockedMembers'
 // import InviteMembers from './components/FamilyComponents/InviteMembers'
 import SearchResult from './components/Search/SearchResult'
+import Temp from './pages/Temp'
 
 import AdminDashboard from './pages/Admin-dashboard'
 import Profile from './pages/Profile'
