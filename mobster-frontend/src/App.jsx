@@ -22,12 +22,11 @@ function App() {
   const [loggedInUser, setLoggedInUser] = (useLocalStorage('user', null));
 
   function isAuthorizedAsApplicationAdmin() {
+    console.log('Inloggad användare APP: ', loggedInUser);
     let isAuthorized = false;
     if (loggedInUser !== null){
-      for (let i = 0; i < loggedInUser.roles.length; i++){
-        if(loggedInUser.roles[i] === 'admin'){
-          isAuthorized = true;
-        }
+      if(loggedInUser.roles.includes('admin')){
+        isAuthorized = true;
       }
     }
     return isAuthorized;
@@ -35,9 +34,9 @@ function App() {
 
   // This is mainly for changing the url from /admin-dashboard when user is redirected to "Home"
   function Redirect() {
-    window.history.pushState('/', '', '/');
+    window.history.pushState('/profile', '', '/profile');
     return (
-      <Home />
+      <Profile />
     )
   }
 
@@ -57,9 +56,9 @@ function App() {
             {/* <Route exact path="/family/:familyId/invite" element={<InviteMembers />}></Route> */}
             <Route exact path="/searchresult" element={<SearchResult />}></Route>
             <Route exact path="/admin-dashboard" element={isAuthorizedAsApplicationAdmin() ? <AdminDashboard /> : <Redirect />} />
-            <Route exact path ="/profile" element={<Profile />}></Route>
-            <Route exact path ="/about" element={<About />}></Route>
-            <Route exact path ="/faq" element={<FAQ />}></Route>
+            <Route exact path="/profile" element={<Profile />}></Route>
+            <Route exact path="/about" element={<About />}></Route>
+            <Route exact path="/faq" element={<FAQ />}></Route>
 
             <Route path="*" element={<NotFound />} />
           </Routes>

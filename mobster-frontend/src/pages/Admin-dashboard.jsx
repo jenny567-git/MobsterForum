@@ -1,15 +1,18 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
+import { Modal, Button } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function AdminDashboard() {
 
     const [users, setUsers] = useState([]);
     const [filteredUsers, setFilteredUsers] = useState([]);
+    const [showBlockModal, setShowBlockModal] = useState(false);
+    let [chosenUser, setChosenUser] = useState({});
     let [isLoaded, setLoadedState] = useState(false);
     let searchbar = document.querySelector('#searchbar');
     let searchString = '';
-    let auth0 = useAuth0();
 
     useEffect(() => {
         if(isLoaded == false){
@@ -32,11 +35,13 @@ function AdminDashboard() {
     }
 
     async function toggleUserBlock(user) {
+        console.log(user);
         const response = await axios.put(`https://localhost:44304/api/Block?userId=${user.userId}`);
         console.log(`ToggleUserBlock, Response Status Code: ${response.status}`);
         setLoadedState(false);
         searchbar.value = '';
         searchString = '';
+        closeModal();
     }
 
     function filterUsersBySearchString(){
@@ -53,6 +58,20 @@ function AdminDashboard() {
             filterUsersBySearchString();
         }
         setTimeout(timer, 0); // TODO: Set timer to what ever delay we want when going live
+    }
+
+    function openModal(userData) {
+        console.log('opened modal')
+        console.log('user: ', userData)
+        console.log('user ID: ', userData.userId);
+        setChosenUser(userData);
+        setShowBlockModal(true);
+        console.log(showBlockModal);
+    }
+
+    function closeModal() {
+        setChosenUser({});
+        setShowBlockModal(false);
     }
 
     return (
@@ -72,19 +91,27 @@ function AdminDashboard() {
                             <div key={index} className="user-detail">
                                 {user.userName}
                                 {user.isBanned ? (
-                                    <button value={user} onClick={() => {
-                                        window.confirm('Are you sure you want to unblock this user?') ? toggleUserBlock(user) : {} 
-                                    }} className="button unblock">Unblock</button>
+                                    <button value={user} onClick={() => openModal(user)} className="button unblock">Unblock</button>
                                         ) : (
-                                    <button value={user} onClick={() => {
-                                        window.confirm('Are you sure you want to block this user?') ? toggleUserBlock(user) : {} 
-                                    }} className="button block">Block</button>
+                                    <button value={user} onClick={() => openModal(user)} className="button block">Block</button>
                                 )}
                             </div>
                         ))}
                     </div>
                 </div>
             </div>
+            <Modal show={showBlockModal} onHide={() => closeModal()} centered>
+                <Modal.Header>
+                    {chosenUser.isBanned ? (<Modal.Title>Unblock user</Modal.Title>) : (<Modal.Title>Block user</Modal.Title>)}
+                </Modal.Header>
+                <Modal.Body>
+                    {chosenUser.isBanned ? (<span>Are you sure you want to unblock this user?</span>) : (<span>Are you sure you want to block this user?</span>)}
+                </Modal.Body>
+                <Modal.Footer>
+                    {chosenUser.isBanned ? (<Button onClick={() => toggleUserBlock(chosenUser)}>Unblock</Button>) : (<Button variant="danger" onClick={() => toggleUserBlock(chosenUser)}>Block</Button>)}
+                    <Button variant="secondary" onClick={() => closeModal()}>Cancel</Button>
+                </Modal.Footer>
+            </Modal>
         </div>
     )
 }
