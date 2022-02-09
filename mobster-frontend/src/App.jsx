@@ -57,10 +57,14 @@ function App() {
             {/* <Route exact path="/family/:familyId/invite" element={<InviteMembers />}></Route> */}
             <Route exact path="/searchresult" element={<SearchResult />}></Route>
             <Route exact path="/admin-dashboard" element={isAuthorizedAsApplicationAdmin() ? <AdminDashboard /> : <Redirect />} />
+
             <Route exact path ="/profile" element={<Profile />}></Route>
             <Route exact path ="/about" element={<About />}></Route>
             <Route exact path ="/faq" element={<FAQ />}></Route>
             <Route exact path ="/contact" element={<Contact />}></Route>
+
+            
+
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

@@ -143,7 +143,7 @@ namespace mobster_backend.Extensions
                 UserName = user.UserName,
                 IsActive = user.IsActive,
                 IsBanned = user.IsBanned,
-                AuthId = user.AuthId
+                AuthId = user.AuthId,
             };
         }
 
