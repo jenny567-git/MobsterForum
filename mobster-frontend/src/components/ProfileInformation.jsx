@@ -7,19 +7,24 @@ import { useLocalStorage } from '../CustomHooks/useLocalStorage';
 
 const ProfileInformation = () => {
   let [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [localUser, setLocaluser] = useLocalStorage("user", null);
+
   const {
       user,
       isAuthenticated,
   } = useAuth0();
 
   useEffect(() => {
+
+    //add user to our database
     let userObj = {
       userName: user["https://rules.com/claims/user_metadata"].username,
       AuthId: user.sub,
       Id: user["https://rules.com/claims/user_metadata"].uuid,
     };
     axios.post(`https://localhost:44304/api/User`, userObj);
-
+    
+    //store user in local storage
     let loggedInUser = {
       userName: user["https://rules.com/claims/user_metadata"].username,
       authId: user.sub,
@@ -29,7 +34,7 @@ const ProfileInformation = () => {
       updatedAt: user.updated_at,
     };
     localStorage.setItem("user", JSON.stringify(loggedInUser));
-
+    console.log('local user', localUser);
     if(loggedInUser.roles.includes('admin')){
       setIsLoggedIn(true);
     }

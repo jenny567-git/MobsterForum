@@ -4,7 +4,7 @@ import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
 import { Modal, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-function AdminDashboard() {
+function BanUser() {
 
     const [users, setUsers] = useState([]);
     const [filteredUsers, setFilteredUsers] = useState([]);
@@ -116,4 +116,4 @@ function AdminDashboard() {
     )
 }
 
-export default withAuthenticationRequired(AdminDashboard, {});
+export default withAuthenticationRequired(BanUser, {});

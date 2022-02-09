@@ -8,9 +8,9 @@ import Members from './components/FamilyComponents/Members'
 import BlockedMembers from './components/FamilyComponents/BlockedMembers'
 // import InviteMembers from './components/FamilyComponents/InviteMembers'
 import SearchResult from './components/Search/SearchResult'
-import Temp from './pages/Temp'
+import AdminDashboard from './pages/AdminDashboard'
 
-import AdminDashboard from './pages/Admin-dashboard'
+// import AdminDashboard from './pages/Admin-dashboard'
 import Profile from './pages/Profile'
 import { About } from './pages/StaticContent/About'
 import { NotFound } from './pages/StaticContent/NotFound'
@@ -21,7 +21,7 @@ import { useLocalStorage } from './CustomHooks/useLocalStorage'
 
 function App() {
 
-  const [loggedInUser, setLoggedInUser] = (useLocalStorage('user', null));
+  const [loggedInUser, setLoggedInUser] = useLocalStorage('user', null);
 
   function isAuthorizedAsApplicationAdmin() {
     console.log('Inloggad användare APP: ', loggedInUser);
@@ -52,19 +52,14 @@ function App() {
             <Route exact path="/thread/:id" element={<SingleThreadView />}></Route>
             <Route exact path="/family" element={<Family />}></Route>
             <Route exact path="/family/:id" element={<Family />}></Route>
-            {/* <Route exact path="/family/create" element={<CreateFamily />}></Route> */}
             <Route exact path="/family/:familyId/members" element={<Members />}></Route>
             <Route exact path="/family/:familyId/blockedMembers" element={<BlockedMembers />}></Route>
-            {/* <Route exact path="/family/:familyId/invite" element={<InviteMembers />}></Route> */}
             <Route exact path="/searchresult" element={<SearchResult />}></Route>
             <Route exact path="/admin-dashboard" element={isAuthorizedAsApplicationAdmin() ? <AdminDashboard /> : <Redirect />} />
-            <Route exact path="/admin" element={<Temp />} />
             <Route exact path ="/profile" element={<Profile />}></Route>
             <Route exact path ="/about" element={<About />}></Route>
             <Route exact path ="/faq" element={<FAQ />}></Route>
             <Route exact path ="/contact" element={<Contact />}></Route>
-=======
->>>>>>> main
 
             <Route path="*" element={<NotFound />} />
           </Routes>
