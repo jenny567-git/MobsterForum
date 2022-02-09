@@ -10,6 +10,8 @@ const LoginButton = () => {
       loginWithRedirect,
       logout,
   } = useAuth0();
+
+  
   const logoutWithRedirect = () =>{
     logout({
       returnTo: window.location.origin,
@@ -21,10 +23,10 @@ const LoginButton = () => {
 
   return (
     <div>
-        {!isAuthenticated && ( <button onClick={() => loginWithRedirect()}>Log In</button>)}
-        {!isAuthenticated && (<button onClick={() => loginWithRedirect({screen_hint: "signup"})}>Register</button>)}
+        {!isAuthenticated && ( <button onClick={() => loginWithRedirect()}><p>Log In</p></button>)}
+        {!isAuthenticated && (<button onClick={() => loginWithRedirect({screen_hint: "signup"})}><p>Register</p></button>)}
         <Link to="/profile">{isAuthenticated && (<button onClick={() => Navigate }>Profile</button>)}</Link>
-        {isAuthenticated && (<button onClick={() => logoutWithRedirect()}>Log out</button>)}
+        {isAuthenticated && (<button onClick={() => logoutWithRedirect()}><p>Log out</p></button>)}
     </div>
 )
 };

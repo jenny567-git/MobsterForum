@@ -386,7 +386,8 @@ namespace mobster_backend.Services
                 Content = "Kan du inte bara skjuta dom och sen ringa din cleaner?",
                 CreatedAt = new DateTime(2022, 01, 21),
                 UpdatedAt = DateTime.Now,
-                Author = user1
+                Author = user1,
+                IsCensored = false
             };
 
             var post2 = new Post()
@@ -396,7 +397,8 @@ namespace mobster_backend.Services
                 Content = "Jag har en bra cleaner som inte ställer frågor, jag skickar dm.",
                 CreatedAt = new DateTime(2022, 01, 21),
                 UpdatedAt = DateTime.Now,
-                Author = user2
+                Author = user2,
+                IsCensored = false
 
             };
 
@@ -409,8 +411,8 @@ namespace mobster_backend.Services
                 "inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo",
                 CreatedAt = new DateTime(2022, 01, 21),
                 UpdatedAt = DateTime.Now,
-                Author = user1
-
+                Author = user1,
+                IsCensored = false
             };
 
             var post4 = new Post()
@@ -422,7 +424,8 @@ namespace mobster_backend.Services
                 "inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo",
                 CreatedAt = new DateTime(2022, 01, 21),
                 UpdatedAt = DateTime.Now,
-                Author = user7
+                Author = user7,
+                IsCensored = false
             };
 
             var post5 = new Post()
@@ -434,7 +437,8 @@ namespace mobster_backend.Services
                 "inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo",
                 CreatedAt = new DateTime(2022, 01, 19),
                 UpdatedAt = DateTime.Now,
-                Author = user3
+                Author = user3,
+                IsCensored = false
 
             };
 
@@ -447,7 +451,9 @@ namespace mobster_backend.Services
                 "inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo",
                 CreatedAt = new DateTime(2022, 01, 21),
                 UpdatedAt = DateTime.Now,
-                Author = user4
+                Author = user4,
+                IsCensored = false
+
             };
 
             var post7 = new Post()
@@ -459,7 +465,8 @@ namespace mobster_backend.Services
                 "inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo",
                 CreatedAt = new DateTime(2022, 01, 21),
                 UpdatedAt = DateTime.Now,
-                Author = user5
+                Author = user5,
+                IsCensored = false
             };
 
             var post8 = new Post()
@@ -471,7 +478,9 @@ namespace mobster_backend.Services
                 "inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo",
                 CreatedAt = new DateTime(2022, 01, 18),
                 UpdatedAt = DateTime.Now,
-                Author = user1
+                Author = user1,
+                IsCensored = false
+
             };
 
             var post9 = new Post()
@@ -483,7 +492,9 @@ namespace mobster_backend.Services
                 "inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo",
                 CreatedAt = new DateTime(2022, 01, 21),
                 UpdatedAt = DateTime.Now,
-                Author = user7
+                Author = user7,
+                IsCensored = false
+
             };
 
             var post10 = new Post()
@@ -495,7 +506,9 @@ namespace mobster_backend.Services
                 "inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo",
                 CreatedAt = new DateTime(2022, 01, 20),
                 UpdatedAt = DateTime.Now,
-                Author = user7
+                Author = user7,
+                IsCensored = false
+
             };
 
             var post11 = new Post()
@@ -507,7 +520,9 @@ namespace mobster_backend.Services
                 "inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo",
                 CreatedAt = new DateTime(2022, 01, 11),
                 UpdatedAt = DateTime.Now,
-                Author = user6
+                Author = user6,
+                IsCensored = false
+
             };
 
             var post12 = new Post()
@@ -519,7 +534,9 @@ namespace mobster_backend.Services
                 "inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo",
                 CreatedAt = new DateTime(2022, 01, 21),
                 UpdatedAt = DateTime.Now,
-                Author = user3
+                Author = user3,
+                IsCensored = false
+
             };
 
             context.Posts.AddRange(post1, post2, post3, post4, post5, post6, post7, post8, 
@@ -629,6 +646,33 @@ namespace mobster_backend.Services
             context.BlockedMembers.AddRange(bm1, bm2, bm3);
             context.SaveChanges();
 
+            #endregion
+
+            #region Reports
+
+            var report1 = new Report()
+            {
+                ReportId = new Guid("85bd03ea-c40f-47c2-bded-9a3c5cf4eb07"),
+                SubjectUserId = user6.UserId,
+                ObjectUserId = user5.UserId,
+                Reason = "Unrespectful langauage",
+                CreatedAt = new DateTime(2022, 01, 03),
+                PostId = post7.PostId,
+                ThreadId = thread6.ThreadId
+            };
+
+            var report2 = new Report()
+            {
+                ReportId = new Guid("3cb3a15d-cf63-42a1-97b4-00481d38df79"),
+                SubjectUserId = user4.UserId,
+                ObjectUserId = user6.UserId,
+                Reason = "Unlawful content",
+                CreatedAt = new DateTime(2022, 01, 14),
+                ThreadId = thread7.ThreadId
+            };
+
+            context.Reports.AddRange(report1, report2);
+            context.SaveChanges();
             #endregion
         }
 

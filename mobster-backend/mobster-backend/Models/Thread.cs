@@ -13,6 +13,7 @@ namespace mobster_backend.Models
         public string Content { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+        public bool IsCensored { get; set; }
 
         public virtual Family Family { get; set; }
         public virtual User Author { get; set; }
@@ -27,6 +28,7 @@ namespace mobster_backend.Models
             CreatedAt = DateTime.Now;
             UpdatedAt = DateTime.Now;
             Posts = new HashSet<Post>();
+            IsCensored = false;
         }
 
         public Thread()

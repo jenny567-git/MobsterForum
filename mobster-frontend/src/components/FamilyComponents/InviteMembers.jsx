@@ -55,8 +55,17 @@ const InviteMembers = ({familyId, stateChanger}) => {
       }, 2000);
   };
 
+  const buttonStyles = {
+    color: "white",
+    fontFamily: "Lekton",
+    margin: "10px",
+    fontWeight: "bold",
+    cursor: "pointer",
+    borderRadius: "0.5rem"
+  }
+
   return (
-    <div className="container">
+    <div>
       <Form.Group>
         {/* <Form.Label>Add members</Form.Label> */}
         <Typeahead
@@ -65,11 +74,11 @@ const InviteMembers = ({familyId, stateChanger}) => {
           labelKey="userName"
           onChange={(e) => onSelect(e)}
           options={users}
-          placeholder="Type an username"
+          placeholder="Type a username"
           selected={selected}
         />
       </Form.Group>
-      <Button onClick={onAdd}>Add</Button>
+      <Button style={buttonStyles} onClick={onAdd}>Add</Button>
       {success && <Alert variant="success">Success</Alert>}
       {error && <Alert variant="danger">Error</Alert>}
     </div>

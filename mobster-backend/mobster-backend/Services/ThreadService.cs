@@ -98,6 +98,8 @@ namespace mobster_backend.Services
         {
             var thread = await context.Threads
                 .Include(t => t.Family)
+                .ThenInclude(f => f.FamilyMembers)
+                .Include(t => t.Family)
                 .ThenInclude(f => f.Admin)
                 .Include(t => t.Author)
                 .Include(t => t.Posts)
@@ -132,6 +134,23 @@ namespace mobster_backend.Services
             else
             {
                 return threads.ToThreadDtos();
+            }
+        }
+
+        public async Task ToggleCensorThread(Guid threadId)
+        {
+            var thread = await context.Threads
+                .FirstOrDefaultAsync(t => t.ThreadId == threadId);
+
+            if (thread == null)
+            {
+                throw new DbNotFoundException($"No thread with id {thread} exists in the database.");
+            }
+            else
+            {
+                thread.IsCensored = !thread.IsCensored;
+
+                await context.SaveChangesAsync();
             }
         }
     }

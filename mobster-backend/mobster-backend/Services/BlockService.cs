@@ -45,7 +45,7 @@ namespace mobster_backend.Services
 
             var innerJoin = from blockedUser in blockedUsers
                             join user in context.Users on blockedUser.UserId equals user.UserId
-                            select new UserDto { UserId = blockedUser.UserId, UserName = user.UserName, AuthId = user.AuthId, IsBanned = user.IsBanned, CreatedAt = blockedUser.BlockedAt };
+                            select new UserDto { UserId = blockedUser.UserId, UserName = user.UserName, AuthId = user.AuthId, IsBanned = user.IsBanned, CreatedAt = blockedUser.BlockedAt.ToString("yyyy/MM/dd HH:mm") };
             var users = await innerJoin.ToListAsync();
             return users.Count >0 ? users : null;
         }
@@ -60,8 +60,8 @@ namespace mobster_backend.Services
         public async Task ToggleUserBlockInApplication(Guid userId)
         {
             var user = await context.Users.FirstOrDefaultAsync(u => u.UserId == userId);
-
             user.IsBanned = !user.IsBanned;
+            Auth0.Methods.ToggleUserBlock(user.AuthId, user.IsBanned);
 
             await context.SaveChangesAsync();
         }

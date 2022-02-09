@@ -72,7 +72,7 @@ const AddThread = () => {
                 <textarea placeholder="Text" name="thread-content"cols="70" rows="4" onChange={(e)=> setThread({
                     ...thread, content: e.target.value
                 })} value={thread.content}></textarea>
-                <button onClick={postThread} className="post-button">Post</button>
+                <button onClick={postThread} className="post-button"><p>Post</p></button>
             
             </div>
         </div>

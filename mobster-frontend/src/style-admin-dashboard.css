@@ -39,6 +39,16 @@ p {
     padding: .4rem .1rem;
 }
 
+.report-detail {
+    /* display: flex;
+    flex-direction: row;
+    justify-content: space-between; */
+    align-items: center; 
+    border-bottom: 1px solid gray;
+    padding: .2rem;
+    /* padding: .4rem .1rem; */
+}
+
 .users-list {
     min-height: 275px;
     max-height: 500px;

@@ -1,3 +1,9 @@
 .modal .modal-content{
     background-color: #313131;
 }
+
+.click{
+	align-self: flex-end;
+    cursor: default;
+
+}

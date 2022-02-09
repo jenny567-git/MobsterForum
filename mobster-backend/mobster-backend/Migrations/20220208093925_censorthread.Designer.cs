@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using mobster_backend.Database;
 
@@ -11,9 +12,10 @@ using mobster_backend.Database;
 namespace mobster_backend.Migrations
 {
     [DbContext(typeof(MobsterContext))]
-    partial class MobsterContextModelSnapshot : ModelSnapshot
+    [Migration("20220208093925_censorthread")]
+    partial class censorthread
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -161,43 +163,6 @@ namespace mobster_backend.Migrations
                     b.ToTable("Posts", "forum");
                 });
 
-            modelBuilder.Entity("mobster_backend.Models.Report", b =>
-                {
-                    b.Property<Guid>("ReportId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("ObjectUserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("PostId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Reason")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("SubjectUserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("ThreadId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("ReportId");
-
-                    b.HasIndex("ObjectUserId");
-
-                    b.HasIndex("PostId");
-
-                    b.HasIndex("SubjectUserId");
-
-                    b.HasIndex("ThreadId");
-
-                    b.ToTable("Reports", "forum");
-                });
-
             modelBuilder.Entity("mobster_backend.Models.Thread", b =>
                 {
                     b.Property<Guid>("ThreadId")
@@ -337,35 +302,6 @@ namespace mobster_backend.Migrations
                         .HasForeignKey("ThreadId");
 
                     b.Navigation("Author");
-
-                    b.Navigation("Thread");
-                });
-
-            modelBuilder.Entity("mobster_backend.Models.Report", b =>
-                {
-                    b.HasOne("mobster_backend.Models.User", "ObjectUser")
-                        .WithMany()
-                        .HasForeignKey("ObjectUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("mobster_backend.Models.Post", "Post")
-                        .WithMany()
-                        .HasForeignKey("PostId");
-
-                    b.HasOne("mobster_backend.Models.User", "SubjectUser")
-                        .WithMany()
-                        .HasForeignKey("SubjectUserId");
-
-                    b.HasOne("mobster_backend.Models.Thread", "Thread")
-                        .WithMany()
-                        .HasForeignKey("ThreadId");
-
-                    b.Navigation("ObjectUser");
-
-                    b.Navigation("Post");
-
-                    b.Navigation("SubjectUser");
 
                     b.Navigation("Thread");
                 });

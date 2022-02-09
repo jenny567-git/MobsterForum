@@ -34,7 +34,7 @@ function MyFamilies() {
               key={family.familyId}
               onClick={() => navigate(`/family/${family.familyId}`)}
             >
-                <p>{family.name} <span>Members: {family.memberCount}</span></p>
+                <p>{family.name}<br></br> <span>Members: {family.memberCount}</span></p>
             </li>
           ))}
       </ul>
