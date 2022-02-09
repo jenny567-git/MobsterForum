@@ -70,12 +70,13 @@ namespace mobster_backend.Controllers
         }
 
         [HttpPost("ToggleUserActive")]
-        public async Task<IActionResult> ToggleUserActive(Guid userId)
+        public async Task<IActionResult> ToggleUserActive(string authId)
         {
             try
             {
-            var user = await userService.ToggleUserActive(userId);
-            return Ok(user);
+                var user = await userService.GetUserByAuthId(authId);
+                user = await userService.ToggleUserActive(user.UserId);
+                return Ok(user);
             }
             catch (Exception e)
             {
@@ -85,29 +86,35 @@ namespace mobster_backend.Controllers
         }
 
         [HttpPost("ChangeUserEmail")]
-        public async Task<IActionResult> ChangeUserEmail(Guid userId, string email)
+        public async Task<IActionResult> ChangeUserEmail(string sub, string email)
         {
             try
             {
-                var user = await userService.GetUser(userId);
-                var response = Auth0.Methods.ChangeEmail(user.AuthId, email);
+                var response = Auth0.Methods.ChangeEmail(sub, email);
                 return Ok(response);
-                
+
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return StatusCode(500, e);
             }
         }
 
         [HttpPost("ChangePassword")]
-        public async Task<IActionResult> ChangePassword(Guid userId)
+        public async Task<IActionResult> ChangePassword(string sub)
         {
             try
             {
-                var user = await userService.GetUser(userId);
-                var response = Auth0.Methods.CreateChangePasswordTicket(user.AuthId);
-                return Ok(response.Content);
+                //var user = await userService.GetUser(userId);
+                var response = Auth0.Methods.CreateChangePasswordTicket(sub);
+                string link = response.Content.ToString();
+                //string temp = "{\"ticket\":\"https://outlaw-forum.eu.auth0.com/lo/reset?ticket=BBEAXTwz23FRcvsXQUj32Wp9WNPJRs2y#\"}";
+                link = link.Substring(11);
+                string link2 = link.Remove(link.Length - 2, 2);
+                //string responselol2 = temp.Substring(11);
+                //responselol2 = responselol2.Remove(responselol2.Length - 2, 2);
+                //return Ok(response.Content);
+                return Ok(link2);
             }
             catch
             {
