@@ -14,6 +14,7 @@ import Profile from './pages/Profile'
 import { About } from './pages/StaticContent/About'
 import { NotFound } from './pages/StaticContent/NotFound'
 import { FAQ } from './pages/StaticContent/FAQ'
+import { Contact } from './pages/StaticContent/Contact'
 import { Footer } from './components/Footer'
 import { useLocalStorage } from './CustomHooks/useLocalStorage'
 
@@ -56,9 +57,16 @@ function App() {
             {/* <Route exact path="/family/:familyId/invite" element={<InviteMembers />}></Route> */}
             <Route exact path="/searchresult" element={<SearchResult />}></Route>
             <Route exact path="/admin-dashboard" element={isAuthorizedAsApplicationAdmin() ? <AdminDashboard /> : <Redirect />} />
+<<<<<<< HEAD
+            <Route exact path ="/profile" element={<Profile />}></Route>
+            <Route exact path ="/about" element={<About />}></Route>
+            <Route exact path ="/faq" element={<FAQ />}></Route>
+            <Route exact path ="/contact" element={<Contact />}></Route>
+=======
             <Route exact path="/profile" element={<Profile />}></Route>
             <Route exact path="/about" element={<About />}></Route>
             <Route exact path="/faq" element={<FAQ />}></Route>
+>>>>>>> main
 
             <Route path="*" element={<NotFound />} />
           </Routes>

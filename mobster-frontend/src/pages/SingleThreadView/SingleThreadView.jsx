@@ -134,7 +134,7 @@ const SingleThreadView = () => {
   return <div className="SingleThreadView">
 
     <div className="main-container">
-      <div className="thread-container">
+      <div className="single-thread-container">
 
         {thread && (<div className="thread">
           {thread.author.isBanned && <p className="thread-metadata">Posted by <strong className='thread-metadata-banned'> &#91;Banned User&#93; </strong> in <strong title='Go to family' className='thread-metadata-bold thread-metadata-tofamily'  onClick={() => navigate(`/family/${thread.family.familyId}`)}>{thread.family.name}</strong>  at {thread.createdAt}</p>}

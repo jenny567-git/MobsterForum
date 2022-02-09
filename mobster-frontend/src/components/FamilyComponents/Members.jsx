@@ -60,13 +60,23 @@ const Members = () => {
     }) );
   };
 
+  const buttonStyles = {
+    color: "white",
+    fontFamily: "Lekton",
+    margin: "10px",
+    fontWeight: "bold",
+    cursor: "pointer",
+    borderRadius: "0.5rem"
+  }
+
   if(isLoading) return <>Loading...</>
 
   return (
-    <div className="container">
+    <div>
       <div className="flex space">
       <h1>List of members({members.length})</h1>
       <Button
+      style={buttonStyles}
         variant="dark"
         onClick={() => navigate(`/family/${familyId}/blockedMembers`)}
         >
@@ -88,8 +98,8 @@ const Members = () => {
             <tr key={member.userId}>
               <td>{member.userName}</td>
               <td>      
-                <Button onClick={() => onBlock(member)}>Block</Button>
-                <Button variant="danger" onClick={() => onRemove(member)}>Remove</Button>
+                <Button style={buttonStyles} onClick={() => onBlock(member)}>Block</Button>
+                <Button style={buttonStyles} variant="danger" onClick={() => onRemove(member)}>Remove</Button>
               </td>
             </tr>
           ))}

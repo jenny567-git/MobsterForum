@@ -38,6 +38,14 @@ const BlockedMembers = () => {
     }) );
 
   };
+  const buttonStyles = {
+    color: "white",
+    fontFamily: "Lekton",
+    margin: "10px",
+    fontWeight: "bold",
+    cursor: "pointer",
+    borderRadius: "0.5rem"
+  }
 
   return (
     <div className="container">
@@ -73,6 +81,7 @@ const BlockedMembers = () => {
                 <td>
                   {/* <Button>Description (TODO)</Button> */}
                   <Button
+                  style={buttonStyles}
                     variant="danger"
                     onClick={() => onRemove(member.userId)}
                   >
