@@ -45,6 +45,7 @@ namespace mobster_backend
                     };
                 });
 
+            Auth0.Methods.GetBearerToken();
 
             services.AddCors(options =>
             {

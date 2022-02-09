@@ -60,8 +60,8 @@ namespace mobster_backend.Services
         public async Task ToggleUserBlockInApplication(Guid userId)
         {
             var user = await context.Users.FirstOrDefaultAsync(u => u.UserId == userId);
-
             user.IsBanned = !user.IsBanned;
+            Auth0.Methods.ToggleUserBlock(user.AuthId, user.IsBanned);
 
             await context.SaveChangesAsync();
         }
