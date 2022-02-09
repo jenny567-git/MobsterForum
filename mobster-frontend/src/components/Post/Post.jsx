@@ -122,7 +122,7 @@ useEffect(()=>{
 // if(isLoading){
 //     return <div> <p>Loading page...</p></div>
 //   }
-    return <div>
+    return <div className="posts">
 
             { !posts && <p>There are no posts on this thread yet...</p> }
 

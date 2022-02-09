@@ -42,6 +42,7 @@ const Family = () => {
       .catch((error) => {
         console.error("Error:", error);
       });
+      console.log(response);
   };
 
   const checkJoinable = async () => {
