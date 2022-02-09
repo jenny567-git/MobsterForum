@@ -144,7 +144,6 @@ namespace mobster_backend.Extensions
                 IsActive = user.IsActive,
                 IsBanned = user.IsBanned,
                 AuthId = user.AuthId,
-                IsActive = user.IsActive
             };
         }
 

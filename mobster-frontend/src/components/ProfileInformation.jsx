@@ -2,7 +2,6 @@ import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import {useState, useEffect} from 'react'
 import { Link, Navigate } from "react-router-dom";
-import { useState, useEffect } from "react";
 import axios, { Axios } from "axios";
 import { useLocalStorage } from '../CustomHooks/useLocalStorage'; 
 
