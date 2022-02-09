@@ -155,7 +155,7 @@ const SingleThreadView = () => {
   return (
     <div className="SingleThreadView">
       <div className="main-container">
-        <div className="thread-container">
+              <div className="single-thread-container">
           {thread && (
             <div className="thread">
               {thread.author.isBanned && (

@@ -11,7 +11,8 @@ export const Footer = () => {
             <nav>
               <Link to="/"> Home</Link> | 
               <Link to="/about"> About</Link> | 
-              <Link to="/faq"> FAQ</Link>
+              <Link to="/faq"> FAQ</Link> | 
+              <Link to="/contact"> Contact us</Link>
             </nav>
         </div>
 
