@@ -310,3 +310,18 @@ div{
 .mobster-std-container {
 	padding: .5rem 0 .5rem 0;
 }
+.container Button{
+  background-color: #ec625f;
+  color: white;
+  border: none;
+  font-family: Lekton;
+  margin: 4px;
+  width: 15%;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 0.5rem;
+}
+.container Button:hover{
+  background-color: #414141;
+  color:#ec625f;
+}

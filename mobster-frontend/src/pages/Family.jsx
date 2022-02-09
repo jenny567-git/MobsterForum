@@ -68,7 +68,7 @@ const Family = () => {
       setCanJoin(true);
     }
   };
-  
+
   const checkLeave = async () => {
     const memberResponse = await axios.get(
       `https://localhost:44304/api/Family/${id}/members`
@@ -103,7 +103,7 @@ const Family = () => {
       });
     console.log(family);
   };
-  
+
   const toLeave = async () => {
     setShowLeaveModal(true);
     await axios
@@ -156,11 +156,11 @@ const Family = () => {
     border: "none",
     fontFamily: "Lekton",
     margin: "4px",
-    width:"15%",
+    width: "15%",
     fontWeight: "bold",
     cursor: "pointer",
-    borderRadius: "0.5rem"
-  }
+    borderRadius: "0.5rem",
+  };
   return (
     <div className="container">
       <h1>{family.name}</h1>
@@ -169,27 +169,41 @@ const Family = () => {
       </h2>
       <p>Members: {family.memberCount}</p>
 
-          {canJoin && <Button style={buttonStyles} onClick={toJoin}>Join</Button>}
-{canLeave && (<Button onClick={toLeave}>Leave</Button>)} 
+      {canJoin && (
+        <Button onClick={toJoin}>
+          Join
+        </Button>
+      )}
+      {canLeave && <Button onClick={toLeave}>Leave</Button>}
       {/*if current user == admin or site admin, display Add/Edit/Delete button*/}
       {user &&
         (user.roles.includes("admin") || user.userId == family.adminUserId) && (
           <>
-            <Button style={buttonStyles} onClick={() => setShowInviteModal(true)}>
+            <Button
+              
+              onClick={() => setShowInviteModal(true)}
+            >
               Add members
             </Button>
-            <Button style={buttonStyles} onClick={toggleEdit}>Edit</Button>
-            <Button style={buttonStyles} onClick={() => navigate(`/family/${id}/members`)}>
+            <Button onClick={toggleEdit}>
+              Edit
+            </Button>
+            <Button
+              
+              onClick={() => navigate(`/family/${id}/members`)}
+            >
               {" "}
               Handle members
             </Button>
-            <Button style={buttonStyles} variant="danger" onClick={() => setShowDeleteModal(true)}>
+            <Button
+              
+             
+              onClick={() => setShowDeleteModal(true)}
+            >
               Delete family
             </Button>
           </>
         )}
-
-      
 
       {isEditing && (
         <EditFamily stateChanger={setState} isEdit={setIsEditing} />
@@ -235,13 +249,17 @@ const Family = () => {
             <p>You're now a part of the family :)</p>
           </Modal.Body>
           <Modal.Footer>
-            <Button style={buttonStyles} variant="secondary" onClick={() => setShowJoinModal(false)}>
+            <Button
+              
+              variant="secondary"
+              onClick={() => setShowJoinModal(false)}
+            >
               Close
             </Button>
           </Modal.Footer>
         </Modal>
       )}
-{/* LEAVE MODAL */}
+      {/* LEAVE MODAL */}
       {user && (
         <Modal
           show={showLeaveModal}
@@ -255,13 +273,15 @@ const Family = () => {
             <p>You're no longer a part of the family</p>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={() => setShowLeaveModal(false)}>
+            <Button
+              variant="secondary"
+              onClick={() => setShowLeaveModal(false)}
+            >
               Close
             </Button>
           </Modal.Footer>
         </Modal>
       )}
-
 
       {/* DELETE MODAL */}
       <Modal
@@ -276,10 +296,14 @@ const Family = () => {
           <p>This family will be permanently be removed</p>
         </Modal.Body>
         <Modal.Footer>
-          <Button style={buttonStyles} variant="secondary" onClick={() => setShowDeleteModal(false)}>
+          <Button
+          
+           
+            onClick={() => setShowDeleteModal(false)}
+          >
             Close
           </Button>
-          <Button style={buttonStyles} variant="danger" onClick={onDelete}>
+          <Button  variant="danger" onClick={onDelete}>
             Confirm delete
           </Button>
         </Modal.Footer>
