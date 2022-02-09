@@ -285,7 +285,8 @@ const SingleThreadView = () => {
                 )}
                 {checkIfUserInFamily() &&
                   !user.roles.includes("admin") &&
-                  thread.author.userId != user.userId && (
+                  thread.author.userId != user.userId && 
+                  !thread.isCensored && (
                     <Button
                       className="thread-btns"
                       title="Report thread"

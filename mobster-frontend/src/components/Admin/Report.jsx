@@ -42,9 +42,10 @@ const Report = () => {
 
   const onDelete = () => {
     //delete report
+    console.log('censur', isCensur);
     axios
       .delete(
-        `https://localhost:44304/api/Report?reportId=${selectedReport.reportId}&censur${isCensur}`
+        `https://localhost:44304/api/Report?reportId=${selectedReport.reportId}&censur=${isCensur}`
       )
       .then((res) => {
         console.log("Success: Delete report", res.data);
@@ -55,7 +56,7 @@ const Report = () => {
     if (isCensur) {
       setReports(
         reports.filter(function (report) {
-          return (report.postId !== selectedReport.postId && report.threadId !== selectedReport.threadId);
+          return (report.postId !== selectedReport.postId || report.threadId !== selectedReport.threadId);
         })
       );
     } else {
@@ -73,12 +74,12 @@ const Report = () => {
     if (selectedReport.postId == null) {
       axios.put(
         `https://localhost:44304/api/Thread/censor/${selectedReport.threadId}`
-      );
-    } else {
-      axios.put(
-        `https://localhost:44304/api/Posts/censor/${selectedReport.postId}`
-      );
-    }
+        );
+      } else {
+        axios.put(
+          `https://localhost:44304/api/Posts/censor/${selectedReport.postId}`
+          );
+        }
     isCensur = true;
     onDelete();
   };
@@ -134,7 +135,7 @@ const Report = () => {
                     {selectedReport && <p>{selectedReport.reason}</p>}
                   </Modal.Body>
                 </Modal>
-                
+
 {/* REPORT CONTENT */}
                 <Modal
                   show={showContentModal}
