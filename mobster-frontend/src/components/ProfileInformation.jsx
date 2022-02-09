@@ -1,13 +1,14 @@
 import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import {useState, useEffect} from 'react'
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import axios, { Axios } from "axios";
-import { useLocalStorage } from '../CustomHooks/useLocalStorage'; 
+import { useLocalStorage } from "../CustomHooks/useLocalStorage";
 
 const ProfileInformation = () => {
   let [isLoggedIn, setIsLoggedIn] = useState(true);
-  const [localUser, setLocaluser] = useLocalStorage("user", null);
+
+  let navigate = useNavigate();
 
   const {
       user,
@@ -34,7 +35,7 @@ const ProfileInformation = () => {
       updatedAt: user.updated_at,
     };
     localStorage.setItem("user", JSON.stringify(loggedInUser));
-    console.log('local user', localUser);
+
     if(loggedInUser.roles.includes('admin')){
       setIsLoggedIn(true);
     }
@@ -97,8 +98,8 @@ const ProfileInformation = () => {
           </button>
         </div>
         <div className="d-flex flex-row justify-content-center mobster-std-container">
-              <Link to="/admin-dashboard">{isLoggedIn && (<button className="mobster-std-btn" onClick="/admin-dashboard">Admin Dashboard</button>)}</Link>
-            </div>
+            {isLoggedIn && (<button className="mobster-std-btn" onClick={() =>navigate(`/admin-dashboard`)}>Admin Dashboard</button>)}
+        </div>
       </div>
     </div>
   );
