@@ -7,15 +7,20 @@ import axios from "axios";
 const ProfileInformation = ({ setIsAuthorized }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { user, isAuthenticated } = useAuth0();
+  const [isActive, setIsActive] = useState(true);
+  const [newEmail, setEmail] = useState("");
 
-  useEffect(() => {
+
+  useEffect(async () => {
     //add user to our database
     let userObj = {
       userName: user["https://rules.com/claims/user_metadata"].username,
       AuthId: user.sub,
       Id: user["https://rules.com/claims/user_metadata"].uuid,
     };
-    axios.post(`https://localhost:44304/api/User`, userObj);
+    let userActive = await axios.post(`https://localhost:44304/api/User`, userObj);
+    console.log(userActive);
+    setIsActive(userActive.data.isActive);
 
     //store user in local storage
     let loggedInUser = {
@@ -34,7 +39,8 @@ const ProfileInformation = ({ setIsAuthorized }) => {
     } else {
       setIsAuthorized(false);
     }
-  }, []);
+
+  }, [isActive]);
 
   const changePassword = async () => {
     console.log(user.sub);
@@ -56,15 +62,28 @@ const ProfileInformation = ({ setIsAuthorized }) => {
     //https://localhost:44304/api/User/ChangeUserEmail?sub=subbbb&email=emailjlsss
   };
 
-  const deactivateAccount = () => {
-    axios.post(
+  const deactivateAccount = async () => {
+    let response = await axios.post(
       "https://localhost:44304/api/User/ToggleUserActive?authId=" + user.sub
+      
     );
+    console.log(response);
+    if(response.data.isActive)
+    {
+      setIsActive(true);
+      console.log(response);
+      alert("You reactivated your account");
+    }
+    else{
+      setIsActive(false);
+      console.log(response);
+      alert("You deactivated your account");
+    }
+   
   };
   //const [user2, setuser] = useLocalStorage('user', null)
 
-  const [newEmail, setEmail] = useState("");
-
+  
   return (
     
      <div className="profile-center">
@@ -80,16 +99,24 @@ const ProfileInformation = ({ setIsAuthorized }) => {
               <h6>Email:</h6>
               <h6>{user.email}</h6>
             </div>
-            <button className="mobster-std-btn" onClick={deactivateAccount}>
-              Deactivate my account.
-            </button>
-            <p>This will deactivate your account</p>
-            <p>If you wish to be permanently removed</p>
-            <p>contact us on contact.mobsterforum@gmail.com</p>
+            {isActive && (<div>
+              <button className="mobster-std-btn" onClick={deactivateAccount}>
+                Deactivate my account.
+              </button>
+              <p>This will deactivate your account</p>
+              <p>If you wish to be permanently removed</p>
+              <p>contact us on contact.mobsterforum@gmail.com</p>
+            </div>
+            )}
+            
+             {!isActive && (<button className="mobster-std-btn" onClick={deactivateAccount}>
+              Reactivate my account.
+            </button>)}
+            {!isActive && (<p>This will reactivate your account</p>)}
        
        
             </div>
-          <div classname="to-right">
+          <div className="to-right">
           <Link to="/admin-dashboard">
               {isLoggedIn && (
                 <button className="mobster-std-btn">Admin Dashboard</button>
@@ -104,11 +131,12 @@ const ProfileInformation = ({ setIsAuthorized }) => {
                   onChange={(e) => setEmail(e.target.value)}
                 />
                 <button className="mobster-std-btn" type="submit">Change my email</button>
-                <button className="mobster-std-btn" onClick={changePassword}>
-                  Change password. You will be redirected.
-                </button>
+               
               </div>
             </form>
+            <button className="mobster-std-btn" onClick={changePassword}>
+                  Change password. You will be redirected.
+                </button>
           </div>
         </div>
      </div>

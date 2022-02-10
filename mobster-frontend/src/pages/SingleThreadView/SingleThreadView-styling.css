@@ -2,6 +2,7 @@
 	display: flex;
 	margin-bottom: 30px;
 	justify-content: center;
+	
 }
 
 .main-container {
@@ -9,6 +10,7 @@
 	flex-direction: column;
 	justify-content: center;
 	width: 95%;
+	
 }
 
 .single-thread-container {
@@ -19,6 +21,7 @@
 	width: 100%;
 	margin-top: 2rem;
 	cursor: pointer;
+	border-radius: 1rem;
 }
 
 .thread {

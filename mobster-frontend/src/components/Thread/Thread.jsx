@@ -10,7 +10,6 @@ function Thread({thread}) {
   return (
     <div className="thread-container" onClick={() => navigate(`/thread/${thread.threadId}`)}>
       <div className="thread-title">
-        {/* {thread.author ? < p className="thread-metadata">posted by {thread.author.userName} in {thread.familyName} at {thread.createdAt}</p>: */}
         < div className="thread-metadata"><span>Posted by <p>{thread.author.userName}</p> in <p>{thread.familyName}</p> at {thread.createdAt}</span></div>
         <h2>{thread.title}</h2>
       </div>

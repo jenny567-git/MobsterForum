@@ -30,25 +30,34 @@ function MyFamilies() {
     }
     setIsFetching(false);
   };
-
+  const buttonStyles = {
+    color: "white",
+    fontFamily: "Lekton",
+    margin: "10px",
+    fontWeight: "bold",
+    cursor: "pointer",
+    border: "none",
+    borderRadius: "0.5rem",
+    backgroundColor: "#ec625f",
+    
+  }
   if (error)
     return (
       <div className="my-families">
         <h3>My Families</h3>
         <p>You haven't joined any families.</p>
+        {user && (
+        <Button
+          style={buttonStyles}
+          variant="success"
+          onClick={() => setShowCreateFamilyModal(true)}
+        >
+          Create new family
+        </Button>
+      )}
       </div>
     );
-    const buttonStyles = {
-      color: "white",
-      fontFamily: "Lekton",
-      margin: "10px",
-      fontWeight: "bold",
-      cursor: "pointer",
-      border: "none",
-      borderRadius: "0.5rem",
-      backgroundColor: "#ec625f",
-      
-    }
+   
 
   // { error && <h2>you haven't joined any families.</h2> }
   return (

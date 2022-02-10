@@ -12,28 +12,32 @@ const SearchResult = () => {
 
   if (context.searchType == "families") {
     return (
-      <div className="search-result">
-        <h1>Found: {context.searchResult.length} families</h1>
-        {Array.from(context.searchResult).map((family) => (
-            <FamilyOverview
-            key={family.familyId}
-            family={family}
-          />
-          ))}
+      <div className="flex-space">
+        <div className="search-result">
+          <h2>Found: {context.searchResult.length} families</h2>
+          {Array.from(context.searchResult).map((family) => (
+              <FamilyOverview
+              key={family.familyId}
+              family={family}
+            />
+            ))}
+        </div>
       </div>
     );
   }
 
   if (context.searchType == "threads") {
     return (
-      <div className="search-result">
-        <h1>Found: {context.searchResult.length} threads</h1>
-        {Array.from(context.searchResult).map((thread) => (
-            <Thread
-            key={thread.threadId}
-            thread={thread}
-          />
-          ))}
+      <div className="flex-space">
+        <div className="search-result">
+          <h1>Found: {context.searchResult.length} threads</h1>
+          {Array.from(context.searchResult).map((thread) => (
+              <Thread
+              key={thread.threadId}
+              thread={thread}
+            />
+            ))}
+        </div>
       </div>
     );
   }
