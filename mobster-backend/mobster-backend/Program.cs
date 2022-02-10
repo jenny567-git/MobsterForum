@@ -16,7 +16,7 @@ namespace mobster_backend
             {
                 var seed = scope.ServiceProvider.GetRequiredService<IDatabaseSeedService>();
 
-                //seed.SeedDatabase().Wait();
+                seed.SeedDatabase().Wait();
             }
 
             host.Run();
