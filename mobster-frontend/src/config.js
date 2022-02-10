@@ -7,10 +7,7 @@ export function getConfig() {
   // don't have an API).
   // If this resolves to `null`, the API page changes to show some helpful info about what to do
   // with the audience.
-  const audience =
-    configJson.audience && configJson.audience !== "https://mobster/api"
-      ? configJson.audience
-      : null;
+  const audience = "https://mobster/api"
 
   return {
     domain: configJson.domain,

@@ -17,7 +17,8 @@ const ProfileInformation = ({setIsAuthorized}) => {
   const config = getConfig();
 
   useEffect(() => {
-
+    getToken(); 
+    getIdToken();
     //add user to our database
     let userObj = {
       userName: user["https://rules.com/claims/user_metadata"].username,
@@ -50,9 +51,9 @@ const ProfileInformation = ({setIsAuthorized}) => {
 
   const getToken = async () => {
     const token = await getAccessTokenSilently({
-      audience: config.audience,
+      audience: "https://mobster/api",
     });
-    console.log(token);
+    console.log("Config.audience: " + config.audience)
   }
 
   const getIdToken = async () => {
