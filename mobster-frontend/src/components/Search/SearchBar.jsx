@@ -71,7 +71,7 @@ function SearchBar() {
                 <i className="fas fa-search"></i>
               </button>
             </div>
-            <div className = "search-select">
+            <div className="search-select">
               <p>Select:</p>
               <div className="radio-button">
                 <input

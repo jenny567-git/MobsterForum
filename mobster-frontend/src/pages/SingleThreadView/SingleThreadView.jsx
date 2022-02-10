@@ -6,7 +6,7 @@ import { useLocalStorage } from "../../CustomHooks/useLocalStorage";
 import { Button, Modal } from "react-bootstrap";
 import { Post } from "../../components/Post/Post";
 import "./SingleThreadView-styling.css";
-import "../../components/Thread/thread-styling.css"
+import "../../components/Thread/thread-styling.css";
 
 const SingleThreadView = () => {
   const { id } = useParams();
@@ -156,14 +156,14 @@ const SingleThreadView = () => {
   return (
     <div className="SingleThreadView">
       <div className="main-container">
-              <div className="single-thread-container">
+        <div className="single-thread-container">
           {thread && (
             <div className="thread">
               {thread.author.isBanned && (
                 <div className="thread-metadata">
                   <span>
+                    Posted by{" "}
                     <p>
-                      Posted by{" "}
                       <strong className="thread-metadata-banned">
                         {" "}
                         &#91;Banned User&#93;{" "}
@@ -184,44 +184,44 @@ const SingleThreadView = () => {
                 </div>
               )}
               {!thread.author.isActive && (
-                <p className="thread-metadata">
-                  Posted by{" "}
-                  <strong className="thread-metadata-bold">
-                    &#91;Deleted User&#93;
-                  </strong>{" "}
-                  in{" "}
-                  <strong
-                    title="Go to family"
-                    className="thread-metadata-bold thread-metadata-tofamily"
-                    onClick={() =>
-                      navigate(`/family/${thread.family.familyId}`)
-                    }
-                  >
-                    {thread.family.name}
-                  </strong>{" "}
-                  at {thread.createdAt}
-                </p>
+                <div className="thread-metadata">
+                  <span>
+                    Posted by{" "}
+                    <strong className="thread-metadata-bold">
+                      <p>&#91;Deleted User&#93;</p>
+                    </strong>{" "}
+                    in{" "}
+                    <strong
+                      title="Go to family"
+                      className="thread-metadata-bold thread-metadata-tofamily"
+                      onClick={() =>
+                        navigate(`/family/${thread.family.familyId}`)
+                      }
+                    >
+                      <p>{thread.family.name}</p>
+                    </strong>{" "}
+                    at <p>{thread.createdAt}</p>
+                  </span>
+                </div>
               )}
               {!thread.author.isBanned && thread.author.isActive && (
                 <div className="thread-metadata">
                   <span>
-                    <p >
-                      Posted by{" "}
-                      <strong className="thread-metadata-bold">
-                        {thread.author.userName}
-                      </strong>{" "}
-                      in{" "}
-                      <strong
-                        title="Go to family"
-                        className="thread-metadata-bold thread-metadata-tofamily"
-                        onClick={() =>
-                          navigate(`/family/${thread.family.familyId}`)
-                        }
-                      >
-                        {thread.family.name}
-                      </strong>{" "}
-                      at {thread.createdAt}
-                    </p>
+                    Posted by{" "}
+                    <strong className="thread-metadata-bold">
+                      <p>{thread.author.userName}</p>
+                    </strong>{" "}
+                    in{" "}
+                    <strong
+                      title="Go to family"
+                      className="thread-metadata-bold thread-metadata-tofamily"
+                      onClick={() =>
+                        navigate(`/family/${thread.family.familyId}`)
+                      }
+                    >
+                      <p>{thread.family.name}</p>
+                    </strong>{" "}
+                    at <p>{thread.createdAt}</p>
                   </span>
                 </div>
               )}
@@ -294,7 +294,7 @@ const SingleThreadView = () => {
                 )}
                 {checkIfUserInFamily() &&
                   !user.roles.includes("admin") &&
-                  thread.author.userId != user.userId && 
+                  thread.author.userId != user.userId &&
                   !thread.isCensored && (
                     <Button
                       className="thread-btns"

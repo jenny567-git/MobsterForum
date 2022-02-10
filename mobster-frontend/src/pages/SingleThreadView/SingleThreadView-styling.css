@@ -23,7 +23,6 @@
 	cursor: pointer;
 	border-radius: 1rem;
 }
-
 .thread {
 	display: flex;
 	flex-direction: column;
@@ -66,12 +65,14 @@ p {
 	display: flex;
 	padding-right: 0.5em;
 	align-items: center;
+	padding-right: 1rem;
 }
-.thread-metadata p {
+.thread-metadata p:first-child {
 	display: flex;
-	color: #ec625f;
+	flex-direction: row;
 	padding-left: 0.5em;
 	padding-right: 0.5em;
+	color: #ec625f;
 }
 
 .thread-data {

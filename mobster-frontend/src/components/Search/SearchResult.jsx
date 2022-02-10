@@ -30,7 +30,7 @@ const SearchResult = () => {
     return (
       <div className="flex-space">
         <div className="search-result">
-          <h1>Found: {context.searchResult.length} threads</h1>
+          <h2>Found: {context.searchResult.length} threads</h2>
           {Array.from(context.searchResult).map((thread) => (
               <Thread
               key={thread.threadId}
