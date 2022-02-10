@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using mobster_backend.DTOs.Read;
 using mobster_backend.DTOs.Write;
 using mobster_backend.Exceptions;
@@ -108,6 +110,7 @@ namespace mobster_backend.Controllers
         /// Get top 5 families with most members
         /// </summary>
         /// <returns></returns>
+        [Authorize]
         [HttpGet("top5")]
         public async Task<IActionResult> GetTopFamiliesAsync()
         {

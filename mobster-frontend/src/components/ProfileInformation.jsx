@@ -3,13 +3,18 @@ import { useAuth0 } from "@auth0/auth0-react";
 import {useState, useEffect} from 'react'
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { getConfig } from "../config";
 
 const ProfileInformation = ({setIsAuthorized}) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const {
       user,
       isAuthenticated,
+      getAccessTokenSilently,
+      getIdTokenClaims
   } = useAuth0();
+
+  const config = getConfig();
 
   useEffect(() => {
 
@@ -39,8 +44,24 @@ const ProfileInformation = ({setIsAuthorized}) => {
     else {
       setIsAuthorized(false);
     }
+    getToken();
+    getIdToken();
   }, []);
 
+  const getToken = async () => {
+    const token = await getAccessTokenSilently({
+      audience: config.audience,
+    });
+    console.log(token);
+  }
+
+  const getIdToken = async () => {
+    const token = await getIdTokenClaims({
+      audience: config.audience,
+    });
+    console.log(token);
+  }
+  
   const changePassword = async () => {
 	  console.log(user.sub)
     axios.post("https://localhost:44304/api/User/ChangePassword?sub=" + user.sub).then((response) => {window.location.href = response.data})
