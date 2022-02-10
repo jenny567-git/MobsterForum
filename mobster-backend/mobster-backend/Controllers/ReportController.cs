@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using mobster_backend.DTOs.Write;
 using mobster_backend.Interfaces;
@@ -45,7 +46,7 @@ namespace mobster_backend.Controllers
             }
             return StatusCode(201);
         }
-        
+        [Authorize(Policy = "AdminAccess")]
         [HttpDelete]
         public async Task<IActionResult> DeleteReport(Guid reportId, bool censur)
         {

@@ -41,7 +41,7 @@ namespace mobster_backend
                     // If the access token does not have a `sub` claim, `User.Identity.Name` will be `null`. Map it to a different claim by setting the NameClaimType below.
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
-                        //NameClaimType = ClaimTypes.NameIdentifier
+                        NameClaimType = ClaimTypes.NameIdentifier
                     };
                 });
 
@@ -110,6 +110,7 @@ namespace mobster_backend
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("read:messages", policy => policy.Requirements.Add(new HasScopeRequirement("read:messages", domain)));
+                options.AddPolicy("AdminAccess", policy => policy.RequireClaim("permissions", "admin:access"));
             });
 
             services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
