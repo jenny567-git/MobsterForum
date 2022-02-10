@@ -1,11 +1,14 @@
 .SingleThreadView {
 	display: flex;
 	margin-bottom: 30px;
+	justify-content: center;
 }
 
-.main-container{
+.main-container {
+	display: flex;
 	flex-direction: column;
-	width: 100%;
+	justify-content: center;
+	width: 95%;
 }
 
 .single-thread-container {
@@ -15,9 +18,6 @@
 	border-radius: 0;
 	width: 100%;
 	margin-top: 2rem;
-	margin-left: -2rem;
-	margin-left: 2rem;
-	padding: 1rem;
 	cursor: pointer;
 }
 
@@ -26,7 +26,6 @@
 	flex-direction: column;
 	color: #fff;
 	font-family: 'Special Elite';
-	
 }
 
 .thread h2,
@@ -39,9 +38,9 @@ p {
 }
 
 .thread-metadata {
+	padding: 1rem;
 	display: flex;
 	align-self: flex-end;
-
 }
 
 .thread-metadata-bold {
@@ -60,15 +59,14 @@ p {
 .thread-metadata-banned {
 	color: white;
 }
-.thread-metadata span{
+.thread-metadata span {
 	display: flex;
 	padding-right: 0.5em;
 	align-items: center;
-	
 }
-.thread-metadata p{
+.thread-metadata p {
 	display: flex;
-	color:#ec625f;
+	color: #ec625f;
 	padding-left: 0.5em;
 	padding-right: 0.5em;
 }
@@ -98,7 +96,7 @@ textarea {
 	justify-content: flex-end;
 	align-items: center;
 	flex-direction: row;
-    border: none;
+	border: none;
 	height: 5vh;
 	background-color: #ec625f;
 }
@@ -107,7 +105,10 @@ textarea {
 	cursor: pointer;
 }
 
-.thread-btns Button:hover, .thread-btns Button:active, .thread-btns Button:visited, .thread-btns Button:focus {
+.thread-btns Button:hover,
+.thread-btns Button:active,
+.thread-btns Button:visited,
+.thread-btns Button:focus {
 	background-color: #eb4a48;
 	box-shadow: none;
 }
@@ -120,7 +121,6 @@ textarea {
 	align-items: center;
 }
 
-
 .backtotop-button {
 	display: flex;
 	margin: 10px auto;
@@ -128,8 +128,10 @@ textarea {
 	border: none;
 }
 
-.backtotop-button:hover, .backtotop-button:active, .backtotop-button:visited, .backtotop-button:focus {
+.backtotop-button:hover,
+.backtotop-button:active,
+.backtotop-button:visited,
+.backtotop-button:focus {
 	background-color: #eb4a48;
 	box-shadow: none;
 }
-

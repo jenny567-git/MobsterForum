@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 // import { useAuth0 } from '@auth0/auth0-react';
 import { useLocalStorage } from '../../CustomHooks/useLocalStorage';
 import axios from 'axios'
-import logo from '../../assets/Mobster-logo.png'
+import userPic from '../../assets/profile-icons/user.jpg'
 import './add-thread-styling.css'
 
 
@@ -48,7 +48,7 @@ const AddThread = () => {
     return (
         <div className="add-thread">
             
-            <img src={logo} alt="profile picture" />
+            <img src={userPic} alt="profile picture" />
             <div className="thread-text">
                 
                 <div className="family-select">
