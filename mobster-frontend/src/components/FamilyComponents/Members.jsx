@@ -71,15 +71,11 @@ const Members = () => {
   return (
     <div className="flex-space">
       <div className="pad">
-        <h1>List of members({members.length})</h1>
+        <h1>List of members ({members.length})</h1>
         <Button onClick={() => navigate(`/family/${familyId}/blockedMembers`)}>
           Blocked member list
         </Button>
       </div>
-      {/* {Array.from(members).map((member) => (
-        <Member key={member.userId} member={member} familyId={familyId} />
-      ))} */}
-     
         <Table striped bordered hover size="sm" variant="dark">
           <thead>
             <tr>

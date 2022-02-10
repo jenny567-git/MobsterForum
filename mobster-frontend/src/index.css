@@ -2,11 +2,11 @@
 font-family: 'Special Elite', cursive; */
 
 #root {
-	display: flex;
-	flex-direction: column;
-	margin: 0;
-	background-color: #313131;
-	min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  background-color: #313131;
+  min-height: 100vh;
 }
 
 p,
@@ -27,17 +27,17 @@ h6 {
 }
 
 div {
-	color: white;
+  color: white;
 }
 .app {
-	min-height: 100vh;
-	display: flex;
-	flex-direction: column;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .flex {
-	display: flex;
-	flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 .dark {
@@ -49,25 +49,25 @@ div {
 }
 /* Home Page */
 .home {
-	width: 100%;
-	display: flex;
-	flex-direction: row;
-	justify-content: space-around;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
 .page-center {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 60%;
 }
 .home-welcome {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	color: #ec625f;
-	margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #ec625f;
+  margin-top: auto;
 }
 
 /* grey container box */
@@ -81,15 +81,15 @@ div {
 /* MyFamilies component*/
 
 .my-families {
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-start;
-	width: 20%;
-	height: 100%;
-	background-color: #414141;
-	margin-top: 2rem;
-	margin-left: 2rem;
-	border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 20%;
+  height: 100%;
+  background-color: #414141;
+  margin-top: 2rem;
+  margin-left: 2rem;
+  border-radius: 1rem;
 }
 .my-families h3 {
   text-align: center;
@@ -101,7 +101,6 @@ div {
 .my-families ul {
   list-style-type: upper-roman;
   font-size: 1rem;
-  
 }
 .my-families li {
   margin-bottom: 1rem;
@@ -109,8 +108,8 @@ div {
   color: whitesmoke;
 }
 .my-families li:hover {
-	color: #ec625f;
-	cursor: pointer;
+  color: #ec625f;
+  cursor: pointer;
 }
 
 /* Members component */
@@ -120,7 +119,7 @@ div {
   flex-direction: row;
 }
 .pad {
-  padding-bottom: 20px;
+  margin-left: 2rem;
 }
 .flex-space Button {
   background-color: #ec625f;
@@ -128,7 +127,7 @@ div {
   border: none;
   font-family: Lekton;
   margin: 4px;
-  width: 20%;
+  width: 17%;
   font-weight: bold;
   cursor: pointer;
   border-radius: 0.5rem;
@@ -136,6 +135,13 @@ div {
 .flex-space Button:hover {
   background-color: #414141;
   color: #ec625f;
+}
+/* .flex-space Button:last-child{
+	background-color: black;
+	color: #ec625f;
+} */
+.flex-space Table {
+  margin-left: 2rem;
 }
 .block-btn {
   margin: 0.5rem;
@@ -151,69 +157,82 @@ div {
   background-color: #ec625f;
   width: 100%;
 }
+.add-member Button {
+  color: white;
+  background-color: #ec625f;
+  border: none;
+  margin-top: 1rem;
+  width: 15%;
+  font-weight: bold;
+  cursor: pointer;
+}
+.add-member Button:hover {
+  background-color: #414141;
+  color: #ec625f;
+}
 
 /* MostPopularFamilies component*/
 
 .mp-families {
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-start;
-	width: 20%;
-	height: 100%;
-	background-color: #414141;
-	margin-top: 2rem;
-	margin-right: 2rem;
-	border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 20%;
+  height: 100%;
+  background-color: #414141;
+  margin-top: 2rem;
+  margin-right: 2rem;
+  border-radius: 1rem;
 }
 .mp-families h3 {
-	text-align: center;
-	font-size: 1.5rem;
-	color: whitesmoke;
-	border-bottom: 0.2rem solid #ec625f;
-	padding: 1rem;
+  text-align: center;
+  font-size: 1.5rem;
+  color: whitesmoke;
+  border-bottom: 0.2rem solid #ec625f;
+  padding: 1rem;
 }
 .mp-families ul {
   list-style-type: upper-roman;
   font-size: 1rem;
 }
 .mp-families li {
-	margin-bottom: 1rem;
-	margin-left: 1rem;
-	color: whitesmoke;
+  margin-bottom: 1rem;
+  margin-left: 1rem;
+  color: whitesmoke;
 }
 .mp-families span {
   font-size: 90%;
 }
 .mp-families p:hover {
-	color: #ec625f;
-	cursor: pointer;
+  color: #ec625f;
+  cursor: pointer;
 }
 
 /* Header Component*/
 .header {
-	width: 100%;
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: space-between;
-	height: 10rem;
-	background-color: #313131;
-	border-bottom: 0.2rem solid #ec625f;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: 10rem;
+  background-color: #313131;
+  border-bottom: 0.2rem solid #ec625f;
 }
 
 .footer {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	align-self: flex-end;
-	justify-content: space-between;
-	margin-top: auto;
-	left: 0;
-	bottom: 0;
-	width: 100%;
-	height: 9vh;
-	background-color: #505050;
-	border-top: 0.2rem solid #ec625f;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-self: flex-end;
+  justify-content: space-between;
+  margin-top: auto;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 9vh;
+  background-color: #505050;
+  border-top: 0.2rem solid #ec625f;
 }
 
 .footer a {
@@ -228,11 +247,11 @@ div {
 }
 
 .sign-in {
-	display: flex;
-	flex-direction: row;
-	width: 33%;
-	justify-content: flex-end;
-	margin-right: 2rem;
+  display: flex;
+  flex-direction: row;
+  width: 33%;
+  justify-content: flex-end;
+  margin-right: 2rem;
 }
 .sign-in button {
   border: none;
@@ -249,53 +268,53 @@ div {
   border-radius: 0.5rem;
 }
 .sign-in button:hover {
-	background-color: #505050;
-	color: #ec625f;
+  background-color: #505050;
+  color: #ec625f;
 }
 .logo {
-	width: 33%;
-	display: flex;
-	justify-content: flex-start;
-	align-items: center;
-	margin-left: 2rem;
+  width: 33%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-left: 2rem;
 }
 .logo img {
-	height: auto;
-	width: 50%;
+  height: auto;
+  width: 50%;
 }
 /* Search bar Component*/
 .search-bar-input {
-	display: flex;
-	flex-direction: row;
-	margin-top: 2.3rem;
+  display: flex;
+  flex-direction: row;
+  margin-top: 2.3rem;
 }
 .search-container {
-	display: flex;
-	flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 .search-select {
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 .search-bar-input input {
-	border: 0.2rem solid #ec625f;
-	border-right: none;
-	padding: 5px;
-	width: 18rem;
-	height: 2.5rem;
-	border-radius: 5px 0 0 5px;
-	outline: none;
+  border: 0.2rem solid #ec625f;
+  border-right: none;
+  padding: 5px;
+  width: 18rem;
+  height: 2.5rem;
+  border-radius: 5px 0 0 5px;
+  outline: none;
 }
 .search-bar-input button {
-	width: 3rem;
-	height: 2.5rem;
-	border: 1px solid #ec625f;
-	background: #ec625f;
-	color: #fff;
-	border-radius: 0 5px 5px 0;
-	cursor: pointer;
-	font-size: 20px;
+  width: 3rem;
+  height: 2.5rem;
+  border: 1px solid #ec625f;
+  background: #ec625f;
+  color: #fff;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  font-size: 20px;
 }
 .search-result {
   margin-left: 8vh;
@@ -305,11 +324,11 @@ div {
   margin-left: -3.5vh;
 }
 .select-type form {
-	flex-grow: 1;
+  flex-grow: 1;
 }
 .radio-button {
-	display: flex;
-	flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 .radio-button label {
@@ -322,23 +341,23 @@ div {
 }
 
 .radio-button input {
-	filter: grayscale(1);
-	width: 65%;
+  filter: grayscale(1);
+  width: 65%;
 }
 .search-field {
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
 }
 
 .select-type p {
-	margin-top: 8px;
-	padding-left: 0.5vh;
-	padding-right: 2.5vh;
-	padding-top: 0.5vh;
-	font-size: 80%;
-	margin-right: 0.5rem;
+  margin-top: 8px;
+  padding-left: 0.5vh;
+  padding-right: 2.5vh;
+  padding-top: 0.5vh;
+  font-size: 80%;
+  margin-right: 0.5rem;
 }
 .container {
   margin-top: 3.5vh;
@@ -348,10 +367,10 @@ div {
 }
 
 /* DANIEL PROFILE INFORMATION DESIGN */
-.profile-center{
- display:flex;
- justify-content: center;
- align-items: center;
+.profile-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .mobster-std-btn {
   border: none;
@@ -374,42 +393,36 @@ div {
   display: flex;
   flex-direction: row;
   width: 60%;
-  
-  
 }
-.to-right{
-  display:flex;
+.to-right {
+  display: flex;
   flex-direction: column;
   flex-grow: 1;
 }
-.to-left{
-  display:flex;
+.to-left {
+  display: flex;
   flex-direction: column;
   flex-grow: 1;
- 
 }
 
-.user-details{
+.user-details {
   display: flex;
   flex-direction: row;
   margin-bottom: 0.5rem;
-
 }
-.user-details h6{
- padding: 0.2rem;
+.user-details h6 {
+  padding: 0.2rem;
 }
-.change-email{
+.change-email {
   display: flex;
   flex-direction: column;
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
-
 }
-.change-email input{
+.change-email input {
   height: 1.5rem;
   margin-bottom: 1.5rem;
 }
-
 
 /* Button styles */
 

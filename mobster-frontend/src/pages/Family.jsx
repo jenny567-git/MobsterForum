@@ -177,7 +177,7 @@ const Family = () => {
         </h2>
         <p>Members: {family.memberCount}</p>
      
-
+       
       {canJoin && <Button onClick={toJoin}>Join</Button>}
       {canLeave && <Button onClick={toLeave}>Leave</Button>}
       {/*if current user == admin or site admin, display Add/Edit/Delete button*/}
