@@ -1,122 +1,125 @@
 .about-container {
-  background-color: #636363ea;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  border-radius: 10px;
-  margin-bottom: 45px;
+	background-color: #636363ea;
+	display: flex;
+	flex-direction: column;
+	width: 95%;
+	border-radius: 10px;
+	margin: 2rem;
+	padding: 1rem;
 }
 
 .about-header {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    margin-bottom: 10px;
-    margin-top: 20px;
-    padding-bottom: 10px;
-    color: white;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	margin-bottom: 10px;
+	margin-top: 20px;
+	padding-bottom: 10px;
+	color: white;
 }
 
 .aboutme {
-  color: red;
+	color: #505050;
 }
 .contact-container {
-  margin: 10vh;
-  padding: 5vh;
-  background-color: #636363ea;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 80%;
-  border-radius: 10px;
+	margin: 10vh;
+	padding: 5vh;
+	background-color: #636363ea;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 80%;
+	border-radius: 10px;
 }
 .contact-form {
-  display: flex;
-  flex-direction: column;
-
+	display: flex;
+	flex-direction: column;
 }
 .contact-form input {
-    border: 2px solid #ec625f;
-  border-radius: 0.5rem;
-  padding: 0.5rem;
-  margin: 0.3rem;
-  margin-bottom: 10px;
-  width: auto;
+	border: 2px solid #ec625f;
+	border-radius: 0.5rem;
+	padding: 0.5rem;
+	margin: 0.3rem;
+	margin-bottom: 10px;
+	width: auto;
 }
 .contact-form textarea {
-  background-color: whitesmoke;
-  border: 3px solid #ec625f;
-  color: black;
-  margin-top: 10px;
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  width: auto;
-  height: auto;
+	background-color: whitesmoke;
+	border: 3px solid #ec625f;
+	color: black;
+	margin-top: 10px;
+	padding: 0.5rem;
+	border-radius: 0.5rem;
+	width: auto;
+	height: auto;
 }
 .contact-form button {
-  border: none;
-  background-color: #ec625f;
-  color: #fff;
-  font-weight: bold;
-  font-size: 1rem;
-  text-align: center;
-  text-decoration: none;
-  cursor: pointer;
-  padding: 1rem;
-  border-radius: 0.5rem;
+	border: none;
+	background-color: #ec625f;
+	color: #fff;
+	font-weight: bold;
+	font-size: 1rem;
+	text-align: center;
+	text-decoration: none;
+	cursor: pointer;
+	padding: 1rem;
+	border-radius: 0.5rem;
 }
 .contact-form button:hover {
-  background-color: #505050;
-  color: #ec625f;
+	background-color: #505050;
+	color: #ec625f;
 }
 
-.single-card{
-    width: 22rem;
-    padding: 10px;
-    margin: 10px auto;
+.single-card {
+	width: 22rem;
+	padding: 10px;
+	margin: 10px auto;
+}
+.card-title h4 {
+	color: #ec625f;
 }
 
 .notfound-container {
-  padding: 20px;
-  display: flex;
-  flex-direction: column-reverse;
-  justify-content: center;
-  align-items: center;
-  margin: 10vh auto;
-  width: 80%;
-  color: #ec625f;
+	padding: 20px;
+	display: flex;
+	flex-direction: column-reverse;
+	justify-content: center;
+	align-items: center;
+	margin: 10vh auto;
+	width: 80%;
+	color: #ec625f;
 }
 
 .notfound-container img {
-    padding-bottom: 20px;
+	padding-bottom: 20px;
 }
 
 .faq-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 20px auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 20px auto;
 }
 
 .faq-heading {
-  color: white;
+	color: white;
 }
 
 .faq-question {
-    color: white;
-    font-size: 28px;
-    font-family: 'Lekton', sans-serif;
+	color: white;
+	font-size: 28px;
+	font-family: 'Lekton', sans-serif;
 }
 
 .faq-answer {
-  color: #ec625f;
-  font-size: 18px;
+	color: #ec625f;
+	font-size: 18px;
 }
 
 .faq-answer li {
-    font-family: 'Lekton', sans-serif;
+	font-family: 'Lekton', sans-serif;
 }
 
 details {
-  padding: 10px;
+	padding: 10px;
 }

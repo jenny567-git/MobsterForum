@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 // import { useAuth0 } from '@auth0/auth0-react';
 import { useLocalStorage } from '../../CustomHooks/useLocalStorage';
 import axios from 'axios'
-import logo from '../../assets/Mobster-logo.png'
+import userPic from '../../assets/profile-icons/user.jpg'
 import './add-thread-styling.css'
 
 
