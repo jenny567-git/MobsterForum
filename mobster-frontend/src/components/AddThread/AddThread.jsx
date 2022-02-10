@@ -48,11 +48,11 @@ const AddThread = () => {
     return (
         <div className="add-thread">
             
-            <img src={logo} alt="profile picture" />
+
             <div className="thread-text">
                 
                 <div className="family-select">
-                    <label htmlFor="family-selection">Choose a Family:</label>
+                    <label htmlFor="family-selection">Create new thread in Family:</label>
                     <select value={thread.familyId} onChange={(e)=> setThread({
                     ...thread, familyId: e.target.value
                 })} name="family-selection">

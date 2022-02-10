@@ -8,9 +8,6 @@ font-family: 'Special Elite', cursive; */
   background-color: #313131;
   min-height: 100vh;
 }
-.body{
-  margin-bottom: 10rem;
-}
 
 p,
 a,
@@ -18,7 +15,7 @@ li,
 strong,
 span,
 label {
-	font-family: 'Lekton', sans-serif;
+  font-family: "Lekton", sans-serif;
 }
 
 h1,
@@ -26,11 +23,11 @@ h2,
 h3,
 h4,
 h6 {
-	font-family: 'Special Elite';
+  font-family: "Special Elite";
 }
 
-div{
-	color:white
+div {
+  color: white;
 }
 
 .flex {
@@ -38,12 +35,12 @@ div{
   flex-direction: row;
 }
 
-.dark{
-	color: black;
+.dark {
+  color: black;
 }
 
-.space{
-	justify-content: space-between;
+.space {
+  justify-content: space-between;
 }
 /* Home Page */
 .home {
@@ -59,12 +56,21 @@ div{
   width: 60%;
 }
 .home-welcome {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	color: #ec625f;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #ec625f;
 }
+
+/* grey container box */
+.flex-space {
+  margin: 2rem;
+  background-color: #515151;
+  border-radius: 0.5rem;
+  padding: 2rem;
+}
+
 /* MyFamilies component*/
 
 .my-families {
@@ -79,25 +85,64 @@ div{
   border-radius: 1rem;
 }
 .my-families h3 {
-  width: 100%;
   text-align: center;
   font-size: 1.5rem;
-
   color: whitesmoke;
   border-bottom: 0.2rem solid #ec625f;
   padding: 1rem;
 }
 .my-families ul {
-  list-style-type: none;
+  list-style-type: upper-roman;
   font-size: 1rem;
+  
 }
 .my-families li {
   margin-bottom: 1rem;
+  margin-left: 1rem;
   color: whitesmoke;
 }
 .my-families li:hover {
   color: #ec625f;
   cursor: pointer;
+}
+
+/* Members component */
+
+.fs {
+  display: flex;
+  flex-direction: row;
+}
+.pad {
+  padding-bottom: 20px;
+}
+.flex-space Button {
+  background-color: #ec625f;
+  color: white;
+  border: none;
+  font-family: Lekton;
+  margin: 4px;
+  width: 20%;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 0.5rem;
+}
+.flex-space Button:hover {
+  background-color: #414141;
+  color: #ec625f;
+}
+.block-btn {
+  margin: 0.5rem;
+}
+.block-btn Button {
+  background-color: blue;
+  width: 100%;
+}
+.remove-btn {
+  margin: 0.5rem;
+}
+.remove-btn Button {
+  background-color: #ec625f;
+  width: 100%;
 }
 
 /* MostPopularFamilies component*/
@@ -121,7 +166,7 @@ div{
   padding: 1rem;
 }
 .mp-families ul {
-  list-style-type:upper-roman;
+  list-style-type: upper-roman;
   font-size: 1rem;
 }
 .mp-families li {
@@ -129,8 +174,8 @@ div{
   margin-left: 1rem;
   color: whitesmoke;
 }
-.mp-families span{
-	font-size:90%;
+.mp-families span {
+  font-size: 90%;
 }
 .mp-families p:hover {
   color: #ec625f;
@@ -165,16 +210,15 @@ div{
 }
 
 .footer a {
-	text-decoration: none;
+  text-decoration: none;
 }
 
 .footer-left,
 .footer-middle,
 .footer-right {
-	padding: 10px;
-	margin: 0 auto;
+  padding: 10px;
+  margin: 0 auto;
 }
-
 
 .search-bar {
   width: 33%;
@@ -193,6 +237,7 @@ div{
   font-weight: bold;
   font-size: 1rem;
   margin-left: 2rem;
+  height: 3.3rem;
   text-align: center;
   text-decoration: none;
   cursor: pointer;
@@ -218,7 +263,6 @@ div{
 .search-bar-input {
   display: flex;
   flex-direction: row;
-  
 }
 .search-bar-input input {
   border: 0.2rem solid #ec625f;
@@ -239,22 +283,19 @@ div{
   cursor: pointer;
   font-size: 20px;
   margin-right: 2vh;
-  
-
 }
-.search-result{
+.search-result {
   margin-left: 8vh;
 }
-.search-result h1{
+.search-result h1 {
   margin-top: 2vh;
   margin-left: -3.5vh;
 }
 .select-type form {
-	display: flex;
-	flex-direction: row;
-	flex-grow: 1;
-   
-  }
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+}
 .radio-button {
   display: flex;
   flex-direction: row;
@@ -268,14 +309,11 @@ div{
   margin-left: 0.2vh;
   font-size: 80%;
   width: 70%;
-  
 }
-
 
 .radio-button input {
   filter: grayscale(1);
   width: 65%;
-  
 }
 
 .select-type p {
@@ -284,33 +322,81 @@ div{
   padding-right: 1.5vh;
   padding-top: 0.5vh;
   font-size: 80%;
-
 }
-.container{
+.container {
   margin-top: 3.5vh;
 }
-.container ul{
+.container ul {
   margin-bottom: 2.5vh;
 }
 
 /* DANIEL PROFILE INFORMATION DESIGN */
+.profile-center{
+ display:flex;
+ justify-content: center;
+ align-items: center;
+}
 .mobster-std-btn {
-	border: none;
-	background-color: #ec625f;
-	color: #fff;
-	font-weight: bold;
-	font-size: 1rem;
-	text-align: center;
-	text-decoration: none;
-	cursor: pointer;
-	padding: 1rem 2rem;
-	border-radius: 0.5rem;
+  border: none;
+  background-color: #ec625f;
+  color: #fff;
+  font-weight: bold;
+  font-size: 1rem;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  width: 190px !important;
 }
 
 .mobster-std-container {
-	padding: .5rem 0 .5rem 0;
+  padding: 0.5rem 0 0.5rem 0;
 }
-.container Button{
+.user-container {
+  display: flex;
+  flex-direction: row;
+  width: 60%;
+  
+  
+}
+.to-right{
+  display:flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+.to-left{
+  display:flex;
+  flex-direction: column;
+  flex-grow: 1;
+ 
+}
+
+.user-details{
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 0.5rem;
+
+}
+.user-details h6{
+ padding: 0.2rem;
+}
+.change-email{
+  display: flex;
+  flex-direction: column;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+
+}
+.change-email input{
+  height: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+
+/* Button styles */
+
+.container Button {
   background-color: #ec625f;
   color: white;
   border: none;
@@ -321,7 +407,7 @@ div{
   cursor: pointer;
   border-radius: 0.5rem;
 }
-.container Button:hover{
+.container Button:hover {
   background-color: #414141;
-  color:#ec625f;
+  color: #ec625f;
 }

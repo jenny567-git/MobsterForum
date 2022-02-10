@@ -157,60 +157,47 @@ const Family = () => {
     );
   }
 
-  const buttonStyles = {
-    color: "white",
-    backgroundColor: "#ec625f",
-    border: "none",
-    fontFamily: "Lekton",
-    margin: "4px",
-    width: "15%",
-    fontWeight: "bold",
-    cursor: "pointer",
-    borderRadius: "0.5rem",
-  };
+  // const buttonStyles = {
+  //   color: "white",
+  //   backgroundColor: "#ec625f",
+  //   border: "none",
+  //   fontFamily: "Lekton",
+  //   margin: "4px",
+  //   width: "15%",
+  //   fontWeight: "bold",
+  //   cursor: "pointer",
+  //   borderRadius: "0.5rem",
+  // };
   return (
-    <div className="container">
-      <h1>{family.name}</h1>
-      <h2>
-        <i>{family.description}</i>
-      </h2>
-      <p>Members: {family.memberCount}</p>
+    <div className="flex-space">
+      <div className="pad">
+        <h1>{family.name}</h1>
+        <h2>
+          <i>{family.description}</i>
+        </h2>
+        <p>Members: {family.memberCount}</p>
+     
 
-      {canJoin && (
-        <Button onClick={toJoin}>
-          Join
-        </Button>
-      )}
+      {canJoin && <Button onClick={toJoin}>Join</Button>}
       {canLeave && <Button onClick={toLeave}>Leave</Button>}
       {/*if current user == admin or site admin, display Add/Edit/Delete button*/}
       {user &&
         (user.roles.includes("admin") || user.userId == family.adminUserId) && (
           <>
-            <Button
-              
-              onClick={() => setShowInviteModal(true)}
-            >
+            <Button onClick={() => setShowInviteModal(true)}>
               Add members
             </Button>
-            <Button onClick={toggleEdit}>
-              Edit
-            </Button>
-            <Button
-              
-              onClick={() => navigate(`/family/${id}/members`)}
-            >
+            <Button onClick={toggleEdit}>Edit</Button>
+            <Button onClick={() => navigate(`/family/${id}/members`)}>
               {" "}
               Handle members
             </Button>
-            <Button
-              
-             
-              onClick={() => setShowDeleteModal(true)}
-            >
+            <Button onClick={() => setShowDeleteModal(true)}>
               Delete family
             </Button>
           </>
         )}
+         </div>
 
       {isEditing && (
         <EditFamily stateChanger={setState} isEdit={setIsEditing} />
@@ -256,11 +243,7 @@ const Family = () => {
             <p>You're now a part of the family :)</p>
           </Modal.Body>
           <Modal.Footer>
-            <Button
-              
-              variant="secondary"
-              onClick={() => setShowJoinModal(false)}
-            >
+            <Button variant="secondary" onClick={() => setShowJoinModal(false)}>
               Close
             </Button>
           </Modal.Footer>
@@ -305,14 +288,8 @@ const Family = () => {
           {error && <Alert variant="danger">Error</Alert>}
         </Modal.Body>
         <Modal.Footer>
-          <Button
-          
-           
-            onClick={() => setShowDeleteModal(false)}
-          >
-            Close
-          </Button>
-          <Button  variant="danger" onClick={onDelete}>
+          <Button onClick={() => setShowDeleteModal(false)}>Close</Button>
+          <Button variant="danger" onClick={onDelete}>
             Confirm delete
           </Button>
         </Modal.Footer>
