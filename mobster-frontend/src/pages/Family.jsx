@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import EditFamily from "../components/FamilyComponents/EditFamily";
-import { Modal, Button } from "react-bootstrap";
+import { Modal, Button, Alert } from "react-bootstrap";
 import Thread from "../components/Thread/Thread";
 import InviteMembers from "../components/FamilyComponents/InviteMembers";
 // import CreateFamily from "../components/FamilyComponents/CreateFamily";
@@ -23,6 +23,8 @@ const Family = () => {
   const [family, setFamily] = useState({});
   const [isFetching, setIsFetching] = useState(true);
   const [state, setState] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
   const { id } = useParams();
   let navigate = useNavigate();
 
@@ -128,13 +130,18 @@ const Family = () => {
     axios
       .delete(`https://localhost:44304/api/Family?familyId=${id}`)
       .then(() => {
-        alert("Family deleted");
+        // alert("Family deleted");
+        setSuccess(true);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        setError(true);
       });
     //add message: will be redirected after 5 sec
     const timer = setTimeout(() => {
-      handleClose();
+      // handleClose();
       navigate("/");
-    }, 5000);
+    }, 2000);
   };
 
   if (!user) {
@@ -294,6 +301,8 @@ const Family = () => {
         </Modal.Header>
         <Modal.Body>
           <p>This family will be permanently be removed</p>
+          {success && <Alert variant="success">Success</Alert>}
+          {error && <Alert variant="danger">Error</Alert>}
         </Modal.Body>
         <Modal.Footer>
           <Button
