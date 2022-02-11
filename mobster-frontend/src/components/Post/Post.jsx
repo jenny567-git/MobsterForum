@@ -138,17 +138,16 @@ export const Post = ({ id , blockedMembers , thread }) => {
       setReportReason("");
       setTimeout(() => {
         setIsReported(false);
-      }, 5000);
+        setShowReportModal(false);
+      }, 2500);
     };
 
 useEffect(()=>{
     fetchPosts();
   },[])
   
-// if(isLoading){
-//     return <div> <p>Loading page...</p></div>
-//   }
-    return <div>
+
+    return <div className = "posts-container">
 
             { !posts && <p>There are no posts on this thread yet...</p> }
 

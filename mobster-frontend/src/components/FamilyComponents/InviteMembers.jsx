@@ -48,26 +48,16 @@ const InviteMembers = ({familyId, stateChanger}) => {
         setError(true);
       });
       
-      //show response for 2s
+      //show response for 5s
       setTimeout(() => {
         setSuccess(false);
         setError(false);
-      }, 2000);
+      }, 5000);
   };
 
-  const buttonStyles = {
-    color: "white",
-    fontFamily: "Lekton",
-    margin: "10px",
-    fontWeight: "bold",
-    cursor: "pointer",
-    borderRadius: "0.5rem"
-  }
-
   return (
-    <div>
+    <div className="add-member">
       <Form.Group>
-        {/* <Form.Label>Add members</Form.Label> */}
         <Typeahead
           id="basic-typeahead-multi"
           multiple
@@ -78,7 +68,7 @@ const InviteMembers = ({familyId, stateChanger}) => {
           selected={selected}
         />
       </Form.Group>
-      <Button style={buttonStyles} onClick={onAdd}>Add</Button>
+      <Button onClick={onAdd}><p>Add</p></Button>
       {success && <Alert variant="success">Success</Alert>}
       {error && <Alert variant="danger">Error</Alert>}
     </div>

@@ -3,8 +3,6 @@ import MyFamilies from '../components/MyFamilies'
 import MostPopularFamilies from '../components/MostPopularFamilies'
 import AddThread from '../components/AddThread/AddThread'
 import Welcome from '../components/Welcome'
-//import Thread from '../components/Thread/Thread'
-//import { useAuth0 } from '@auth0/auth0-react';
 import { useLocalStorage } from '../CustomHooks/useLocalStorage'
 
 function Home() {

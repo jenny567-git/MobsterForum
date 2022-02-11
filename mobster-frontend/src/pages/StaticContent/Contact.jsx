@@ -43,33 +43,35 @@ export const Contact = () => {
   };
 
   return (
-    <div className="contact-container">
-      <h1>Contact us</h1>
-      <h6>If you need the Mobster Family's support or protection</h6>
-      <div className="contact-form">
-        <input
-          type="text"
-          placeholder="Your name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <input
-          type="email"
-          placeholder="Your email address"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <textarea
-          placeholder="Your message"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-        ></textarea>
-        <button onClick={submit}><p>Send Message</p></button>
-        {emailSent && (
-          <span>
-            Thank you for your message, we will be in touch in no time!
-          </span>
-        )}
+    <div className="contact-container-wrap">
+      <div className="contact-container">
+        <h1>Contact us</h1>
+        <h5>If you need the Mobster Family's support or protection</h5>
+        <div className="contact-form">
+          <input
+            type="text"
+            placeholder="Your name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <input
+            type="email"
+            placeholder="Your email address"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <textarea
+            placeholder="Your message"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+          ></textarea>
+          <button onClick={submit}><p>Send Message</p></button>
+          {emailSent && (
+            <span>
+              Thank you for your message, we will be in touch in no time!
+            </span>
+          )}
+        </div>
       </div>
     </div>
   );

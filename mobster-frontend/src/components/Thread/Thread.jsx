@@ -10,11 +10,12 @@ function Thread({thread}) {
   return (
     <div className="thread-container" onClick={() => navigate(`/thread/${thread.threadId}`)}>
       <div className="thread-title">
-        {/* {thread.author ? < p className="thread-metadata">posted by {thread.author.userName} in {thread.familyName} at {thread.createdAt}</p>: */}
         < div className="thread-metadata"><span>Posted by <p>{thread.author.userName}</p> in <p>{thread.familyName}</p> at {thread.createdAt}</span></div>
-        <h2>{thread.title}</h2>
+        {!thread.isCensored && (<h2>{thread.title}</h2>)}
+        {thread.isCensored && (<h2>[Silenced]</h2>)}
       </div>
-      {thread.title.length>100 ? <p className="thread-text">{thread.content}</p> : <p className="thread-text">{thread.content.slice(0,100)}...</p>}
+      {!thread.isCensored && (thread.title.length>100 ? <p className="thread-text">{thread.content}</p> : <p className="thread-text">{thread.content.slice(0,100)}...</p>)}
+      {thread.isCensored && <p>[This mook disrespected the family; their words are silenced.]</p>}
      
   </div>
   );

@@ -42,8 +42,10 @@ function SearchBar() {
             console.error("Error:", error);
           });
         break;
-    }
-    setSearchString('');
+
+      }
+      
+      setSearchString("");
     navigate("/searchresult");
   };
 
@@ -57,31 +59,38 @@ function SearchBar() {
     <div className="search-bar-input">
       <div className="select-type">
         <form  onSubmit={onSubmit}>
-          <input
-            id="searchText"
-            type="text"
-            placeholder="Search..."
-            autoComplete="off"
-            onChange={(e) => setSearchString(e.target.value)}
-          />
-          <button type="button" onClick={search}>
-            <i className="fas fa-search"></i>
-          </button>
-        
-          <p>Select:</p>
-          <div className="radio-button">
-            <input
-              type="radio"
-              id="huey"
-              name="drone"
-              value="families"
-              defaultChecked
-            />
-            <label htmlFor="huey">Family</label>
-          </div>
-          <div className="radio-button">
-            <input type="radio" id="dewey" name="drone" value="threads" />
-            <label htmlFor="dewey">Thread</label>
+
+          <div className="search-container">
+            <div className = "search-field">
+              <input
+              value={searchString}
+                id="searchText"
+                type="text"
+                placeholder="Search..."
+                autoComplete="off"
+                onChange={(e) => setSearchString(e.target.value)}
+              />
+              <button type="button" onClick={search}>
+                <i className="fas fa-search"></i>
+              </button>
+            </div>
+            <div className="search-select">
+              <p>Select:</p>
+              <div className="radio-button">
+                <input
+                  type="radio"
+                  id="huey"
+                  name="drone"
+                  value="families"
+                  defaultChecked
+                />
+                <label htmlFor="huey">Family</label>
+              </div>
+              <div className="radio-button">
+                <input type="radio" id="dewey" name="drone" value="threads" />
+                <label htmlFor="dewey">Thread</label>
+              </div>
+            </div>
           </div>
         </form>
       </div>

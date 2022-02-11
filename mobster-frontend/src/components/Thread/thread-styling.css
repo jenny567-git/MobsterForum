@@ -6,6 +6,7 @@
 	width: 90%;
 	margin-top: 2rem;
 	padding: 1rem;
+	cursor: pointer;
 }
 .thread-title {
 	display: flex;
