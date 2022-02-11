@@ -216,7 +216,7 @@ const Family = () => {
        
       {canJoin && <Button onClick={toJoin}>Join</Button>}
       {canLeave && <Button onClick={toLeave}>Leave</Button>}
-      {canLeave && <Button onClick={() => setShowAddThreadModal(true)}>Add Thead</Button>}
+      {canLeave && <Button onClick={() => setShowAddThreadModal(true)}>Add Thread</Button>}
       {/*if current user == admin or site admin, display Add/Edit/Delete button*/}
       {user &&
         (user.roles.includes("admin") || user.userId == family.adminUserId) && (
