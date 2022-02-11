@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using mobster_backend.DTOs.Write;
 using mobster_backend.Exceptions;
@@ -89,12 +90,12 @@ namespace mobster_backend.Controllers
         }
 
         /// <summary>
-        /// Creates a new post belonging to an existing thread.
+        /// Creates a new post belonging to an existing thread. Role: anyone.
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        
+        [Authorize]
         public async Task<IActionResult> AddPost(SetPostDto model)
         {
             try
@@ -114,12 +115,13 @@ namespace mobster_backend.Controllers
         }
 
         /// <summary>
-        /// Updates an existing post
+        /// Updates an existing post. Role Anyone.
         /// </summary>
         /// <param name="postId">The id of the post to be updated</param>
         /// <param name="model">The model for the post object to be updated</param>
         /// <returns></returns>
         [HttpPut]
+        [Authorize]
         public async Task<IActionResult> UpdatePost(Guid postId, SetPostDto model)
         {
             try
@@ -139,11 +141,12 @@ namespace mobster_backend.Controllers
         }
 
         /// <summary>
-        /// Toggles the IsCensored flag on a single post
+        /// Toggles the IsCensored flag on a single post. Role: GroupAdmin and up.
         /// </summary>
         /// <param name="postId">The id of the post to be censored/uncensored</param>
         /// <returns></returns>
         [HttpPut("censor/{postId}")]
+        [Authorize(Policy = "GroupAdmin")]
         public async Task<IActionResult> ToggleCensorPost(Guid postId)
         {
             try
@@ -163,11 +166,12 @@ namespace mobster_backend.Controllers
         }
 
         /// <summary>
-        /// Deletes an existing post
+        /// Deletes an existing post. Role: GRoupAdmin and up. 
         /// </summary>
         /// <param name="postId">The id of the post to be deleted</param>
         /// <returns></returns>
         [HttpDelete]
+        [Authorize(Policy = "GroupAdmin")]
         public async Task<IActionResult> DeletePost(Guid postId)
         {
             try

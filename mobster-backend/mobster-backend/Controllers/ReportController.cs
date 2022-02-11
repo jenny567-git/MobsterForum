@@ -33,6 +33,7 @@ namespace mobster_backend.Controllers
             }
         }
         
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> AddReport(SetReportDto model)
         {

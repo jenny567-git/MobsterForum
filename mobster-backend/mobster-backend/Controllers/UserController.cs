@@ -30,11 +30,10 @@ namespace mobster_backend.Controllers
 
 
         /// <summary>
-        /// Adds a user to the db if it doesn't already exist. This endpoint bridges between frontend and auth0
+        /// Adds a user to the db if it doesn't already exist. This endpoint bridges between frontend and auth0. Role: open
         /// </summary>
         /// <returns>A User Dto</returns>
         [HttpPost]
-        //[Authorize]
         public async Task<IActionResult> AddUserAsync(SetUserDto model)
         {
             try
@@ -47,13 +46,6 @@ namespace mobster_backend.Controllers
                 return StatusCode(500, e.Message);
             }
         }
-
-        //[HttpGet]
-        //[Authorize]
-        //public async Task<IActionResult> TestAuth()
-        //{
-        //    return Ok(null);
-        //}
 
         [HttpGet]
         public async Task<IActionResult> GetUsers()
@@ -68,7 +60,13 @@ namespace mobster_backend.Controllers
                 return StatusCode(500, e);
             }
         }
-
+        
+        /// <summary>
+        /// Role: Anyone
+        /// </summary>
+        /// <param name="authId"></param>
+        /// <returns></returns>
+        [Authorize]
         [HttpPost("ToggleUserActive")]
         public async Task<IActionResult> ToggleUserActive(string authId)
         {
@@ -85,6 +83,13 @@ namespace mobster_backend.Controllers
             }
         }
 
+        /// <summary>
+        /// Role: Anyone
+        /// </summary>
+        /// <param name="sub"></param>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        [Authorize]
         [HttpPost("ChangeUserEmail")]
         public async Task<IActionResult> ChangeUserEmail(string sub, string email)
         {
@@ -100,20 +105,21 @@ namespace mobster_backend.Controllers
             }
         }
 
+        /// <summary>
+        /// Role: anyone
+        /// </summary>
+        /// <param name="sub"></param>
+        /// <returns></returns>
+        [Authorize]
         [HttpPost("ChangePassword")]
         public async Task<IActionResult> ChangePassword(string sub)
         {
             try
             {
-                //var user = await userService.GetUser(userId);
                 var response = Auth0.Methods.CreateChangePasswordTicket(sub);
                 string link = response.Content.ToString();
-                //string temp = "{\"ticket\":\"https://outlaw-forum.eu.auth0.com/lo/reset?ticket=BBEAXTwz23FRcvsXQUj32Wp9WNPJRs2y#\"}";
                 link = link.Substring(11);
                 string link2 = link.Remove(link.Length - 2, 2);
-                //string responselol2 = temp.Substring(11);
-                //responselol2 = responselol2.Remove(responselol2.Length - 2, 2);
-                //return Ok(response.Content);
                 return Ok(link2);
             }
             catch
