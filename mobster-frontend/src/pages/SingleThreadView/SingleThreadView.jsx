@@ -8,6 +8,9 @@ import { Post } from "../../components/Post/Post";
 import "./SingleThreadView-styling.css";
 import "../../components/Thread/thread-styling.css";
 import { getAuthenticationHeader, getAudience } from "../../CustomHooks/useAutenticationHeader";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const SingleThreadView = () => {
   const { id } = useParams();
@@ -75,9 +78,21 @@ const SingleThreadView = () => {
       `https://localhost:44304/api/Thread?id=${id}`, {}, header
     );
     console.log(response);
-    alert("your thread has been deleted");
+    notifyDelete();
+    // alert("your thread has been deleted");
     navigate("/");
   };
+
+  const notifyDelete = () => toast('your thread has been deleted', {
+    position: "bottom-right",
+    autoClose: 3000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "dark"
+    });
 
   function log() {
     console.log(thread);
@@ -126,9 +141,20 @@ const SingleThreadView = () => {
     console.log(thread);
   }
 
+  const notifyCopy = () => toast('The link has been copied to clipboard', {
+    position: "bottom-right",
+    autoClose: 2000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "dark"
+    });
+
   function getThreadLink() {
     navigator.clipboard.writeText(window.location.href);
-    alert("The link has been copied to clipboard")
+    notifyCopy();
   }
 
   function scrollToBottom() {
@@ -363,6 +389,17 @@ const SingleThreadView = () => {
           <Button onClick={onReport}>Confirm</Button>
         </Modal.Footer>
       </Modal>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 };

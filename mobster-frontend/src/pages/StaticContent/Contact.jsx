@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "./StaticContent-styles.css";
 import emailjs from "emailjs-com";
 import { init } from "@emailjs/browser";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 init("user_nTOKwW2tx2msKjYI9fVvH");
 // import { init } from 'emailjs-com';
 // init('user_nTOKwW2tx2msKjYI9fVvH');
@@ -38,9 +40,21 @@ export const Contact = () => {
         setEmailSent(false);
       }, 5000);
     } else {
-      alert("Please fill in all fields silly you.");
+      notify();
+      // alert("Please fill in all fields silly you.");
     }
   };
+
+  const notify = () => toast.error('Please fill in all fields silly you.', {
+    position: "bottom-right",
+    autoClose: 3000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "dark"
+    });
 
   return (
     <div className="contact-container-wrap">
@@ -73,6 +87,17 @@ export const Contact = () => {
           )}
         </div>
       </div>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 };

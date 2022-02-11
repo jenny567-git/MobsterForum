@@ -60,7 +60,8 @@ const ProfileInformation = ({ setIsAuthorized }) => {
 
   const changeEmail = async (event) => {
     event.preventDefault();
-    alert(`The name you entered was: ${newEmail}`);
+    // alert(`The name you entered was: ${newEmail}`);
+    notify();
     const token = await getAccessToken();
     const header = getAuthenticationHeader(token);
     axios.post(`https://localhost:44304/api/User/ChangeUserEmail?sub=${user.sub}&email=${newEmail}`,{}, header);
@@ -73,21 +74,26 @@ const ProfileInformation = ({ setIsAuthorized }) => {
     if(response.data.isActive)
     {
       setIsActive(true);
-      console.log(response);
-      alert("You reactivated your account");
     }
     else{
       setIsActive(false);
-      console.log(response);
-      alert("You deactivated your account");
     }
    
   };
+  const notify = () => toast(`The name you entered was: ${newEmail}`, {
+    position: "bottom-right",
+    autoClose: 3000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "dark"
+    });
   
   return (
     
      <div className="profile-center">
-       
         <div className="user-container flex-space">
           <div className="to-left">
           <h1>Profile Page</h1>
@@ -139,6 +145,17 @@ const ProfileInformation = ({ setIsAuthorized }) => {
                 </button>
           </div>
         </div>
+        <ToastContainer
+          position="bottom-right"
+          autoClose={3000}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
      </div>
   );
 };
