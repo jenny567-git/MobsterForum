@@ -3,9 +3,10 @@ import React, { useEffect, useState } from "react";
 import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
 import { Modal, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useLocalStorage } from "../../CustomHooks/useLocalStorage"
 
 function BanUser() {
-
+    const [loggedInUser, setLoggedInUser] = useState(useLocalStorage('user', null))
     const [users, setUsers] = useState([]);
     const [filteredUsers, setFilteredUsers] = useState([]);
     const [showBlockModal, setShowBlockModal] = useState(false);
@@ -80,7 +81,7 @@ function BanUser() {
                 <div className="users-wrapper">
                     <div className="users-header">
                         <h3>Application User Block</h3>
-                        <p>Block a Mobster user and give them the "Mark of a traitor" which blocks them from communicating with other members in every part of the application</p>
+                        <p>Give a user "The mark of a traitor" and block them from every part of the application or forgive them for their sins and let them back in!</p>
                         <hr></hr>
                     </div>
                     <div className="users-search">
@@ -88,27 +89,29 @@ function BanUser() {
                     </div>
                     <div className="users-list">
                         {filteredUsers.map( (user ,index) => (
-                            <div key={index} className="user-detail">
-                                {user.userName}
-                                {user.isBanned ? (
-                                    <button value={user} onClick={() => openModal(user)} className="button unblock">Unblock</button>
-                                        ) : (
-                                    <button value={user} onClick={() => openModal(user)} className="button block">Block</button>
-                                )}
-                            </div>
+                            loggedInUser[0].userName !== user.userName && (
+                                <div key={index} className="user-detail">
+                                    {user.userName}
+                                    {user.isBanned ? (
+                                        <button value={user} onClick={() => openModal(user)} className="button unblock">Forgive</button>
+                                            ) : (
+                                        <button value={user} onClick={() => openModal(user)} className="button block">Mark as traitor</button>
+                                    )}
+                                </div>
+                            )
                         ))}
                     </div>
                 </div>
             </div>
             <Modal show={showBlockModal} onHide={() => closeModal()} centered>
                 <Modal.Header>
-                    {chosenUser.isBanned ? (<Modal.Title>Unblock user</Modal.Title>) : (<Modal.Title>Block user</Modal.Title>)}
+                    {chosenUser.isBanned ? (<Modal.Title>Forgive</Modal.Title>) : (<Modal.Title>Mark as traitor</Modal.Title>)}
                 </Modal.Header>
                 <Modal.Body>
-                    {chosenUser.isBanned ? (<span>Are you sure you want to unblock this user?</span>) : (<span>Are you sure you want to block this user?</span>)}
+                    {chosenUser.isBanned ? (<span>Are you sure you want to forgive this member?</span>) : (<span>Are you sure you want to give this user "The mark of a traitor"?</span>)}
                 </Modal.Body>
                 <Modal.Footer>
-                    {chosenUser.isBanned ? (<Button onClick={() => toggleUserBlock(chosenUser)}>Unblock</Button>) : (<Button variant="danger" onClick={() => toggleUserBlock(chosenUser)}>Block</Button>)}
+                    {chosenUser.isBanned ? (<Button onClick={() => toggleUserBlock(chosenUser)}>Forgive</Button>) : (<Button variant="danger" onClick={() => toggleUserBlock(chosenUser)}>Mark as traitor</Button>)}
                     <Button variant="secondary" onClick={() => closeModal()}>Cancel</Button>
                 </Modal.Footer>
             </Modal>
