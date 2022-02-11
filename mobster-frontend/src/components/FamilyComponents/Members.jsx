@@ -3,8 +3,10 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { Button, Table } from "react-bootstrap";
+import { useLocalStorage } from "../../CustomHooks/useLocalStorage";
 
 const Members = () => {
+  const [user,setUser] = useLocalStorage('user', null)
   const [members, setmembers] = useState([]);
   const [isLoading, setisLoading] = useState(true);
 
@@ -88,10 +90,13 @@ const Members = () => {
               <tr key={member.userId}>
                 <td>{member.userName}</td>
                 <td>
-                  <div className="fs">
+                  {user.userId != member.userId &&(<div className="fs">
                     <div className="block-btn"><Button onClick={() => onBlock(member)}>Block</Button></div>
                     <div className="remove-btn"><Button onClick={() => onRemove(member)}>Remove</Button></div>
-                  </div>
+                  </div>)}
+                  {user.userId == member.userId && <div className = "fs">
+                    <h4>Admin</h4>
+                  </div>}
                 </td>
               </tr>
             ))}

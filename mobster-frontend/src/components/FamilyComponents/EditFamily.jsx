@@ -65,7 +65,9 @@ const EditFamily = ({stateChanger, isEdit}) => {
     setSelected(data);
   };
   const handleClose = () => {
-    updateContext({ currentAdmin: selected[0] });
+    if(selected.length > 0){
+      updateContext({ currentAdmin: selected[0] });
+    }
     setShowModal(false);
   };
 

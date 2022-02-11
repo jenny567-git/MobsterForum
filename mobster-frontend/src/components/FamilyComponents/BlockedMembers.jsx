@@ -23,6 +23,15 @@ const BlockedMembers = () => {
 
   const onRemove = async (userId) => {
     console.log("in delete");
+    const addUser = await axios.post(
+      `https://localhost:44304/addMember?familyId=${familyId}&userId=${userId}`
+    ).then((res) => {
+      console.log("Success: ", res.data);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+    
     const response = await axios
       .delete(
         `https://localhost:44304/api/Block?userId=${userId}&familyId=${familyId}`
