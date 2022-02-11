@@ -42,8 +42,10 @@ function SearchBar() {
             console.error("Error:", error);
           });
         break;
-    }
-   
+
+      }
+      
+      setSearchString("");
     navigate("/searchresult");
   };
 
@@ -61,6 +63,7 @@ function SearchBar() {
           <div className="search-container">
             <div className = "search-field">
               <input
+              value={searchString}
                 id="searchText"
                 type="text"
                 placeholder="Search..."

@@ -116,6 +116,7 @@ const SingleThreadView = () => {
 
   function getThreadLink() {
     navigator.clipboard.writeText(window.location.href);
+    alert("The link has been copied to clipboard")
   }
 
   function scrollToBottom() {
@@ -141,7 +142,9 @@ const SingleThreadView = () => {
     setReportReason("");
     setTimeout(() => {
       setIsReported(false);
-    }, 5000);
+      setShowReportModal(false);
+    }, 2500);
+
   };
 
   useEffect(() => {

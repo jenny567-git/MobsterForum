@@ -138,7 +138,8 @@ export const Post = ({ id , blockedMembers , thread }) => {
       setReportReason("");
       setTimeout(() => {
         setIsReported(false);
-      }, 5000);
+        setShowReportModal(false);
+      }, 2500);
     };
 
 useEffect(()=>{
