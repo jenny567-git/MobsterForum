@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'
 import { Button, Form, Modal } from 'react-bootstrap';
-// import { useAuth0 } from '@auth0/auth0-react'; 
+import { useAuth0 } from '@auth0/auth0-react'; 
 import { useLocalStorage } from '../../CustomHooks/useLocalStorage';
 // import adminPic from '../../assets/profile-icons/admin.jpg'
 import userPic from '../../assets/profile-icons/user.jpg'
 import bannedPic from '../../assets/profile-icons/banned.jpg'
 import inactivePic from '../../assets/profile-icons/inactive.png'
 import  "./Post-styling.css"
+import { getAuthenticationHeader, getAudience } from '../../CustomHooks/useAutenticationHeader';
 
 export const Post = ({ id , blockedMembers , thread }) => {
   const [posts, setPosts] = useState([]);
@@ -22,7 +23,7 @@ export const Post = ({ id , blockedMembers , thread }) => {
   const [reportReason, setReportReason] = useState("");
   const [showReportModal, setShowReportModal] = useState(false);
   const [selectedPost, setSelectedPost] = useState();
-
+  const {getAccessTokenSilently} = useAuth0();
 
     const fetchPosts = (async () => {
     let response = await axios.get(`https://localhost:44304/api/Posts/thread/${id}`)
@@ -49,9 +50,10 @@ export const Post = ({ id , blockedMembers , thread }) => {
         threadId: id,
         content: newPostContent 
     }
-
+    const token = await getAccessToken();
+    const header = getAuthenticationHeader(token);
     await axios
-    .post(`https://localhost:44304/api/Posts`, newPost)
+    .post(`https://localhost:44304/api/Posts`, newPost, header)
     .then((res) => {
         console.log("Success: ", res.data);
     })
@@ -80,9 +82,10 @@ export const Post = ({ id , blockedMembers , thread }) => {
       threadId: id,
       content: editedPostContent 
   }
-    
+  const token = await getAccessToken();
+  const header = getAuthenticationHeader(token);
     await axios
-    .put(`https://localhost:44304/api/Posts?postId=${postId}`, editedPost)
+    .put(`https://localhost:44304/api/Posts?postId=${postId}`, editedPost, header)
     .catch((error) => {
       console.error("Error:", error);
     });
@@ -99,9 +102,10 @@ export const Post = ({ id , blockedMembers , thread }) => {
   }
   
   const deletePost = async (postId) => {
-    
+    const token = await getAccessToken();
+    const header = getAuthenticationHeader(token);
       await axios
-      .delete(`https://localhost:44304/api/Posts?postId=${postId}`)
+      .delete(`https://localhost:44304/api/Posts?postId=${postId}`, {}, header)
       .catch((error) => {
         console.error("Error:", error);
     });
@@ -113,8 +117,10 @@ export const Post = ({ id , blockedMembers , thread }) => {
     }
 
     const toggleCensorPost = async (postId) => {
+      const token = await getAccessToken();
+      const header = getAuthenticationHeader(token);
       await axios
-        .put(`https://localhost:44304/api/Posts/censor/${postId}`)
+        .put(`https://localhost:44304/api/Posts/censor/${postId}`, {}, header)
         .catch((error) => {
           console.error("Error:", error);
         });
@@ -124,7 +130,6 @@ export const Post = ({ id , blockedMembers , thread }) => {
 
     const onReport = async () => {
       setShowReportModal(true);
-      console.log("on report", selectedPost);
       let report = {
         subjectUserId: user.userId,
         objectUserId: selectedPost.author.userId,
@@ -132,8 +137,11 @@ export const Post = ({ id , blockedMembers , thread }) => {
         threadId: selectedPost.threadId,
         postId: selectedPost.postId
       };
-      console.log('report', report);
-      await axios.post(`https://localhost:44304/api/Report/`, report);
+      
+      const token = await getAccessToken();
+      const header = getAuthenticationHeader(token);
+
+      await axios.post(`https://localhost:44304/api/Report/`, report, header);
       setIsReported(true);
       setReportReason("");
       setTimeout(() => {
@@ -141,6 +149,15 @@ export const Post = ({ id , blockedMembers , thread }) => {
         setShowReportModal(false);
       }, 2500);
     };
+
+    
+const getAccessToken = async () => {
+  const audience = getAudience();
+  const token = await getAccessTokenSilently({
+    audience: audience,
+  });
+  return token;
+}
 
 useEffect(()=>{
     fetchPosts();

@@ -2,12 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Modal, Button } from "react-bootstrap";
+import { getAuthenticationHeader, getAudience } from "../../CustomHooks/useAutenticationHeader";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Report = () => {
   const [reports, setReports] = useState([]);
   const [selectedReport, setSelectedReport] = useState(null);
   const [showReasonModal, setShowReasonModal] = useState(false);
   const [showContentModal, setShowContentModal] = useState(false);
+  const {getAccessTokenSilently} = useAuth0();
 
   let navigate = useNavigate();
 
@@ -30,6 +33,14 @@ const Report = () => {
       });
   };
 
+  const getAccessToken = async () => {
+    const audience = getAudience();
+    const token = await getAccessTokenSilently({
+      audience: audience,
+    });
+    return token;
+  }
+
   const onShowReasonModal = (report) => {
     setSelectedReport(report);
     setShowReasonModal(true);
@@ -40,13 +51,14 @@ const Report = () => {
     setShowContentModal(true);
   };
 
-  const onDelete = () => {
+  const onDelete = async () => {
     //delete report
-    console.log('censur', isCensur);
+    const token = await getAccessToken();
+    const header = getAuthenticationHeader(token);
     axios
-      .delete(
-        `https://localhost:44304/api/Report?reportId=${selectedReport.reportId}&censur=${isCensur}`
-      )
+    .delete(
+      `https://localhost:44304/api/Report?reportId=${selectedReport.reportId}&censur=${isCensur}`, {}, header
+    )
       .then((res) => {
         console.log("Success: Delete report", res.data);
       })
@@ -70,14 +82,16 @@ const Report = () => {
     isCensur = false;
   };
 
-  const onCensur = () => {
+  const onCensur = async () => {
+    const token = await getAccessToken();
+    const header = getAuthenticationHeader(token);
     if (selectedReport.postId == null) {
       axios.put(
-        `https://localhost:44304/api/Thread/censor/${selectedReport.threadId}`
+        `https://localhost:44304/api/Thread/censor/${selectedReport.threadId}`,{}, header
         );
       } else {
         axios.put(
-          `https://localhost:44304/api/Posts/censor/${selectedReport.postId}`
+          `https://localhost:44304/api/Posts/censor/${selectedReport.postId}`,{}, header
           );
         }
     isCensur = true;

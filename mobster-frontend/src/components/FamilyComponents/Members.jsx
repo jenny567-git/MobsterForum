@@ -4,12 +4,14 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { Button, Table } from "react-bootstrap";
 import { useLocalStorage } from "../../CustomHooks/useLocalStorage";
+import { getAuthenticationHeader, getAudience } from "../../CustomHooks/useAutenticationHeader";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Members = () => {
   const [user,setUser] = useLocalStorage('user', null)
   const [members, setmembers] = useState([]);
   const [isLoading, setisLoading] = useState(true);
-
+  const {getAccessTokenSilently} = useAuth0();
   let navigate = useNavigate();
 
   const { familyId } = useParams();
@@ -33,8 +35,10 @@ const Members = () => {
       Description: "",
     };
 
+    const token = await getAccessToken();
+    const header = getAuthenticationHeader(token);
     const response = await axios
-      .post(`https://localhost:44304/api/Block/`, blockedUser)
+      .post(`https://localhost:44304/api/Block/`, blockedUser, header)
       .then((res) => {
         console.log("Success: ", res.data);
       })
@@ -50,9 +54,11 @@ const Members = () => {
   };
 
   const onRemove = async (member) => {
+    const token = await getAccessToken();
+    const header = getAuthenticationHeader(token);
     const response = await axios
       .delete(
-        `https://localhost:44304/removeUser?familyId=${familyId}&userId=${member.userId}`
+        `https://localhost:44304/removeUser?familyId=${familyId}&userId=${member.userId}`, {}, header
       )
       .then((res) => {
         console.log("Success: ", res.data);
@@ -67,6 +73,14 @@ const Members = () => {
       })
     );
   };
+
+  const getAccessToken = async () => {
+    const audience = getAudience();
+    const token = await getAccessTokenSilently({
+      audience: audience,
+    });
+    return token;
+  }
 
   if (isLoading) return <>Loading...</>;
 

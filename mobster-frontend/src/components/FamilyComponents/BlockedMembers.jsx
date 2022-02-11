@@ -4,10 +4,13 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Button, Table } from "react-bootstrap";
 import "../../../src/index.css";
+import { getAuthenticationHeader, getAudience } from "../../CustomHooks/useAutenticationHeader";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const BlockedMembers = () => {
   const [members, setmembers] = useState([]);
   const { familyId } = useParams();
+  const {getAccessTokenSilently} = useAuth0();
 
   useEffect(() => {
     fetchBlockedMembers();
@@ -22,9 +25,10 @@ const BlockedMembers = () => {
   };
 
   const onRemove = async (userId) => {
-    console.log("in delete");
+    const token = await getAccessToken();
+    const header = getAuthenticationHeader(token);
     const addUser = await axios.post(
-      `https://localhost:44304/addMember?familyId=${familyId}&userId=${userId}`
+      `https://localhost:44304/addMember?familyId=${familyId}&userId=${userId}`, {}, header
     ).then((res) => {
       console.log("Success: ", res.data);
     })
@@ -34,7 +38,7 @@ const BlockedMembers = () => {
     
     const response = await axios
       .delete(
-        `https://localhost:44304/api/Block?userId=${userId}&familyId=${familyId}`
+        `https://localhost:44304/api/Block?userId=${userId}&familyId=${familyId}`, {}, header
       )
       .then((res) => {
         console.log("Success: ", res.data);
@@ -49,6 +53,14 @@ const BlockedMembers = () => {
       })
     );
   };
+
+  const getAccessToken = async () => {
+    const audience = getAudience();
+    const token = await getAccessTokenSilently({
+      audience: audience,
+    });
+    return token;
+  }
 
   return (
     <div className="flex-space">

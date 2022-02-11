@@ -4,12 +4,14 @@ import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
 import { Modal, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useLocalStorage } from "../../CustomHooks/useLocalStorage"
+import { getAuthenticationHeader, getAudience } from "../../CustomHooks/useAutenticationHeader";
 
 function BanUser() {
     const [loggedInUser, setLoggedInUser] = useState(useLocalStorage('user', null))
     const [users, setUsers] = useState([]);
     const [filteredUsers, setFilteredUsers] = useState([]);
     const [showBlockModal, setShowBlockModal] = useState(false);
+    const {getAccessTokenSilently} = useAuth0();
     let [chosenUser, setChosenUser] = useState({});
     let [isLoaded, setLoadedState] = useState(false);
     let searchbar = document.querySelector('#searchbar');
@@ -28,6 +30,14 @@ function BanUser() {
         }
     })
 
+    const getAccessToken = async () => {
+        const audience = getAudience();
+        const token = await getAccessTokenSilently({
+          audience: audience,
+        });
+        return token;
+      }
+    
     const fetchUsers = async () => {
         const response = await axios.get('https://localhost:44304/api/User');
         console.log(response);
@@ -36,9 +46,9 @@ function BanUser() {
     }
 
     async function toggleUserBlock(user) {
-        console.log(user);
-        const response = await axios.put(`https://localhost:44304/api/Block?userId=${user.userId}`);
-        console.log(`ToggleUserBlock, Response Status Code: ${response.status}`);
+        const token = await getAccessToken();
+        const header = getAuthenticationHeader(token);
+        const response = await axios.put(`https://localhost:44304/api/Block?userId=${user.userId}`, {}, header);
         setLoadedState(false);
         searchbar.value = '';
         searchString = '';

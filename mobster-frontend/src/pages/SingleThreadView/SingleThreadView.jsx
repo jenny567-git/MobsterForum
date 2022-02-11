@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-// import { useAuth0 } from '@auth0/auth0-react';
+import { useAuth0 } from '@auth0/auth0-react';
 import { useLocalStorage } from "../../CustomHooks/useLocalStorage";
 import { Button, Modal } from "react-bootstrap";
 import { Post } from "../../components/Post/Post";
 import "./SingleThreadView-styling.css";
 import "../../components/Thread/thread-styling.css";
+import { getAuthenticationHeader, getAudience } from "../../CustomHooks/useAutenticationHeader";
 
 const SingleThreadView = () => {
   const { id } = useParams();
@@ -23,10 +24,17 @@ const SingleThreadView = () => {
     <i className="fas fa-edit" title="Edit thread"></i>
   );
   const [showReportModal, setShowReportModal] = useState(false);
-  // const {user, isLoading} = useAuth0();
+  const {getAccessTokenSilently} = useAuth0();
   const [user, setuser] = useLocalStorage("user", null);
   let navigate = useNavigate();
-
+  
+  const getAccessToken = async () => {
+    const audience = getAudience();
+    const token = await getAccessTokenSilently({
+      audience: audience,
+    });
+    return token;
+  }
   // TODO: add error so that "no content found" can be rendered on error
   const fetchThreadById = async () => {
     let response = await axios.get(`https://localhost:44304/api/Thread/${id}`);
@@ -61,8 +69,10 @@ const SingleThreadView = () => {
   };
 
   const deleteThread = async () => {
+    const token = await getAccessToken();
+    const header = getAuthenticationHeader(token);
     let response = await axios.delete(
-      `https://localhost:44304/api/Thread?id=${id}`
+      `https://localhost:44304/api/Thread?id=${id}`, {}, header
     );
     console.log(response);
     alert("your thread has been deleted");
@@ -88,17 +98,19 @@ const SingleThreadView = () => {
       console.log(updatedThread);
       setIsReadOnly(true);
       setBtnText(<i className="fas fa-edit" title="Save changes"></i>);
-      const response = await axios.put(
-        `https://localhost:44304/api/Thread?id=${id}`,
-        updatedThread
-      );
+      
+      const token = await getAccessToken();
+      const header = getAuthenticationHeader(token);
+      const response = await axios.put(`https://localhost:44304/api/Thread?id=${id}`,updatedThread, header);
       console.log(response);
     }
   };
 
   const toggleCensorThread = async () => {
+    const token = await getAccessToken();
+    const header = getAuthenticationHeader(token);
     await axios
-      .put(`https://localhost:44304/api/Thread/censor/${id}`)
+      .put(`https://localhost:44304/api/Thread/censor/${id}`, {}, header)
       .catch((error) => {
         console.error("Error:", error);
       });
@@ -136,8 +148,9 @@ const SingleThreadView = () => {
       reason: reportReason,
       threadId: thread.threadId,
     };
-    console.log("on report", report);
-    await axios.post(`https://localhost:44304/api/Report/`, report);
+    const token = await getAccessToken();
+    const header = getAuthenticationHeader(token);
+    await axios.post(`https://localhost:44304/api/Report/`, report, header);
     setIsReported(true);
     setReportReason("");
     setTimeout(() => {
@@ -153,9 +166,7 @@ const SingleThreadView = () => {
       fetchBlockedMembersByFamilyId();
     }
   }, [isThreadLoaded, isThreadCensored, isReported]);
-  // if(isLoading){
-  //   return <div> <p>Loading thread...</p></div>
-  // }
+
   return (
     <div className="SingleThreadView">
       <div className="main-container">

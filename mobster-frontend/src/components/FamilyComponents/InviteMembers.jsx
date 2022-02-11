@@ -4,12 +4,15 @@ import { Typeahead } from "react-bootstrap-typeahead";
 import "react-bootstrap-typeahead/css/Typeahead.css";
 import "./invite.css";
 import axios from "axios";
+import { getAuthenticationHeader, getAudience } from "../../CustomHooks/useAutenticationHeader";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const InviteMembers = ({familyId, stateChanger}) => {
   const [selected, setSelected] = useState([]);
   const [users, setUsers] = useState([]);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
+  const {getAccessTokenSilently} = useAuth0();
 
   useEffect(() => {
     fetchUsers();
@@ -32,10 +35,19 @@ const InviteMembers = ({familyId, stateChanger}) => {
     console.log(data);
   };
 
+  const getAccessToken = async () => {
+    const audience = getAudience();
+    const token = await getAccessTokenSilently({
+      audience: audience,
+    });
+    return token;
+  }
+
   const onAdd = async () => {
-    console.log("in add", selected);
+    const token = await getAccessToken();
+    const header = getAuthenticationHeader(token);
     const response = await axios
-      .post(`https://localhost:44304/addMembers?familyId=${familyId}`, selected)
+      .post(`https://localhost:44304/addMembers?familyId=${familyId}`, selected, header)
       .then((res) => {
         console.log("Success: ", res.data);
         setUsers(users.filter((user) => !selected.includes(user)));

@@ -5,6 +5,8 @@ import { Button, Form, FloatingLabel, Modal, Alert } from "react-bootstrap";
 import { Context } from "../../utils/store";
 import { Typeahead } from "react-bootstrap-typeahead";
 import "react-bootstrap-typeahead/css/Typeahead.css";
+import { getAuthenticationHeader, getAudience } from "../../CustomHooks/useAutenticationHeader";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const EditFamily = ({stateChanger, isEdit}) => {
   const [context, updateContext] = useContext(Context);
@@ -18,6 +20,8 @@ const EditFamily = ({stateChanger, isEdit}) => {
   const [familyName, setfamilyName] = useState("");
   const [description, setDescription] = useState("");
   const { id } = useParams();
+
+  const {getAccessTokenSilently} = useAuth0();
 
   useEffect(() => {
     fetchFamily();
@@ -43,8 +47,11 @@ const EditFamily = ({stateChanger, isEdit}) => {
       Description: description,
       AdminId: context.currentAdmin.userId,
     };
+
+    const token = await getAccessToken();
+    const header = getAuthenticationHeader(token);
     await axios
-      .put(`https://localhost:44304/api/Family?familyId=${id}`, updatedFamily)
+      .put(`https://localhost:44304/api/Family?familyId=${id}`, updatedFamily, header)
       .then((res) => {
         console.log("Success: ", res.data);
         setSuccess(true);
@@ -78,6 +85,14 @@ const EditFamily = ({stateChanger, isEdit}) => {
     updateContext({ familyMembers: response2.data });
     setShowModal(true);
   };
+
+  const getAccessToken = async () => {
+    const audience = getAudience();
+    const token = await getAccessTokenSilently({
+      audience: audience,
+    });
+    return token;
+  }
 
   const buttonStyles = {
     color: "white",

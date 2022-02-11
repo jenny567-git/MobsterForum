@@ -3,14 +3,21 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { getConfig } from "../config";
+import { getAuthenticationHeader, getAudience } from "../CustomHooks/useAutenticationHeader";
 
 const ProfileInformation = ({ setIsAuthorized }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const { user, isAuthenticated } = useAuth0();
+  const { user, getAccessTokenSilently } = useAuth0();
   const [isActive, setIsActive] = useState(true);
   const [newEmail, setEmail] = useState("");
 
+  const getAccessToken = async () => {
+    const audience = getAudience();
+    const token = await getAccessTokenSilently({
+      audience: audience,
+    });
+    return token;
+  }
 
   useEffect(async () => {
     //add user to our database
@@ -19,8 +26,9 @@ const ProfileInformation = ({ setIsAuthorized }) => {
       AuthId: user.sub,
       Id: user["https://rules.com/claims/user_metadata"].uuid,
     };
-    let userActive = await axios.post(`https://localhost:44304/api/User`, userObj);
-    console.log(userActive);
+    const token = await getAccessToken();
+    const header = getAuthenticationHeader(token);
+    let userActive = await axios.post(`https://localhost:44304/api/User`, userObj, header);
     setIsActive(userActive.data.isActive);
 
     //store user in local storage
@@ -44,31 +52,24 @@ const ProfileInformation = ({ setIsAuthorized }) => {
   }, [isActive]);
 
   const changePassword = async () => {
-    console.log(user.sub);
-    axios
-      .post("https://localhost:44304/api/User/ChangePassword?sub=" + user.sub)
-      .then((response) => {
-        window.location.href = response.data;
-      });
+    const token = await getAccessToken();
+    const header = getAuthenticationHeader(token);
+    axios.post(`https://localhost:44304/api/User/ChangePassword?sub=${user.sub}`, {}, header)
+    .then((response) => {window.location.href = response.data})
   };
-  const changeEmail = (event) => {
+
+  const changeEmail = async (event) => {
     event.preventDefault();
     alert(`The name you entered was: ${newEmail}`);
-    axios.post(
-      "https://localhost:44304/api/User/ChangeUserEmail?sub=" +
-        user.sub +
-        "&email=" +
-        newEmail
-    );
-    //https://localhost:44304/api/User/ChangeUserEmail?sub=subbbb&email=emailjlsss
+    const token = await getAccessToken();
+    const header = getAuthenticationHeader(token);
+    axios.post(`https://localhost:44304/api/User/ChangeUserEmail?sub=${user.sub}&email=${newEmail}`,{}, header);
   };
 
   const deactivateAccount = async () => {
-    let response = await axios.post(
-      "https://localhost:44304/api/User/ToggleUserActive?authId=" + user.sub
-      
-    );
-    console.log(response);
+    const token = await getAccessToken();
+    const header = getAuthenticationHeader(token);
+    let response = axios.post(`https://localhost:44304/api/User/ToggleUserActive?authId=${user.sub}`, {}, header);
     if(response.data.isActive)
     {
       setIsActive(true);
@@ -82,8 +83,6 @@ const ProfileInformation = ({ setIsAuthorized }) => {
     }
    
   };
-  //const [user2, setuser] = useLocalStorage('user', null)
-
   
   return (
     

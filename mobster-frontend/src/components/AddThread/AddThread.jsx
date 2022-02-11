@@ -4,9 +4,11 @@ import { useLocalStorage } from "../../CustomHooks/useLocalStorage";
 import axios from "axios";
 import userPic from "../../assets/profile-icons/user.jpg";
 import "./add-thread-styling.css";
+import { getAuthenticationHeader, getAudience } from '../../CustomHooks/useAutenticationHeader';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const AddThread = () => {
-
+  const {getAccessTokenSilently} = useAuth0();
   const [user, setuser] = useLocalStorage("user", null);
   const [isFetching, setIsFetching] = useState(true);
   const [myFamilies, setMyFamilies] = useState();
@@ -29,13 +31,19 @@ const AddThread = () => {
   };
 
   const postThread = async () => {
-    let response = await axios.post(
-      "https://localhost:44304/api/Thread",
-      thread
-    );
-    console.log(response);
+    const token = await getAccessToken();
+    const header = getAuthenticationHeader(token);
+    let response = await axios.post("https://localhost:44304/api/Thread",thread, header);
     navigate(`/family/${thread.familyId}`);
   };
+
+  const getAccessToken = async () => {
+    const audience = getAudience();
+    const token = await getAccessTokenSilently({
+      audience: audience,
+    });
+    return token;
+  }
 
   useEffect(() => {
     fetchFamiliesByUserId();

@@ -8,8 +8,6 @@ import { useLocalStorage } from '../CustomHooks/useLocalStorage'
 function Home() {
     const [user, setuser] = useLocalStorage('user', null)
 
-    console.log(user);
-
     return (
         <div className="home">
             {user && (<MyFamilies />)}

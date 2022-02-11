@@ -4,7 +4,8 @@ import EditFamily from "../components/FamilyComponents/EditFamily";
 import { Modal, Button, Alert } from "react-bootstrap";
 import Thread from "../components/Thread/Thread";
 import InviteMembers from "../components/FamilyComponents/InviteMembers";
-// import CreateFamily from "../components/FamilyComponents/CreateFamily";
+import { getAuthenticationHeader, getAudience } from "../CustomHooks/useAutenticationHeader";
+import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
 import { useLocalStorage } from "../CustomHooks/useLocalStorage";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -24,6 +25,7 @@ const Family = () => {
   const [state, setState] = useState("");
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
+  const {getAccessTokenSilently} = useAuth0();
   const { id } = useParams();
   let navigate = useNavigate();
 
@@ -85,11 +87,21 @@ const Family = () => {
     isEditing ? setIsEditing(false) : setIsEditing(true);
   };
 
-  const toJoin = () => {
+  const getAccessToken = async () => {
+    const audience = getAudience();
+    const token = await getAccessTokenSilently({
+      audience: audience,
+    });
+    return token;
+  }
+
+  const toJoin = async () => {
     setShowJoinModal(true);
+    const token = await getAccessToken();
+    const header = getAuthenticationHeader(token);
     axios
       .post(
-        `https://localhost:44304/addMember?familyId=${id}&userId=${user.userId}`
+        `https://localhost:44304/addMember?familyId=${id}&userId=${user.userId}`, {}, header
       )
       .then((res) => {
         console.log("Success: ", res.data);
@@ -107,9 +119,11 @@ const Family = () => {
 
   const toLeave = async () => {
     setShowLeaveModal(true);
+    const token = await getAccessToken();
+    const header = getAuthenticationHeader(token);
     await axios
       .delete(
-        `https://localhost:44304/removeUser?familyId=${id}&userId=${user.userId}`
+        `https://localhost:44304/removeUser?familyId=${id}&userId=${user.userId}`, {}, header
       )
       .then((res) => {
         console.log("Success: ", res.data);
@@ -125,20 +139,19 @@ const Family = () => {
     console.log(family);
   };
 
-  const onDelete = () => {
+  const onDelete = async() => {
+    const token = await getAccessToken();
+    const header = getAuthenticationHeader(token);
     axios
-      .delete(`https://localhost:44304/api/Family?familyId=${id}`)
+      .delete(`https://localhost:44304/api/Family?familyId=${id}`, {}, header)
       .then(() => {
-        // alert("Family deleted");
         setSuccess(true);
       })
       .catch((error) => {
         console.error("Error:", error);
         setError(true);
       });
-    //add message: will be redirected after 5 sec
     const timer = setTimeout(() => {
-      // handleClose();
       navigate("/");
     }, 5000);
   };
