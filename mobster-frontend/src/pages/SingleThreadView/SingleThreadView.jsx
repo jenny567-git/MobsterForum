@@ -300,7 +300,7 @@ const SingleThreadView = () => {
 
               <div className="thread-btns">
                 {!checkIfBlockedFromFamily(user) && (
-                  thread.author.userId == user.userId || user.roles.includes('admin')
+                  thread.author.userId == user.userId 
                 )
                   &&
                   !isThreadCensored && (
