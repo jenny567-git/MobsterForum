@@ -74,8 +74,9 @@ const SingleThreadView = () => {
   const deleteThread = async () => {
     const token = await getAccessToken();
     const header = getAuthenticationHeader(token);
+    console.log(token);
     let response = await axios.delete(
-      `https://localhost:44304/api/Thread?id=${id}`, {}, header
+      `https://localhost:44304/api/Thread?id=${id}`, header
     );
     console.log(response);
     notifyDelete();
@@ -125,7 +126,7 @@ const SingleThreadView = () => {
     const token = await getAccessToken();
     const header = getAuthenticationHeader(token);
     await axios
-      .put(`https://localhost:44304/api/Thread/censor/${id}`, {}, header)
+      .put(`https://localhost:44304/api/Thread/censor/${id}`, header)
       .catch((error) => {
         console.error("Error:", error);
       });
@@ -298,8 +299,10 @@ const SingleThreadView = () => {
               )}
 
               <div className="thread-btns">
-                {!checkIfBlockedFromFamily(user) &&
-                  thread.author.userId == user.userId &&
+                {!checkIfBlockedFromFamily(user) && (
+                  thread.author.userId == user.userId || user.roles.includes('admin')
+                )
+                  &&
                   !isThreadCensored && (
                     <div className="thread-btns">
                       <Button className="thread-btns" onClick={editThread}>

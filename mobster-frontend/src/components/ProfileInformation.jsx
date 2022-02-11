@@ -56,7 +56,7 @@ const ProfileInformation = ({ setIsAuthorized }) => {
   const changePassword = async () => {
     const token = await getAccessToken();
     const header = getAuthenticationHeader(token);
-    axios.post(`https://localhost:44304/api/User/ChangePassword?sub=${user.sub}`, {}, header)
+    axios.post(`https://localhost:44304/api/User/ChangePassword?sub=${user.sub}`, header)
     .then((response) => {window.location.href = response.data})
   };
 
@@ -66,13 +66,13 @@ const ProfileInformation = ({ setIsAuthorized }) => {
     notify();
     const token = await getAccessToken();
     const header = getAuthenticationHeader(token);
-    axios.post(`https://localhost:44304/api/User/ChangeUserEmail?sub=${user.sub}&email=${newEmail}`,{}, header);
+    axios.post(`https://localhost:44304/api/User/ChangeUserEmail?sub=${user.sub}&email=${newEmail}`, header);
   };
 
   const deactivateAccount = async () => {
     const token = await getAccessToken();
     const header = getAuthenticationHeader(token);
-    let response = axios.post(`https://localhost:44304/api/User/ToggleUserActive?authId=${user.sub}`, {}, header);
+    let response = axios.post(`https://localhost:44304/api/User/ToggleUserActive?authId=${user.sub}`, header);
     if(response.data.isActive)
     {
       setIsActive(true);

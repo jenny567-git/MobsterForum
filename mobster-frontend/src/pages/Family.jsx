@@ -111,7 +111,7 @@ const Family = () => {
     const header = getAuthenticationHeader(token);
     axios
       .post(
-        `https://localhost:44304/addMember?familyId=${id}&userId=${user.userId}`, {}, header
+        `https://localhost:44304/addMember?familyId=${id}&userId=${user.userId}`, header
       )
       .then((res) => {
         console.log("Success: ", res.data);
@@ -133,7 +133,7 @@ const Family = () => {
     const header = getAuthenticationHeader(token);
     await axios
       .delete(
-        `https://localhost:44304/removeUser?familyId=${id}&userId=${user.userId}`, {}, header
+        `https://localhost:44304/removeUser?familyId=${id}&userId=${user.userId}`, header
       )
       .then((res) => {
         console.log("Success: ", res.data);
@@ -178,7 +178,7 @@ const Family = () => {
     const token = await getAccessToken();
     const header = getAuthenticationHeader(token);
     axios
-      .delete(`https://localhost:44304/api/Family?familyId=${id}`, {}, header)
+      .delete(`https://localhost:44304/api/Family?familyId=${id}`, header)
       .then(() => {
         setSuccess(true);
       })

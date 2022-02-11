@@ -105,7 +105,7 @@ export const Post = ({ id , blockedMembers , thread }) => {
     const token = await getAccessToken();
     const header = getAuthenticationHeader(token);
       await axios
-      .delete(`https://localhost:44304/api/Posts?postId=${postId}`, {}, header)
+      .delete(`https://localhost:44304/api/Posts?postId=${postId}`, header)
       .catch((error) => {
         console.error("Error:", error);
     });
@@ -120,7 +120,7 @@ export const Post = ({ id , blockedMembers , thread }) => {
       const token = await getAccessToken();
       const header = getAuthenticationHeader(token);
       await axios
-        .put(`https://localhost:44304/api/Posts/censor/${postId}`, {}, header)
+        .put(`https://localhost:44304/api/Posts/censor/${postId}`, header)
         .catch((error) => {
           console.error("Error:", error);
         });

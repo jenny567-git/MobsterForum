@@ -28,7 +28,7 @@ const BlockedMembers = () => {
     const token = await getAccessToken();
     const header = getAuthenticationHeader(token);
     const addUser = await axios.post(
-      `https://localhost:44304/addMember?familyId=${familyId}&userId=${userId}`, {}, header
+      `https://localhost:44304/addMember?familyId=${familyId}&userId=${userId}`, header
     ).then((res) => {
       console.log("Success: ", res.data);
     })
@@ -38,7 +38,7 @@ const BlockedMembers = () => {
     
     const response = await axios
       .delete(
-        `https://localhost:44304/api/Block?userId=${userId}&familyId=${familyId}`, {}, header
+        `https://localhost:44304/api/Block?userId=${userId}&familyId=${familyId}`, header
       )
       .then((res) => {
         console.log("Success: ", res.data);
