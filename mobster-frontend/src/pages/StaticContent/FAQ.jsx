@@ -2,7 +2,7 @@ import React from 'react';
 import './StaticContent-styles.css';
 
 export const FAQ = () => {
-  return <div>
+  return <div className="flex-space">
       <div className="faq-container">
           <h1 className='faq-heading'>Frequently asked questions...</h1>
           

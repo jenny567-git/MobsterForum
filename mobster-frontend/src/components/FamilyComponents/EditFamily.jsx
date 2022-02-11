@@ -65,7 +65,9 @@ const EditFamily = ({stateChanger, isEdit}) => {
     setSelected(data);
   };
   const handleClose = () => {
-    updateContext({ currentAdmin: selected[0] });
+    if(selected.length > 0){
+      updateContext({ currentAdmin: selected[0] });
+    }
     setShowModal(false);
   };
 
@@ -89,7 +91,7 @@ const EditFamily = ({stateChanger, isEdit}) => {
   }
   return (
     <>
-      <div>
+      <div className="edit-fam">
         {success && (
           <Alert variant="success">Success</Alert>
         )}
@@ -114,20 +116,20 @@ const EditFamily = ({stateChanger, isEdit}) => {
           />
         </FloatingLabel>
         <p>Current admin: {context.currentAdmin.userName}</p>
-        <Button style={buttonStyles} variant="success" onClick={handleShow}>
-          Change admin
+        <Button onClick={handleShow}>
+          <p>Change admin</p>
         </Button>
-        <Button style={buttonStyles} onClick={onSubmit}>Save changes</Button>
+        <Button onClick={onSubmit}><p>Save changes</p></Button>
 
         <Modal show={showModal} onHide={handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title className="dark">Change admin</Modal.Title>
+            <Modal.Title ><h4>Change admin</h4></Modal.Title>
           </Modal.Header>
 
           <Modal.Body>
-            <div>
+            <div >
               <Form.Group>
-                <Form.Label className="dark">Find user</Form.Label>
+                <Form.Label className="dark"><p>Find user</p></Form.Label>
                 <Typeahead
                   id="basic-typeahead-single"
                   labelKey="userName"
@@ -140,7 +142,7 @@ const EditFamily = ({stateChanger, isEdit}) => {
             </div>
           </Modal.Body>
           <Modal.Footer>
-            <Button style={buttonStyles} onClick={handleClose}>Select</Button>
+            <div className="modal-select"><Button onClick={handleClose}>Select</Button></div>
           </Modal.Footer>
         </Modal>
       </div>

@@ -32,7 +32,7 @@ function App() {
 
   return (
     <Router>
-      <div className="App">
+      <div className="app">
         <Header></Header>
         <div className="content">
           <Routes>
