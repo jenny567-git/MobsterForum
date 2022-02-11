@@ -313,6 +313,12 @@ h6 {
 	background-color: #505050;
 	color: #ec625f;
 }
+.reg{
+  padding-top: 0.5rem;
+}
+.reg h5{
+  color: #ec625f;
+}
 .logo {
 	width: 33%;
 	display: flex;

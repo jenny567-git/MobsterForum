@@ -12,6 +12,7 @@ export const Footer = () => {
               <Link to="/"> Home</Link> | 
               <Link to="/about"> About</Link> | 
               <Link to="/faq"> FAQ</Link> | 
+              <Link to="/rules"> Rules</Link> | 
               <Link to="/contact"> Contact us</Link>
             </nav>
         </div>

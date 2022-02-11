@@ -14,6 +14,7 @@ import { NotFound } from './pages/StaticContent/NotFound'
 import { FAQ } from './pages/StaticContent/FAQ'
 import { Contact } from './pages/StaticContent/Contact'
 import { Footer } from './components/Footer'
+import  Rules  from './pages/StaticContent/Rules'
 
 function App() {
 
@@ -48,6 +49,7 @@ function App() {
             <Route exact path="/about" element={<About />}></Route>
             <Route exact path="/faq" element={<FAQ />}></Route>
             <Route exact path ="/contact" element={<Contact />}></Route>
+            <Route exact path ="/rules" element={<Rules />}></Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
