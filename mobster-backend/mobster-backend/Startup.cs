@@ -65,7 +65,7 @@ namespace mobster_backend
            //services.AddDbContext<MobsterContext>(opt => opt.UseInMemoryDatabase("Mobster.Test"));
 
             //real database
-            services.AddDbContext<MobsterContext>(options => options.UseSqlServer(connectionString));
+            //services.AddDbContext<MobsterContext>(options => options.UseSqlServer(connectionString));
             services.AddTransient<IThreadService, ThreadService>();
             services.AddTransient<IPostService, PostService>();
             services.AddTransient<IFamilyService, FamilyService>();
