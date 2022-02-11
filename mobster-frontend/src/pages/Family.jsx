@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import EditFamily from "../components/FamilyComponents/EditFamily";
-import { Modal, Button, Alert } from "react-bootstrap";
+import { Modal, Button, Alert,  Form, FloatingLabel } from "react-bootstrap";
 import Thread from "../components/Thread/Thread";
 import InviteMembers from "../components/FamilyComponents/InviteMembers";
 import { getAuthenticationHeader, getAudience } from "../CustomHooks/useAutenticationHeader";
@@ -17,6 +17,7 @@ const Family = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showInviteModal, setShowInviteModal] = useState(false);
+  const [showAddThreadModal, setShowAddThreadModal] = useState(false);
   const [showJoinModal, setShowJoinModal] = useState(false);
   const [showLeaveModal, setShowLeaveModal] = useState(false);
   const [canJoin, setCanJoin] = useState(false);
@@ -27,6 +28,14 @@ const Family = () => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const {getAccessTokenSilently} = useAuth0();
+  const [newThread, setNewThread] = useState({
+    familyId: "",
+    title: "",
+    content: "",
+    authorId: "",
+  });
+  const [threadSuccess, setThreadSuccess] = useState(false);
+  const [threadError, setThreadError] = useState(false);
   const { id } = useParams();
   let navigate = useNavigate();
 
@@ -36,7 +45,7 @@ const Family = () => {
     fetchFamily();
     checkJoinable();
     checkLeave();
-  }, [canJoin, state]);
+  }, [canJoin, state, threadSuccess]);
 
   const fetchFamily = async () => {
     const response = await axios
@@ -139,6 +148,31 @@ const Family = () => {
       });
     console.log(family);
   };
+  
+  const postThread = async () => {
+    let thread = {...newThread, authorId: user.userId, familyId: id}
+    const token = await getAccessToken();
+    const header = getAuthenticationHeader(token);
+    console.log(thread);
+    await axios.post("https://localhost:44304/api/Thread", thread, header)
+    .then((res) => {
+      setThreadSuccess(true)
+    })
+    .catch((error) => {
+      setThreadError(true)
+    });
+    const timer = setTimeout(() => {
+      setShowAddThreadModal(false);
+      setThreadError(false);
+      setThreadSuccess(false);
+      setNewThread({
+        familyId: "",
+        title: "",
+        content: "",
+        authorId: "",
+      })
+    }, 2000);
+  };
 
   const onDelete = async() => {
     const token = await getAccessToken();
@@ -182,6 +216,7 @@ const Family = () => {
        
       {canJoin && <Button onClick={toJoin}>Join</Button>}
       {canLeave && <Button onClick={toLeave}>Leave</Button>}
+      {canLeave && <Button onClick={() => setShowAddThreadModal(true)}>Add Thead</Button>}
       {/*if current user == admin or site admin, display Add/Edit/Delete button*/}
       {user &&
         (user.roles.includes("admin") || user.userId == family.adminUserId) && (
@@ -251,6 +286,58 @@ const Family = () => {
           </Modal.Footer>
         </Modal>
       )}
+      
+      {/* ADD THREAD MODAL */}
+      {user && (
+        <Modal
+          show={showAddThreadModal}
+          onHide={() => setShowAddThreadModal(false)}
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Add thread</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+          <div className="edit-fam">
+              <FloatingLabel
+              controlId="TitleLabel"
+              label="Thread title"
+              style={{color: "black"}}
+            >
+              <Form.Control
+                as="textarea"
+                value={newThread.title}
+                onChange={(e) =>
+                  setNewThread({
+                    ...newThread,
+                    title: e.target.value,
+                  })}
+                  />
+            </FloatingLabel>
+              <FloatingLabel style={{color: "black"}} controlId="threadContent" label="Content">
+              <Form.Control
+                as="textarea"
+                value={newThread.content}
+                onChange={(e) =>
+                  setNewThread({
+                    ...newThread,
+                    content: e.target.value,
+                  })}
+                style={{ height: "100px" }}
+              />
+            </FloatingLabel>
+            {threadSuccess && <Alert variant="success">Success</Alert>}
+          {threadError && <Alert variant="danger">Error</Alert>}
+          </div>
+          </Modal.Body>
+          <Modal.Footer>
+          <button onClick={postThread} className="post-button"><p>Post</p>                    </button>
+            <button className="post-button" onClick={() => setShowAddThreadModal(false)}>
+              Close
+            </button>
+          </Modal.Footer>
+        </Modal>
+      )}
       {/* LEAVE MODAL */}
       {user && (
         <Modal
@@ -296,6 +383,8 @@ const Family = () => {
           </Button>
         </Modal.Footer>
       </Modal>
+
+
     </div>
   );
 };
