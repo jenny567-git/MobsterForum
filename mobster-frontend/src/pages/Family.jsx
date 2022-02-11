@@ -17,7 +17,6 @@ const Family = () => {
   const [showInviteModal, setShowInviteModal] = useState(false);
   const [showJoinModal, setShowJoinModal] = useState(false);
   const [showLeaveModal, setShowLeaveModal] = useState(false);
-  //const [showCreateFamilyModal, setShowCreateFamilyModal] = useState(false);
   const [canJoin, setCanJoin] = useState(false);
   const [canLeave, setCanLeave] = useState(false);
   const [family, setFamily] = useState({});
@@ -141,7 +140,7 @@ const Family = () => {
     const timer = setTimeout(() => {
       // handleClose();
       navigate("/");
-    }, 2000);
+    }, 5000);
   };
 
   if (!user) {
@@ -157,17 +156,6 @@ const Family = () => {
     );
   }
 
-  // const buttonStyles = {
-  //   color: "white",
-  //   backgroundColor: "#ec625f",
-  //   border: "none",
-  //   fontFamily: "Lekton",
-  //   margin: "4px",
-  //   width: "15%",
-  //   fontWeight: "bold",
-  //   cursor: "pointer",
-  //   borderRadius: "0.5rem",
-  // };
   return (
     <div className="flex-space">
       <div className="pad">

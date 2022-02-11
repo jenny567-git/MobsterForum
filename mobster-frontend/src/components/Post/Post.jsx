@@ -145,9 +145,7 @@ useEffect(()=>{
     fetchPosts();
   },[])
   
-// if(isLoading){
-//     return <div> <p>Loading page...</p></div>
-//   }
+
     return <div className = "posts-container">
 
             { !posts && <p>There are no posts on this thread yet...</p> }

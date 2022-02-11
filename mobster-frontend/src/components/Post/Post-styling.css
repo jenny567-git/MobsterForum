@@ -115,6 +115,11 @@ p {
 	margin-left: 2rem;
 	cursor: pointer;
 	border-radius: 0.5rem;
+	width: 10rem;
+}
+.reply-button:hover{
+	background-color: #515151;
+	color: #ec625f;
 }
 
 .delete-modal {

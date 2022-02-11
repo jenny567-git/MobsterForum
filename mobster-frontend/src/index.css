@@ -22,6 +22,7 @@ h1,
 h2,
 h3,
 h4,
+h5,
 h6 {
   font-family: "Special Elite";
 }
@@ -149,10 +150,6 @@ div {
   background-color: #414141;
   color: #ec625f;
 }
-
-.flex-space Table {
- 
-}
 .block-btn {
   margin: 0.5rem;
 }
@@ -180,17 +177,38 @@ div {
   background-color: #414141;
   color: #ec625f;
 }
-/* Blocked Members Component  */
-
-/* .remove Button{
+/* Create Family Component */
+.create-fam Button{
   color: white;
   background-color: #ec625f;
-  font-weight: bold;
-  margin: 1.5rem;
   border: none;
+  margin-top: 1rem;
+  width: 15%;
+  font-weight: bold;
   cursor: pointer;
-  border-radius: 0.5rem;
-} */
+}
+/* Edit Family Component */
+
+.edit-fam Button{
+  color: white;
+  background-color: #ec625f;
+  border: none;
+  margin-top: 1rem;
+  width: 15%;
+  font-weight: bold;
+  cursor: pointer;
+}
+.modal-select Button{
+  color: white;
+  background-color: #ec625f;
+  border: none;
+  margin-top: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+
+
 /* MostPopularFamilies component*/
 
 .mp-families {
