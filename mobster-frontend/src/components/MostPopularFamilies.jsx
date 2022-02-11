@@ -2,8 +2,7 @@ import { React, useEffect, useState } from "react";
 import { useNavigate} from "react-router-dom";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
-import { getConfig } from "../config";
-
+import { getAuthenticationHeader, getAudience } from "../CustomHooks/useAutenticationHeader";
 
 function MyFamilies() {
   const [families, setFamilies] = useState([]);
@@ -12,10 +11,7 @@ function MyFamilies() {
     user,
     isAuthenticated,
     getAccessTokenSilently,
-    getIdTokenClaims
 } = useAuth0();
-
-const config = getConfig();
 
   useEffect(() => {
     fetchTop5();
@@ -24,16 +20,14 @@ const config = getConfig();
   let navigate = useNavigate();
 
   const fetchTop5 = async () => {
-     const token = await getAccessTokenSilently({
-       audience: config.audience,
-     });
-    console.log(token)
+     const token = await getAccessToken();
+     const header = getAuthenticationHeader(token);
+     console.log(header);
+
     axios
-      .get(`https://localhost:44304/api/Family/top5`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      })
+      .get(`https://localhost:44304/api/Family/top5`,
+        header
+      )
       .then((res) => {
         console.log("Success: ", res.data);
         setFamilies(res.data);
@@ -42,21 +36,14 @@ const config = getConfig();
       .catch((error) => {
         console.error("Error:", error);
       });
-      // console.log('token', token);
   };
 
-  const getToken = async () => {
+  const getAccessToken = async () => {
+    const audience = getAudience();
     const token = await getAccessTokenSilently({
-      audience: config.audience,
+      audience: audience,
     });
-    console.log(token);
-  }
-
-  const getIdToken = async () => {
-    const token = await getIdTokenClaims({
-      audience: config.audience,
-    });
-    console.log(token);
+    return token;
   }
 
   return (
