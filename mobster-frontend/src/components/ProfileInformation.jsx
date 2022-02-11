@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { getAuthenticationHeader, getAudience } from "../CustomHooks/useAutenticationHeader";
+import { ToastContainer, toast } from "react-toastify";
+
 
 const ProfileInformation = ({ setIsAuthorized }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
