@@ -23,10 +23,11 @@ namespace mobster_backend.Controllers
         }
 
         /// <summary>
-        /// Create a new family
+        /// Create a new family. Role: anyone
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> AddFamilyAsync(SetFamilyDto model)
         {
@@ -41,13 +42,14 @@ namespace mobster_backend.Controllers
             }
 
         }
-        
+
         /// <summary>
-        /// Add an user to an existing family
+        /// Add an user to an existing family. Role: groupadmin and above. 
         /// </summary>
         /// <param name="familyId"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
+        [Authorize(Policy = "GroupAdmin")]
         [HttpPost("/addMember/")]
         public async Task<IActionResult> AddFamilyMemberAsync(Guid familyId, Guid userId)
         {
@@ -64,11 +66,12 @@ namespace mobster_backend.Controllers
         }
 
         /// <summary>
-        /// Adds a list of members to an existing family
+        /// Adds a list of members to an existing family. Role: Groupadmin and above
         /// </summary>
         /// <param name="familyId"></param>
         /// <param name="users"></param>
         /// <returns></returns>
+        [Authorize(Policy = "GroupAdmin")]
         [HttpPost("/addMembers/")]
         public async Task<IActionResult> AddFamilyMembersAsync(Guid familyId, IEnumerable<UserDto> users)
         {
@@ -110,7 +113,6 @@ namespace mobster_backend.Controllers
         /// Get top 5 families with most members
         /// </summary>
         /// <returns></returns>
-        [Authorize]
         [HttpGet("top5")]
         public async Task<IActionResult> GetTopFamiliesAsync()
         {
@@ -208,11 +210,12 @@ namespace mobster_backend.Controllers
         }
 
         /// <summary>
-        /// Removes an member from the family
+        /// Removes an member from the family. Role: GRoupAdmin and above.
         /// </summary>
         /// <param name="familyId"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
+        [Authorize(Policy = "GroupAdmin")]
         [HttpDelete("/removeUser/")]
         public async Task<IActionResult> RemoveUserFromFamilyAsync(Guid familyId, Guid userId)
         {
@@ -229,12 +232,13 @@ namespace mobster_backend.Controllers
         }
         
         /// <summary>
-        /// Removes a list of members from the family
+        /// Removes a list of members from the family. Role: GroupAdmin and above.
         /// </summary>
         /// <param name="familyId">ID of the family</param>
         /// <param name="userIds">Id of the users</param>
         /// <returns></returns>
         [HttpDelete("/removeUsers/")]
+        [Authorize(Policy = "GroupAdmin")]
         public async Task<IActionResult> RemoveUsersFromFamilyAsync(Guid familyId, IEnumerable<Guid> userIds)
         {
             try
@@ -250,11 +254,12 @@ namespace mobster_backend.Controllers
         }
         
         /// <summary>
-        /// Deletes a family
+        /// Deletes a family. Role: GroupAdmin and above.
         /// </summary>
         /// <param name="familyId"></param>
         /// <returns></returns>
         [HttpDelete]
+        [Authorize(Policy = "GroupAdmin")]
         public async Task<IActionResult> DeleteFamilyAsync(Guid familyId)
         {
             try
@@ -268,13 +273,14 @@ namespace mobster_backend.Controllers
 
             return Ok();
         }
-        
+
         /// <summary>
-        /// Updates a family
+        /// Updates a family. Role: GroupAdmin and above. 
         /// </summary>
         /// <param name="familyId"></param>
         /// <param name="model"></param>
         /// <returns></returns>
+        [Authorize(Policy = "GroupAdmin")]
         [HttpPut]
         public async Task<IActionResult> UpdateFamilyAsync(Guid familyId, SetFamilyDto model)
         {

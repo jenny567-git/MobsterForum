@@ -109,8 +109,8 @@ namespace mobster_backend
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("read:messages", policy => policy.Requirements.Add(new HasScopeRequirement("read:messages", domain)));
                 options.AddPolicy("AdminAccess", policy => policy.RequireClaim("permissions", "admin:access"));
+                options.AddPolicy("GroupAdmin", policy => policy.RequireClaim("permissions", "groupAdmin:access"));
             });
 
             services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using mobster_backend.DTOs.Write;
 using mobster_backend.Interfaces;
 using System;
@@ -37,11 +38,12 @@ namespace mobster_backend.Controllers
         }
         
         /// <summary>
-        /// Blocks an user from a family
+        /// Blocks an user from a family. Role: GroupAdmin and above.
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
+        [Authorize(Policy = "GroupAdmin")]
         public async Task<IActionResult> BlockUserFromFamilyAsync(SetBlockedMemberDto model)
         {
             try
@@ -57,11 +59,12 @@ namespace mobster_backend.Controllers
         }
         
         /// <summary>
-        /// Removes a currently blocked user from the family's black list
+        /// Removes a currently blocked user from the family's black list. Role GroupdAdmin and up.
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="familyId"></param>
         /// <returns></returns>
+        [Authorize(Policy = "GroupAdmin")]
         [HttpDelete]
         public async Task<IActionResult> RemoveBlockUserFromFamilyAsync(Guid userId, Guid familyId)
         {
@@ -78,7 +81,7 @@ namespace mobster_backend.Controllers
         }
 
         [HttpPut]
-
+        [Authorize(Policy = "AdminAccess")]
         public async Task<IActionResult> ToggleUserBlockInApplicationAsync(Guid userId)
         {
             try
