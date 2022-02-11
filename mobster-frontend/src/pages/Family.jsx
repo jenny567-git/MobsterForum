@@ -209,7 +209,7 @@ const Family = () => {
           Array.from(family.threads).map((thread) => (
             <Thread key={thread.threadId} thread={thread} />
           ))}
-        {!family.threads && <p>There is no threads in this family yet...</p>}
+        {!family.threads && <p>There are no threads in this family yet...</p>}
       </ul>
 
       {/* INVITE MODAL */}

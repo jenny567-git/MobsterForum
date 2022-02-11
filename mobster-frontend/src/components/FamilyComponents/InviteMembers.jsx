@@ -48,7 +48,7 @@ const InviteMembers = ({familyId, stateChanger}) => {
         setError(true);
       });
       
-      //show response for 2s
+      //show response for 5s
       setTimeout(() => {
         setSuccess(false);
         setError(false);

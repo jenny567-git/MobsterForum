@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Button, Table } from "react-bootstrap";
+import "../../../src/index.css";
 
 const BlockedMembers = () => {
   const [members, setmembers] = useState([]);
@@ -32,39 +33,20 @@ const BlockedMembers = () => {
       .catch((error) => {
         console.error("Error:", error);
       });
-      
-    setmembers(members.filter(function(user){
-      return user.userId !== userId;
-    }) );
 
+    setmembers(
+      members.filter(function (user) {
+        return user.userId !== userId;
+      })
+    );
   };
-  const buttonStyles = {
-    color: "white",
-    fontFamily: "Lekton",
-    margin: "10px",
-    fontWeight: "bold",
-    cursor: "pointer",
-    borderRadius: "0.5rem"
-  }
 
   return (
-    <div className="container">
+    <div className="flex-space">
       <h1>Blocked members({members.length})</h1>
-      {/* {Array.from(members).map((member) => (
-        <div key={member.userId}>
-          <ul>User name</ul>
-          <ul>Date</ul>
-          <li>{member.userName}</li>
-          <p></p>
-          <Button>Description</Button>
-          <Button variant="danger" onClick={() => onRemove(member.userId)}>
-            Remove block
-          </Button>
-        </div>
-      ))} */}
-      {!members.length ? 
-      ( <>No users found...</> ) : 
-      (
+      {!members.length ? (
+        <>No users found...</>
+      ) : (
         <Table striped bordered hover variant="dark">
           <thead>
             <tr>
@@ -79,14 +61,11 @@ const BlockedMembers = () => {
                 <td>{member.userName}</td>
                 <td> {member.createdAt}</td>
                 <td>
-                  {/* <Button>Description (TODO)</Button> */}
-                  <Button
-                  style={buttonStyles}
-                    variant="danger"
-                    onClick={() => onRemove(member.userId)}
-                  >
-                    Remove block
-                  </Button>
+                  <div className="remove-btn">
+                    <Button onClick={() => onRemove(member.userId)}>
+                      Remove block
+                    </Button>
+                  </div>
                 </td>
               </tr>
             ))}

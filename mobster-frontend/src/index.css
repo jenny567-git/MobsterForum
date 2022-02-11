@@ -52,14 +52,17 @@ div {
   width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  align-items: center;
+  justify-content:center;
+  
+
 }
 .page-center {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   width: 60%;
+  margin-top: -1.5rem;
 }
 .home-welcome {
   display: flex;
@@ -90,12 +93,22 @@ div {
   margin-top: 2rem;
   margin-left: 2rem;
   border-radius: 1rem;
+  align-self: flex-start;
 }
-.my-families h3 {
+.my-families Button{
+  color: white;
+  background-color: #ec625f;
+  font-weight: bold;
+  margin: 1.5rem;
+  border: none;
+  cursor: pointer;
+  border-radius: 0.5rem;
+}
+.my-families h3, h6 {
   text-align: center;
   font-size: 1.5rem;
   color: whitesmoke;
-  border-bottom: 0.2rem solid #ec625f;
+  border-bottom: 0.1rem solid #ec625f;
   padding: 1rem;
 }
 .my-families ul {
@@ -136,12 +149,9 @@ div {
   background-color: #414141;
   color: #ec625f;
 }
-/* .flex-space Button:last-child{
-	background-color: black;
-	color: #ec625f;
-} */
+
 .flex-space Table {
-  margin-left: 2rem;
+ 
 }
 .block-btn {
   margin: 0.5rem;
@@ -170,7 +180,17 @@ div {
   background-color: #414141;
   color: #ec625f;
 }
+/* Blocked Members Component  */
 
+/* .remove Button{
+  color: white;
+  background-color: #ec625f;
+  font-weight: bold;
+  margin: 1.5rem;
+  border: none;
+  cursor: pointer;
+  border-radius: 0.5rem;
+} */
 /* MostPopularFamilies component*/
 
 .mp-families {
@@ -188,7 +208,7 @@ div {
   text-align: center;
   font-size: 1.5rem;
   color: whitesmoke;
-  border-bottom: 0.2rem solid #ec625f;
+  border-bottom: 0.1rem solid #ec625f;
   padding: 1rem;
 }
 .mp-families ul {
@@ -230,13 +250,14 @@ div {
   left: 0;
   bottom: 0;
   width: 100%;
-  height: 9vh;
+  height: 7vh;
   background-color: #505050;
   border-top: 0.2rem solid #ec625f;
 }
 
 .footer a {
   text-decoration: none;
+  color: white;
 }
 
 .footer-left,

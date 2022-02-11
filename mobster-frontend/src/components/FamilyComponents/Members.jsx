@@ -70,12 +70,12 @@ const Members = () => {
 
   return (
     <div className="flex-space">
-      <div className="pad">
+      
         <h1>List of members ({members.length})</h1>
         <Button onClick={() => navigate(`/family/${familyId}/blockedMembers`)}>
           Blocked member list
         </Button>
-      </div>
+     
         <Table striped bordered hover size="sm" variant="dark">
           <thead>
             <tr>

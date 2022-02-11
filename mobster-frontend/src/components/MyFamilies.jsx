@@ -30,57 +30,27 @@ function MyFamilies() {
     }
     setIsFetching(false);
   };
-  const buttonStyles = {
-    color: "white",
-    fontFamily: "Lekton",
-    margin: "10px",
-    fontWeight: "bold",
-    cursor: "pointer",
-    border: "none",
-    borderRadius: "0.5rem",
-    backgroundColor: "#ec625f",
-    
-  }
-  if (error)
-    return (
-      <div className="my-families">
-        <h3>My Families</h3>
-        <p>You haven't joined any families.</p>
-        {user && (
-        <Button
-          style={buttonStyles}
-          variant="success"
-          onClick={() => setShowCreateFamilyModal(true)}
-        >
-          Create new family
-        </Button>
-      )}
-      </div>
-    );
-   
 
-  // { error && <h2>you haven't joined any families.</h2> }
   return (
     <div className="my-families">
       <h3>My Families</h3>
-      {isFetching && <div>Loading families...</div>}
-      <ul>
-        {Array.from(myFamilies).map((family) => (
-          <li
-            key={family.familyId}
-            onClick={() => navigate(`/family/${family.familyId}`)}
-          >
-            {family.name}
-          </li>
-        ))}
-      </ul>
+      {error && <h6>You haven't joined any families.</h6>}
+      {isFetching && !error && <div>Loading families...</div>}
+      {!error && (
+        <ul>
+          {Array.from(myFamilies).map((family) => (
+            <li
+              key={family.familyId}
+              onClick={() => navigate(`/family/${family.familyId}`)}
+            >
+              {family.name}
+            </li>
+          ))}
+        </ul>
+      )}
       {user && (
-        <Button
-          style={buttonStyles}
-          variant="success"
-          onClick={() => setShowCreateFamilyModal(true)}
-        >
-          Create new family
+        <Button onClick={() => setShowCreateFamilyModal(true)}>
+          <p>Create new family</p>
         </Button>
       )}
 
