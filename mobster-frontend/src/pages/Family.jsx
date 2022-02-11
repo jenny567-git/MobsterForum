@@ -11,6 +11,7 @@ import { useLocalStorage } from "../CustomHooks/useLocalStorage";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../components/FamilyComponents/family-override.css";
 import "/src/index.css";
+import Welcome from "../components/Welcome";
 
 const Family = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -164,7 +165,7 @@ const Family = () => {
           <i>{family.description}</i>
         </h2>
         <p>Members: {family.memberCount}</p>
-        <p>Render Welcome component</p>
+        <Welcome/>
       </div>
     );
   }
