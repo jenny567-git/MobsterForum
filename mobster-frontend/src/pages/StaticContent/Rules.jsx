@@ -72,7 +72,8 @@ const Rules = () => {
         inlägg. Vi reserverar oss rättigheten att ändra villkor och regler.
       </p>
       <div className="reg">
-          <h5>Genom att trycka på Registrera nedan, bekräftar jag att jag godkänner reglerna</h5>
+          {!isAuthenticated &&(<h5>Genom att trycka på Registrera nedan, bekräftar jag att jag godkänner reglerna</h5>)}
+          {isAuthenticated &&(<h5>Du läste och godkände dessa regler när du registrerade ditt konto</h5>)}
           {!isAuthenticated && (<button onClick={() => loginWithRedirect({screen_hint: "signup"})}><p>Register</p></button>)}
       </div>
 

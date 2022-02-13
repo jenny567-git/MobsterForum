@@ -52,7 +52,7 @@ const InviteMembers = ({familyId, stateChanger}) => {
       setTimeout(() => {
         setSuccess(false);
         setError(false);
-      }, 5000);
+      }, 2500);
   };
 
   return (
