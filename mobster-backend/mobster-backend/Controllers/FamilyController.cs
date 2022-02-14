@@ -49,7 +49,7 @@ namespace mobster_backend.Controllers
         /// <param name="familyId"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
-        [Authorize(Policy = "GroupAdmin")]
+        [Authorize]
         [HttpPost("/addMember/")]
         public async Task<IActionResult> AddFamilyMemberAsync(Guid familyId, Guid userId)
         {
@@ -215,7 +215,7 @@ namespace mobster_backend.Controllers
         /// <param name="familyId"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
-        [Authorize(Policy = "GroupAdmin")]
+        [Authorize]
         [HttpDelete("/removeUser/")]
         public async Task<IActionResult> RemoveUserFromFamilyAsync(Guid familyId, Guid userId)
         {
@@ -238,7 +238,7 @@ namespace mobster_backend.Controllers
         /// <param name="userIds">Id of the users</param>
         /// <returns></returns>
         [HttpDelete("/removeUsers/")]
-        [Authorize(Policy = "GroupAdmin")]
+        [Authorize]
         public async Task<IActionResult> RemoveUsersFromFamilyAsync(Guid familyId, IEnumerable<Guid> userIds)
         {
             try

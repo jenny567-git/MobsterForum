@@ -106,14 +106,14 @@ const Family = () => {
   }
 
   const toJoin = async () => {
-    setShowJoinModal(true);
     const token = await getAccessToken();
     const header = getAuthenticationHeader(token);
-    axios
-      .post(
-        `https://localhost:44304/addMember?familyId=${id}&userId=${user.userId}`, header
+    await axios
+    .post(
+      `https://localhost:44304/addMember?familyId=${id}&userId=${user.userId}`, header
       )
       .then((res) => {
+        setShowJoinModal(true);
         console.log("Success: ", res.data);
         let newfamily = { ...family };
         newfamily.memberCount++;
@@ -124,18 +124,17 @@ const Family = () => {
       .catch((error) => {
         console.error("Error:", error);
       });
-    console.log(family);
   };
 
   const toLeave = async () => {
-    setShowLeaveModal(true);
     const token = await getAccessToken();
     const header = getAuthenticationHeader(token);
     await axios
-      .delete(
-        `https://localhost:44304/removeUser?familyId=${id}&userId=${user.userId}`, header
+    .delete(
+      `https://localhost:44304/removeUser?familyId=${id}&userId=${user.userId}`, header
       )
       .then((res) => {
+        setShowLeaveModal(true);
         console.log("Success: ", res.data);
         let newfamily = { ...family };
         newfamily.memberCount--;
