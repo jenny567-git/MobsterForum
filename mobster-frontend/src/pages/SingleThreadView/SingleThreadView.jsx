@@ -206,8 +206,8 @@ const SingleThreadView = () => {
                     Posted by{" "}
                     <p>
                       <strong className="thread-metadata-banned">
-                        {" "}
-                        &#91;Banned User&#93;{" "}
+                        {" "}User
+                        &#91;in jail&#93;{" "}
                       </strong>{" "}
                       in{" "}
                       <strong
