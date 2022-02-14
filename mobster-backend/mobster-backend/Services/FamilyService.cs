@@ -42,7 +42,7 @@ namespace mobster_backend.Services
             context.Admins.Add(admin);
 
             await context.SaveChangesAsync();
-
+            Auth0.Methods.AssignGroupAdminRole(user.AuthId);
             return family.ToFamilyDto();
         }
 

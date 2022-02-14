@@ -23,9 +23,6 @@ namespace mobster_backend.Controllers
         {
             this.userService = userService;
 
-            //For auth0 management token
-            //BearerToken = GetBearerToken();
-
         }
 
 
@@ -70,11 +67,26 @@ namespace mobster_backend.Controllers
         [HttpPost("ToggleUserActive")]
         public async Task<IActionResult> ToggleUserActive(string authId)
         {
+            var userIdentity = User.Identity.Name;
+            var ClaimsList = User.Claims.ToList();
+            var permission1 = ClaimsList[ClaimsList.Count - 1].Value;
+            var permission2 = ClaimsList[ClaimsList.Count - 2].Value;
+
             try
             {
-                var user = await userService.GetUserByAuthId(authId);
-                user = await userService.ToggleUserActive(user.UserId);
-                return Ok(user);
+                if (userIdentity == authId)
+                {
+                    var user = await userService.GetUserByAuthId(authId);
+                    user = await userService.ToggleUserActive(user.UserId);
+                    return Ok(user);
+                }
+                else if (permission1.Contains("admin:Access") || permission2.Contains("admin:access"))
+                {
+                    var user = await userService.GetUserByAuthId(authId);
+                    user = await userService.ToggleUserActive(user.UserId);
+                    return Ok(user);
+                }
+                return Forbid("forbidden");
             }
             catch (Exception e)
             {
@@ -95,9 +107,15 @@ namespace mobster_backend.Controllers
         {
             try
             {
-                var response = Auth0.Methods.ChangeEmail(sub, email);
-                return Ok(response);
-
+                var userIdentity = User.Identity.Name;
+                if(sub == userIdentity) {
+                    var response = Auth0.Methods.ChangeEmail(sub, email);
+                    return Ok(response);
+                }
+                else
+                {
+                    return Forbid("Forbidden");
+                }
             }
             catch (Exception e)
             {
@@ -116,17 +134,26 @@ namespace mobster_backend.Controllers
         {
             try
             {
-                var response = Auth0.Methods.CreateChangePasswordTicket(sub);
-                string link = response.Content.ToString();
-                link = link.Substring(11);
-                string link2 = link.Remove(link.Length - 2, 2);
-                return Ok(link2);
+                var userIdentity = User.Identity.Name;
+                if (userIdentity == sub)
+                {
+                    var response = Auth0.Methods.CreateChangePasswordTicket(sub);
+                    string link = response.Content.ToString();
+                    link = link.Substring(11);
+                    string link2 = link.Remove(link.Length - 2, 2);
+                    return Ok(link2);
+                }
+                else
+                {
+                    return Forbid("Forbidden");
+                }
             }
             catch
             {
                 return null;
             }
         }
+
 
         
 

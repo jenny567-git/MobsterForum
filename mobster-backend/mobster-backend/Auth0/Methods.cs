@@ -84,5 +84,20 @@ namespace mobster_backend.Auth0
             return response;
         }
 
+        public static IRestResponse AssignGroupAdminRole(string userId)
+        {
+            Auth0.Objects.Permission permission = new Auth0.Objects.Permission() { permission_name = "groupAdmin:access" };
+            Auth0.Objects.PermissionsList permissionList = new Auth0.Objects.PermissionsList();
+            permissionList.permissions = new System.Collections.Generic.List<Objects.Permission>();
+            permissionList.permissions.Add(permission);
+            RestClient client = new RestClient($"https://outlaw-forum.eu.auth0.com/api/v2/users/{userId}/permissions");
+            var request = new RestRequest(Method.POST);
+            request.AddHeader("authorization", $"Bearer {Token}");
+            string jsonString = JsonSerializer.Serialize(permissionList, options: jsonSerializerOptions);
+            request.AddJsonBody(jsonString);
+            IRestResponse response = client.Execute(request);
+            return response;
+        }
+
     }
 }

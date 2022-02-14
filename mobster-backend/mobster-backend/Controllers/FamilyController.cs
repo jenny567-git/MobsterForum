@@ -27,7 +27,7 @@ namespace mobster_backend.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [Authorize]
+        //[Authorize]
         [HttpPost]
         public async Task<IActionResult> AddFamilyAsync(SetFamilyDto model)
         {
