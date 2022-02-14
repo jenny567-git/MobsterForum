@@ -9,6 +9,7 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	cursor: default;
 }
 .single-post {
 	display: flex;
@@ -29,7 +30,6 @@ p {
 	align-self: center;
 	justify-self: center;
 	margin: 0 auto;
-	/* border: 1px solid yellow; */
 	width: fit-content;
 }
 
@@ -45,7 +45,7 @@ p {
 	margin: 0 auto;
 	justify-content: center;
 	padding: 5px;
-	/* border: 1px solid green; */
+
 }
 
 .censored-post {
@@ -65,7 +65,7 @@ p {
 	align-self: center;
 	margin: 0 auto;
 	width: 5%;
-	/* border: 1px solid red; */
+
 }
 
 .post-btn {

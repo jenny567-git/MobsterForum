@@ -53,7 +53,6 @@ div {
 	width: 100%;
 	display: flex;
 	flex-direction: row;
-	align-items: center;
 	justify-content: center;
 }
 .page-center {
@@ -61,7 +60,8 @@ div {
 	flex-direction: column;
 	align-items: center;
 	width: 60%;
-	margin-top: -1.5rem;
+	margin-top: 2rem;
+
 }
 .home-welcome {
 	display: flex;
@@ -79,6 +79,10 @@ div {
 	border-radius: 0.5rem;
 	padding: 2rem;
 }
+/* Family Component */
+/* .create-thread{
+	padding-top: 2rem;
+} */
 
 /* MyFamilies component*/
 
@@ -313,6 +317,22 @@ h6 {
 	background-color: #505050;
 	color: #ec625f;
 }
+.logged-in-as{
+	display:flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: -2rem;
+	padding-top: 0.5rem;
+
+}
+.logged-in-as span{
+	padding-left: 1rem;
+}
+.logged-in-as p{
+	font-size: 90%;
+	
+}
 .reg{
   padding-top: 0.5rem;
 }
@@ -385,12 +405,12 @@ h6 {
 	margin-right: 3.5vh;
 	margin-left: 0.2vh;
 	font-size: 80%;
-	width: 55%;
+	width: 50%;
 }
 
 .radio-button input {
 	filter: grayscale(1);
-	width: 65%;
+	width: 45%;
 }
 .search-field {
 	display: flex;
@@ -446,11 +466,13 @@ h6 {
 	display: flex;
 	flex-direction: column;
 	flex-grow: 1;
+	padding-left: 6rem;
 }
 .to-left {
 	display: flex;
 	flex-direction: column;
 	flex-grow: 1;
+	border-right: 2px solid white;
 }
 
 .user-details {

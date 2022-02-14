@@ -245,7 +245,10 @@ const Family = () => {
           Array.from(family.threads).map((thread) => (
             <Thread key={thread.threadId} thread={thread} />
           ))}
-        {!family.threads && <p>There are no threads in this family yet...</p>}
+        <div className="create-thread">
+          {!family.threads && <p>There are no threads in this family yet...</p>}
+        </div>
+        
       </ul>
 
       {/* INVITE MODAL */}
