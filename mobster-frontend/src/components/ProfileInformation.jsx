@@ -59,7 +59,6 @@ const ProfileInformation = ({ setIsAuthorized }) => {
         "&email=" +
         newEmail
     );
-    //https://localhost:44304/api/User/ChangeUserEmail?sub=subbbb&email=emailjlsss
   };
 
   const deactivateAccount = async () => {
@@ -81,9 +80,7 @@ const ProfileInformation = ({ setIsAuthorized }) => {
     }
    
   };
-  //const [user2, setuser] = useLocalStorage('user', null)
 
-  
   return (
     
      <div className="profile-center">

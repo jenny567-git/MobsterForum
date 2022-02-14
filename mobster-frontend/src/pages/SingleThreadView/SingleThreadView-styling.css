@@ -20,7 +20,6 @@
 	border-radius: 0;
 	width: 100%;
 	margin-top: 2rem;
-	cursor: pointer;
 	border-radius: 1rem;
 }
 .thread {
@@ -79,6 +78,7 @@ p {
 	display: flex;
 	flex-direction: column;
 	padding: 0 1rem 1rem 1rem;
+	
 }
 .thread-data input,
 textarea {

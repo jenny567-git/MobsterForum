@@ -15,6 +15,7 @@ export const Footer = () => {
               <Link to="/rules"> Rules</Link> | 
               <Link to="/contact"> Contact us</Link>
             </nav>
+
         </div>
 
         <div className='footer-right'>

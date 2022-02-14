@@ -6,12 +6,13 @@
 	width: 90%;
 	margin-top: 2rem;
 	padding: 1rem;
-	cursor: pointer;
+	
 }
 .thread-title {
 	display: flex;
 	flex-direction: column;
 	color: #fff;
+	cursor: pointer;
 }
 .thread-title h2,
 p {
@@ -31,4 +32,5 @@ p {
 	color: #fff;
 	align-self: flex-end;
 	text-align: center;
+	cursor: pointer;
 }

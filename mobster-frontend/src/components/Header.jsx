@@ -15,8 +15,10 @@ function Header() {
                 <SearchBar></SearchBar>
             
             </div>
+           
             <div className="sign-in">
                 <LoginButton />
+     
                 
             
             </div>

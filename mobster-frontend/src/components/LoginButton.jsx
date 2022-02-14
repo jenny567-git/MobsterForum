@@ -23,10 +23,14 @@ const LoginButton = () => {
 
   return (
     <div>
-        {!isAuthenticated && ( <button onClick={() => loginWithRedirect()}><p>Log In</p></button>)}
-        <Link to="/rules">{!isAuthenticated && (<button onClick={() =>Navigate}><p>Register</p></button>)}</Link>
-        <Link to="/profile">{isAuthenticated && (<button onClick={() => Navigate}><p>Profile</p></button>)}</Link>
-        {isAuthenticated && (<button onClick={() => logoutWithRedirect()}><p>Log out</p></button>)}
+        <div className="logged-in-user">
+          {!isAuthenticated && ( <button onClick={() => loginWithRedirect()}><p>Log In</p></button>)}
+          <Link to="/rules">{!isAuthenticated && (<button onClick={() =>Navigate}><p>Register</p></button>)}</Link>
+          <Link to="/profile">{isAuthenticated && (<button onClick={() => Navigate}><p>Profile</p></button>)}</Link>
+          {isAuthenticated && (<button onClick={() => logoutWithRedirect()}><p>Log out</p></button>)}
+          {isAuthenticated && (<p className="logged-in-as">Logged in as: <span>{user["https://mobster.com/username"]}</span></p>)}
+        </div>
+
     </div>
 )
 };
