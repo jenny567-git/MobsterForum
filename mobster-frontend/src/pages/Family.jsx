@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import EditFamily from "../components/FamilyComponents/EditFamily";
 import { Modal, Button, Alert } from "react-bootstrap";
 import Thread from "../components/Thread/Thread";
@@ -199,7 +199,6 @@ const Family = () => {
           ))}
         <div className="create-thread">
           {!family.threads && <p>There are no threads in this family yet...</p>}
-          <Link to="/">{!family.threads && (<Button onClick={() => Navigate}>Create thread</Button>)}</Link>
         </div>
         
       </ul>

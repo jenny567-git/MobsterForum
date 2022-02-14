@@ -29,7 +29,6 @@ const LoginButton = () => {
           <Link to="/profile">{isAuthenticated && (<button onClick={() => Navigate}><p>Profile</p></button>)}</Link>
           {isAuthenticated && (<button onClick={() => logoutWithRedirect()}><p>Log out</p></button>)}
         </div>
-        {/* <div className="logged-in-as"><p>Logged in as: {user["https://mobster.com/username"]}</p></div> */}
 
     </div>
 )
