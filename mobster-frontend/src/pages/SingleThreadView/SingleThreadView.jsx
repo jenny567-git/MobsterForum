@@ -191,7 +191,7 @@ const SingleThreadView = () => {
                   <span>
                     Posted by{" "}
                     <strong className="thread-metadata-bold">
-                      <p>&#91;Deleted User&#93;</p>
+                      <p>&#91;Deceased&#93;</p>
                     </strong>{" "}
                     in{" "}
                     <strong
