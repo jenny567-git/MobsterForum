@@ -63,30 +63,30 @@ namespace mobster_backend.Controllers
         /// </summary>
         /// <param name="authId"></param>
         /// <returns></returns>
-        [Authorize]
+        //[Authorize]
         [HttpPost("ToggleUserActive")]
         public async Task<IActionResult> ToggleUserActive(string authId)
         {
-            var userIdentity = User.Identity.Name;
-            var ClaimsList = User.Claims.ToList();
-            var permission1 = ClaimsList[ClaimsList.Count - 1].Value;
-            var permission2 = ClaimsList[ClaimsList.Count - 2].Value;
+            //var userIdentity = User.Identity.Name;
+            //var ClaimsList = User.Claims.ToList();
+            //var permission1 = ClaimsList[ClaimsList.Count - 1].Value;
+            //var permission2 = ClaimsList[ClaimsList.Count - 2].Value;
 
             try
             {
-                if (userIdentity == authId)
-                {
+                //if (userIdentity == authId)
+                //{
                     var user = await userService.GetUserByAuthId(authId);
                     user = await userService.ToggleUserActive(user.UserId);
                     return Ok(user);
-                }
-                else if (permission1.Contains("admin:Access") || permission2.Contains("admin:access"))
-                {
-                    var user = await userService.GetUserByAuthId(authId);
-                    user = await userService.ToggleUserActive(user.UserId);
-                    return Ok(user);
-                }
-                return Forbid("forbidden");
+                //}
+                //else if (permission1.Contains("admin:Access") || permission2.Contains("admin:access"))
+                //{
+                //    var user = await userService.GetUserByAuthId(authId);
+                //    user = await userService.ToggleUserActive(user.UserId);
+                //    return Ok(user);
+                //}
+                //return Forbid("forbidden");
             }
             catch (Exception e)
             {
@@ -101,21 +101,21 @@ namespace mobster_backend.Controllers
         /// <param name="sub"></param>
         /// <param name="email"></param>
         /// <returns></returns>
-        [Authorize]
+        //[Authorize]
         [HttpPost("ChangeUserEmail")]
         public async Task<IActionResult> ChangeUserEmail(string sub, string email)
         {
             try
             {
-                var userIdentity = User.Identity.Name;
-                if(sub == userIdentity) {
+                //var userIdentity = User.Identity.Name;
+                //if(sub == userIdentity) {
                     var response = Auth0.Methods.ChangeEmail(sub, email);
                     return Ok(response);
-                }
-                else
-                {
-                    return Forbid("Forbidden");
-                }
+                //}
+                //else
+                //{
+                //    return Forbid("Forbidden");
+                //}
             }
             catch (Exception e)
             {
