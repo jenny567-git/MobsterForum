@@ -20,7 +20,7 @@ const ProfileInformation = ({ setIsAuthorized }) => {
     });
     return token;
   }
-
+console.log(user);
   useEffect(async () => {
     //add user to our database
     let userObj = {
@@ -32,7 +32,7 @@ const ProfileInformation = ({ setIsAuthorized }) => {
     const header = getAuthenticationHeader(token);
     let userActive = await axios.post(`https://localhost:44304/api/User`, userObj, header);
     setIsActive(userActive.data.isActive);
-
+    console.log(userActive.data);
     //store user in local storage
     let loggedInUser = {
       userName: user["https://rules.com/claims/user_metadata"].username,
@@ -72,7 +72,8 @@ const ProfileInformation = ({ setIsAuthorized }) => {
   const deactivateAccount = async () => {
     const token = await getAccessToken();
     const header = getAuthenticationHeader(token);
-    let response = axios.post(`https://localhost:44304/api/User/ToggleUserActive?authId=${user.sub}`, header);
+    let response = await axios.post(`https://localhost:44304/api/User/ToggleUserActive?authId=${user.sub}`, header);
+    console.log(response.data);
     if(response.data.isActive)
     {
       setIsActive(true);
