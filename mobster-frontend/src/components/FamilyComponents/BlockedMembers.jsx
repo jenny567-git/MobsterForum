@@ -26,25 +26,20 @@ const BlockedMembers = () => {
 
   const onRemove = async (userId) => {
     const token = await getAccessToken();
-    const header = getAuthenticationHeader(token);
-    const addUser = await axios.post(
-      `https://localhost:44304/addMember?familyId=${familyId}&userId=${userId}`, header
-    ).then((res) => {
-      console.log("Success: ", res.data);
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
-    
-    const response = await axios
-      .delete(
-        `https://localhost:44304/api/Block?userId=${userId}&familyId=${familyId}`, header
-      )
-      .then((res) => {
-        console.log("Success: ", res.data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
+    const AddUserUrl = `https://localhost:44304/addMember?familyId=${familyId}&userId=${userId}`
+      const addUser = await fetch(AddUserUrl, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+      });
+
+      const url = `https://localhost:44304/api/Block?userId=${userId}&familyId=${familyId}`
+      const response = await fetch(url, {
+        method: 'DELETE', 
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
       });
 
     setmembers(
