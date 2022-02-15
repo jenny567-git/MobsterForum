@@ -1,60 +1,62 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Context } from "../../utils/store";
-import { FloatingLabel, Form } from "react-bootstrap";
+import { FloatingLabel, Form, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useLocalStorage } from '../../CustomHooks/useLocalStorage'
+import { getAuthenticationHeader, getAudience } from "../../CustomHooks/useAutenticationHeader";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const CreateFamily = () => {
   const [familyName, setfamilyName] = useState("");
   const [description, setDescription] = useState("");
-  const [context, updateContext] = useContext(Context);
+  const [user, setuser] = useLocalStorage('user', null)
+  const {getAccessTokenSilently} = useAuth0();
 
-  const onSubmit = () => {
-    fetch(
-      //works, but get error "Error: SyntaxError: Unexpected end of JSON input"
-      "https://localhost:44304/api/Family",
-      {
-        method: "Post",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          Name: familyName,
-          Description: description,
-          AdminId: context.user.userid,
-        }),
-      }
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Success:", data);
+  let navigate = useNavigate();
+
+  const onSubmit = async () => {
+    let family = {
+      Name: familyName,
+      Description: description,
+      AdminId: user.userId,
+    };
+
+    const token = await getAccessToken();
+    const header = getAuthenticationHeader(token);
+    await axios
+      .post(`https://localhost:44304/api/Family`, family, header)
+      .then((res) => {
+        console.log("Success: ", res.data);
+        navigate(`/family/${res.data.familyId}`)
+        window.location.reload(false);
       })
       .catch((error) => {
         console.error("Error:", error);
       });
   };
 
+  const getAccessToken = async () => {
+    const audience = getAudience();
+    const token = await getAccessTokenSilently({
+      audience: audience,
+    });
+    return token;
+  }
+  
   return (
-    <div>
-      <h2>Create new family</h2>
-      {/* <p>Name:</p> */}
-      {/* <input
-        type="text"
-        value={familyName}
-        onChange={(e) => setfamilyName(e.target.value)}
-      /> */}
-      {/* <p>Description:</p>
-      <input
-        type="text"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-      /> */}
-      <FloatingLabel controlId="inputName" label="Name" className="mb-3">
+    <div className="create-fam">
+      <FloatingLabel controlId="inputName" label="Name" className="mb-3" className="dark">
         <Form.Control
+        className="dark"
           as="textarea"
           placeholder="Family Name"
           value={familyName}
           onChange={(e) => setfamilyName(e.target.value)}
         />
       </FloatingLabel>
-      <FloatingLabel controlId="inputDescription" label="Description">
+      <FloatingLabel controlId="inputDescription" label="Description" className="dark">
         <Form.Control
+        className="dark"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           as="textarea"
@@ -62,8 +64,10 @@ const CreateFamily = () => {
           style={{ height: "100px" }}
         />
       </FloatingLabel>
-      <p>Admin: {context.user.userid}</p>
-      <button onClick={onSubmit}>Save</button>
+      <p>Admin: {user.userName}</p>
+      <Button  onClick={onSubmit}>
+        <p>Save</p>
+      </Button>
     </div>
   );
 };

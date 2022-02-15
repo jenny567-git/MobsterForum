@@ -16,6 +16,7 @@ namespace mobster_backend.Database
         public DbSet<Family> Families { get; set; }
         public DbSet<Admin> Admins { get; set; }
         public DbSet<BlockedMember> BlockedMembers { get; set; }
+        public DbSet<Report> Reports { get; set; }
 
 
         public MobsterContext(DbContextOptions options) : base(options)

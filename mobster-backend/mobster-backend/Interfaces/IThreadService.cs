@@ -10,9 +10,13 @@ namespace mobster_backend.Interfaces
     public interface IThreadService
     {
         Task AddThread(SetThreadDto model);
+#nullable enable
+        Task<IEnumerable<ThreadDtoOverview>> GetThreads(string? searchstring);
+#nullable disable
         Task<IEnumerable<ThreadDto>> GetThreadsByFamilyId(Guid familyId);
         Task<ThreadDto> GetThread(Guid threadId);
         Task UpdateThread(Guid threadId, SetThreadDto model);
         Task DeleteThread(Guid threadId);
+        Task ToggleCensorThread(Guid threadId);
     }
 }

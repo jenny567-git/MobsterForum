@@ -132,7 +132,7 @@ namespace mobster_backend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("AuthorUserId")
+                    b.Property<Guid>("AuthorUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Content")
@@ -143,7 +143,10 @@ namespace mobster_backend.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("ThreadId")
+                    b.Property<bool>("IsCensored")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("ThreadId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -156,6 +159,43 @@ namespace mobster_backend.Migrations
                     b.HasIndex("ThreadId");
 
                     b.ToTable("Posts", "forum");
+                });
+
+            modelBuilder.Entity("mobster_backend.Models.Report", b =>
+                {
+                    b.Property<Guid>("ReportId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("ObjectUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("PostId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Reason")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("SubjectUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ThreadId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ReportId");
+
+                    b.HasIndex("ObjectUserId");
+
+                    b.HasIndex("PostId");
+
+                    b.HasIndex("SubjectUserId");
+
+                    b.HasIndex("ThreadId");
+
+                    b.ToTable("Reports", "forum");
                 });
 
             modelBuilder.Entity("mobster_backend.Models.Thread", b =>
@@ -177,6 +217,9 @@ namespace mobster_backend.Migrations
 
                     b.Property<Guid>("FamilyId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsCensored")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Title")
                         .HasMaxLength(500)
@@ -285,15 +328,44 @@ namespace mobster_backend.Migrations
                 {
                     b.HasOne("mobster_backend.Models.User", "Author")
                         .WithMany()
-                        .HasForeignKey("AuthorUserId");
-
-                    b.HasOne("mobster_backend.Models.Thread", "Thread")
-                        .WithMany("Posts")
-                        .HasForeignKey("ThreadId")
+                        .HasForeignKey("AuthorUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("mobster_backend.Models.Thread", "Thread")
+                        .WithMany("Posts")
+                        .HasForeignKey("ThreadId");
+
                     b.Navigation("Author");
+
+                    b.Navigation("Thread");
+                });
+
+            modelBuilder.Entity("mobster_backend.Models.Report", b =>
+                {
+                    b.HasOne("mobster_backend.Models.User", "ObjectUser")
+                        .WithMany()
+                        .HasForeignKey("ObjectUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("mobster_backend.Models.Post", "Post")
+                        .WithMany()
+                        .HasForeignKey("PostId");
+
+                    b.HasOne("mobster_backend.Models.User", "SubjectUser")
+                        .WithMany()
+                        .HasForeignKey("SubjectUserId");
+
+                    b.HasOne("mobster_backend.Models.Thread", "Thread")
+                        .WithMany()
+                        .HasForeignKey("ThreadId");
+
+                    b.Navigation("ObjectUser");
+
+                    b.Navigation("Post");
+
+                    b.Navigation("SubjectUser");
 
                     b.Navigation("Thread");
                 });

@@ -1,0 +1,141 @@
+.SingleThreadView {
+	display: flex;
+	margin-bottom: 30px;
+	justify-content: center;
+	
+}
+
+.main-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	width: 95%;
+	
+}
+
+.single-thread-container {
+	display: flex;
+	flex-direction: column;
+	background-color: #414141;
+	border-radius: 0;
+	width: 100%;
+	margin-top: 2rem;
+	border-radius: 1rem;
+}
+.thread {
+	display: flex;
+	flex-direction: column;
+	color: #fff;
+	font-family: 'Special Elite';
+}
+
+.thread h2,
+p {
+	margin: 0.2rem;
+}
+
+.thread p {
+	color: #fff;
+}
+
+.thread-metadata {
+	padding: 1rem;
+	display: flex;
+	align-self: flex-end;
+}
+
+.thread-metadata-bold {
+	color: #ec625f;
+}
+
+.thread-metadata-tofamily {
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+.thread-metadata-tofamily:hover {
+	color: #f8201c;
+}
+
+.thread-metadata-banned {
+	color: white;
+}
+.thread-metadata span {
+	display: flex;
+	padding-right: 0.5em;
+	align-items: center;
+	padding-right: 1rem;
+}
+.thread-metadata p:first-child {
+	display: flex;
+	flex-direction: row;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+	color: #ec625f;
+}
+
+.thread-data {
+	display: flex;
+	flex-direction: column;
+	padding: 0 1rem 1rem 1rem;
+	
+}
+.thread-data input,
+textarea {
+	border: none;
+	background-color: #414141;
+	color: whitesmoke;
+	resize: none;
+	margin-bottom: 1rem;
+	outline: none;
+	height: auto;
+}
+.thread-data input {
+	font-weight: bold;
+	font-size: 2rem;
+}
+
+.thread-btns {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	flex-direction: row;
+	border: none;
+	height: 5vh;
+	background-color: #ec625f;
+}
+
+.thread-btns Button {
+	cursor: pointer;
+}
+
+.thread-btns Button:hover,
+.thread-btns Button:active,
+.thread-btns Button:visited,
+.thread-btns Button:focus {
+	background-color: #eb4a48;
+	box-shadow: none;
+}
+
+.thread-reply {
+	display: flex;
+	flex-direction: row;
+	margin-top: 2vh;
+	justify-content: center;
+	align-items: center;
+}
+
+.backtotop-button {
+	display: flex;
+	margin: 10px auto;
+	background-color: #ec625f;
+	border: none;
+}
+
+.backtotop-button:hover,
+.backtotop-button:active,
+.backtotop-button:visited,
+.backtotop-button:focus {
+	background-color: #eb4a48;
+	box-shadow: none;
+}

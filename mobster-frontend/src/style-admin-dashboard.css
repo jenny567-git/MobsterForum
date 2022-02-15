@@ -1,0 +1,96 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+p {
+    color: lightgray;
+    font-size: .9rem;
+}
+.outer-wrapper {
+    background-color: #414141;
+    color: white;
+    width: 100vw;
+    min-height: 87.5vh;
+}
+
+.inner-wrapper {
+    width: 60%;
+    margin: auto;
+    padding-top: 2rem;
+}
+
+.users-wrapper {
+    width: 500px;
+    background-color: #313131;
+    margin-bottom: 2rem;
+    padding: .5rem;
+    border-radius: 5px;
+    border: 1px solid #EC625F;
+    margin: auto;
+}
+
+.user-detail {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid gray;
+    padding: .4rem .1rem;
+}
+
+.report-detail {
+    /* display: flex;
+    flex-direction: row;
+    justify-content: space-between; */
+    align-items: center; 
+    border-bottom: 1px solid gray;
+    padding: .2rem;
+    /* padding: .4rem .1rem; */
+}
+
+.users-list {
+    min-height: 275px;
+    max-height: 500px;
+    padding-right: .3rem;
+    overflow-y: auto;
+}
+
+.users-search {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: .5rem 0 1rem 0;
+}
+
+.searchbar {
+    border-radius: 5px;
+    border: none;
+    padding: .3rem;
+    width: 70%;
+    text-align: center;
+    margin: auto;
+    background-color: lightgray;
+}
+
+/* Button design and behaviour */
+
+.button {
+    border-radius: 5px;
+    color: white;
+    border: none;
+    padding: .1rem .3rem;
+}
+
+.button:hover {
+    opacity: 70%;
+}
+
+.block {
+    background-color: darkred;
+}
+
+.unblock {
+    background-color: darkgreen;
+}
+
