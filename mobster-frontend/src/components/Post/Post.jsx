@@ -3,7 +3,6 @@ import axios from 'axios'
 import { Button, Form, Modal } from 'react-bootstrap';
 import { useAuth0 } from '@auth0/auth0-react'; 
 import { useLocalStorage } from '../../CustomHooks/useLocalStorage';
-// import adminPic from '../../assets/profile-icons/admin.jpg'
 import userPic from '../../assets/profile-icons/user.jpg'
 import bannedPic from '../../assets/profile-icons/banned.jpg'
 import inactivePic from '../../assets/profile-icons/inactive.png'
@@ -118,13 +117,13 @@ export const Post = ({ id , blockedMembers , thread }) => {
 
     const toggleCensorPost = async (postId) => {
       const token = await getAccessToken();
-      const header = getAuthenticationHeader(token);
-      await axios
-        .put(`https://localhost:44304/api/Posts/censor/${postId}`, header)
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-
+      const url = `https://localhost:44304/api/Posts/censor/${postId}`
+      const response = await fetch(url, {
+        method: 'PUT', // *GET, POST, PUT, DELETE, etc
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+      });
       fetchPosts();
     }
 

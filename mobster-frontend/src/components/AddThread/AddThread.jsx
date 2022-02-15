@@ -20,7 +20,6 @@ const AddThread = () => {
   });
   let navigate = useNavigate();
 
-  // needs to update userId after merge
   const fetchFamiliesByUserId = async () => {
     let response = await axios.get(
       `https://localhost:44304/api/Family/user/${user.userId}`

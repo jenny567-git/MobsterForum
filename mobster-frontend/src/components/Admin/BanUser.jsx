@@ -47,8 +47,13 @@ function BanUser() {
 
     async function toggleUserBlock(user) {
         const token = await getAccessToken();
-        const header = getAuthenticationHeader(token);
-        const response = await axios.put(`https://localhost:44304/api/Block?userId=${user.userId}`, header);
+        const url = `https://localhost:44304/api/Block?userId=${user.userId}`
+        const response = await fetch(url, {
+        method: 'PUT', // *GET, POST, PUT, DELETE, etc
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+      });
         setLoadedState(false);
         searchbar.value = '';
         searchString = '';

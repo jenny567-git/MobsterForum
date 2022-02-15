@@ -49,7 +49,7 @@ namespace mobster_backend.Controllers
         /// <param name="familyId"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
-        //[Authorize]
+        [Authorize]
         [HttpPost("/addMember/")]
         public async Task<IActionResult> AddFamilyMemberAsync(Guid familyId, Guid userId)
         {

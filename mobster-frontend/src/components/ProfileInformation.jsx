@@ -62,11 +62,15 @@ console.log(user);
 
   const changeEmail = async (event) => {
     event.preventDefault();
-    // alert(`The name you entered was: ${newEmail}`);
     notify();
     const token = await getAccessToken();
-    const header = getAuthenticationHeader(token);
-    axios.post(`https://localhost:44304/api/User/ChangeUserEmail?sub=${user.sub}&email=${newEmail}`, header);
+    const url = `https://localhost:44304/api/User/ChangeUserEmail?sub=${user.sub}&email=${newEmail}`
+    const res = await fetch(url, {
+      method: 'POST', 
+      headers: {
+        'Authorization': `Bearer ${token}`
+      },
+    });
   };
 
   const deactivateAccount = async () => {

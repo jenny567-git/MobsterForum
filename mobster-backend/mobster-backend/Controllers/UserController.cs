@@ -88,7 +88,7 @@ namespace mobster_backend.Controllers
         /// <param name="sub"></param>
         /// <param name="email"></param>
         /// <returns></returns>
-        //[Authorize]
+        [Authorize]
         [HttpPost("ChangeUserEmail")]
         public async Task<IActionResult> ChangeUserEmail(string sub, string email)
         {

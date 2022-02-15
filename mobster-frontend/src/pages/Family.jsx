@@ -86,7 +86,6 @@ const Family = () => {
     const memberResponse = await axios.get(
       `https://localhost:44304/api/Family/${id}/members`
     );
-    //check if current user is not a member of the group and not a blocked member
     if (user && memberResponse.data.some((e) => e.authId === user.authId)) {
       console.log("can leave");
       setCanLeave(true);
@@ -108,11 +107,13 @@ const Family = () => {
   const toJoin = async () => {
     const token = await getAccessToken();
     const header = getAuthenticationHeader(token);
-    await axios
-    .post(
-      `https://localhost:44304/addMember?familyId=${id}&userId=${user.userId}`, header
-      )
-      .then((res) => {
+    const url = `https://localhost:44304/addMember?familyId=${id}&userId=${user.userId}`
+    const res = await fetch(url, {
+        method: 'POST', 
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+      });
         setShowJoinModal(true);
         console.log("Success: ", res.data);
         let newfamily = { ...family };
@@ -120,10 +121,6 @@ const Family = () => {
         setFamily(newfamily);
         setCanJoin(false);
         setCanLeave(true);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
   };
 
   const toLeave = async () => {
@@ -257,8 +254,6 @@ const Family = () => {
         onHide={() => setShowInviteModal(false)}
         centered
         className="modal"
-        // contentClassName="modal"
-        // bsPrefix="modal"
       >
         <Modal.Header closeButton>
           <Modal.Title>Add members</Modal.Title>

@@ -52,7 +52,6 @@ const Report = () => {
   };
 
   const onDelete = async () => {
-    //delete report
     const token = await getAccessToken();
     const header = getAuthenticationHeader(token);
     axios

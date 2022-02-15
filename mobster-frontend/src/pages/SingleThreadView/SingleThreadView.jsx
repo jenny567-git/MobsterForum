@@ -80,7 +80,6 @@ const SingleThreadView = () => {
     );
     console.log(response);
     notifyDelete();
-    // alert("your thread has been deleted");
     navigate("/");
   };
 
@@ -124,18 +123,17 @@ const SingleThreadView = () => {
 
   const toggleCensorThread = async () => {
     const token = await getAccessToken();
-    const header = getAuthenticationHeader(token);
-    await axios
-      .put(`https://localhost:44304/api/Thread/censor/${id}`, header)
-      .catch((error) => {
-        console.error("Error:", error);
+    const url = `https://localhost:44304/api/Thread/censor/${id}`
+      const response = await fetch(url, {
+        method: 'PUT', // *GET, POST, PUT, DELETE, etc
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
       });
-
     setIsThreadCensored(!thread.isCensored);
   };
 
   const toggleReplyBox = () => {
-    // setVisible(!isVisible);
     scrollToBottom();
   };
   function logThread() {

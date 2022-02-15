@@ -5,8 +5,6 @@ import { init } from "@emailjs/browser";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 init("user_nTOKwW2tx2msKjYI9fVvH");
-// import { init } from 'emailjs-com';
-// init('user_nTOKwW2tx2msKjYI9fVvH');
 
 export const Contact = () => {
   const [name, setName] = useState("");
@@ -35,13 +33,11 @@ export const Contact = () => {
       setMessage("");
       setEmailSent(true);
 
-      //show response for 5s
       setTimeout(() => {
         setEmailSent(false);
       }, 5000);
     } else {
       notify();
-      // alert("Please fill in all fields silly you.");
     }
   };
 

@@ -81,7 +81,7 @@ namespace mobster_backend.Controllers
         }
 
         [HttpPut]
-        //[Authorize(Policy = "AdminAccess")]
+        [Authorize(Policy = "AdminAccess")]
         public async Task<IActionResult> ToggleUserBlockInApplicationAsync(Guid userId)
         {
             try
