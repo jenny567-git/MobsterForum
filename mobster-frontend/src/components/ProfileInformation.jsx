@@ -56,8 +56,17 @@ console.log(user);
   const changePassword = async () => {
     const token = await getAccessToken();
     const header = getAuthenticationHeader(token);
-    axios.post(`https://localhost:44304/api/User/ChangePassword?sub=${user.sub}`, header)
-    .then((response) => {window.location.href = response.data})
+    const url = `https://localhost:44304/api/User/ChangePassword?sub=${user.sub}`
+    const res = await fetch(url, {
+      method: 'POST', 
+      headers: {
+        'Authorization': `Bearer ${token}`
+      },
+    });
+    // axios.post(`https://localhost:44304/api/User/ChangePassword?sub=${user.sub}`, header)
+    // .then((response) => {window.location.href = response.data})
+    window.location.href = res.data
+    console.log(res.data);
   };
 
   const changeEmail = async (event) => {
