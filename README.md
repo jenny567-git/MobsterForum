@@ -1,20 +1,28 @@
 # Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+This is Mobster Forum, a Reddit/Flashback inspired website created during spring 2022 at Newton YH in Malmö.
+
+This project uses the following technologies:
+- ReactJS with Vite
+- ASP.Net Core Web Api
+- MS SQL
+- Auth0
+
+# Prerequisites
+- .Net Core SDK
+- Node.JS
+- MS SQL
 
 # Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+1. Clone the repo
+2. Then run the following:
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+```bash
+npm install # in frontend directory
+npm run dev # in frontend directory
+```
+3. Seed the database with mock data by removing the outcommented ```seed.SeedDatabase().Wait();``` in Program.cs
+4. Run the Web api once and comment out the method call above
+5. Change the connection string in HolidayMakerContext.cs to your own string
+7. Run the asp net backend server with your preferred choice (either in vs studio or via terminal). we used port 44304. 
+8. Default frontend can be found at localhost:3000
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
-
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
