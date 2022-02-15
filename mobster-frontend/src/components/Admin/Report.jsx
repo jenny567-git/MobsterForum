@@ -85,14 +85,23 @@ const Report = () => {
     const token = await getAccessToken();
     const header = getAuthenticationHeader(token);
     if (selectedReport.postId == null) {
-      axios.put(
-        `https://localhost:44304/api/Thread/censor/${selectedReport.threadId}`, header
-        );
+      const url = `https://localhost:44304/api/Thread/censor/${selectedReport.threadId}`
+      const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+      });
+      
       } else {
-        axios.put(
-          `https://localhost:44304/api/Posts/censor/${selectedReport.postId}`, header
-          );
-        }
+        const url = `https://localhost:44304/api/Posts/censor/${selectedReport.postId}`
+      const response = await fetch(url, {
+        method: 'PUT', 
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+      });
+    }
     isCensur = true;
     onDelete();
   };
