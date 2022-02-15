@@ -95,7 +95,7 @@ namespace mobster_backend.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> AddPost(SetPostDto model)
         {
             try
@@ -121,7 +121,7 @@ namespace mobster_backend.Controllers
         /// <param name="model">The model for the post object to be updated</param>
         /// <returns></returns>
         [HttpPut]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> UpdatePost(Guid postId, SetPostDto model)
         {
             try
@@ -146,7 +146,7 @@ namespace mobster_backend.Controllers
         /// <param name="postId">The id of the post to be censored/uncensored</param>
         /// <returns></returns>
         [HttpPut("censor/{postId}")]
-        [Authorize(Policy = "GroupAdmin")]
+        //[Authorize(Policy = "GroupAdmin")]
         public async Task<IActionResult> ToggleCensorPost(Guid postId)
         {
             try
@@ -171,7 +171,7 @@ namespace mobster_backend.Controllers
         /// <param name="postId">The id of the post to be deleted</param>
         /// <returns></returns>
         [HttpDelete]
-        [Authorize(Policy = "GroupAdmin")]
+        //[Authorize(Policy = "GroupAdmin")]
         public async Task<IActionResult> DeletePost(Guid postId)
         {
             try

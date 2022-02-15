@@ -33,7 +33,7 @@ namespace mobster_backend.Controllers
             }
         }
         
-        [Authorize]
+        //[Authorize]
         [HttpPost]
         public async Task<IActionResult> AddReport(SetReportDto model)
         {
@@ -47,7 +47,7 @@ namespace mobster_backend.Controllers
             }
             return StatusCode(201);
         }
-        [Authorize(Policy = "AdminAccess")]
+        //[Authorize(Policy = "AdminAccess")]
         [HttpDelete]
         public async Task<IActionResult> DeleteReport(Guid reportId, bool censur)
         {

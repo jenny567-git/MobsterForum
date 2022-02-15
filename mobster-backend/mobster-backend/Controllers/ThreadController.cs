@@ -124,7 +124,7 @@ namespace mobster_backend.Controllers
         /// <param name="model">The viewmodel used to represent the thread entity</param>
         /// <returns></returns>
         [HttpPut]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> UpdateThread(Guid id, SetThreadDto model)
         {
             try
@@ -149,7 +149,7 @@ namespace mobster_backend.Controllers
         /// <param name="threadId">The id of the post to be censored/uncensored</param>
         /// <returns></returns>
         [HttpPut("censor/{threadId}")]
-        [Authorize(Policy = "GroupAdmin")]
+        //[Authorize(Policy = "GroupAdmin")]
         public async Task<IActionResult> ToggleCensorThread(Guid threadId)
         {
             try
@@ -174,7 +174,7 @@ namespace mobster_backend.Controllers
         /// <param name="id">The id of the thread to be deleted</param>
         /// <returns></returns>
         [HttpDelete]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> DeleteThread(Guid id)
         {
             try

@@ -1,13 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using mobster_backend.DTOs.Write;
 using mobster_backend.Interfaces;
-using mobster_backend.Models;
-using RestSharp;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace mobster_backend.Controllers
@@ -108,7 +103,7 @@ namespace mobster_backend.Controllers
         /// </summary>
         /// <param name="sub"></param>
         /// <returns></returns>
-        [Authorize]
+        //[Authorize]
         [HttpPost("ChangePassword")]
         public async Task<IActionResult> ChangePassword(string sub)
         {

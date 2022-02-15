@@ -43,7 +43,7 @@ namespace mobster_backend.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        [Authorize(Policy = "GroupAdmin")]
+        //[Authorize(Policy = "GroupAdmin")]
         public async Task<IActionResult> BlockUserFromFamilyAsync(SetBlockedMemberDto model)
         {
             try

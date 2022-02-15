@@ -27,7 +27,7 @@ namespace mobster_backend.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [Authorize]
+        //[Authorize]
         [HttpPost]
         public async Task<IActionResult> AddFamilyAsync(SetFamilyDto model)
         {
@@ -71,7 +71,7 @@ namespace mobster_backend.Controllers
         /// <param name="familyId"></param>
         /// <param name="users"></param>
         /// <returns></returns>
-        [Authorize(Policy = "GroupAdmin")]
+        //[Authorize(Policy = "GroupAdmin")]
         [HttpPost("/addMembers/")]
         public async Task<IActionResult> AddFamilyMembersAsync(Guid familyId, IEnumerable<UserDto> users)
         {
@@ -215,7 +215,7 @@ namespace mobster_backend.Controllers
         /// <param name="familyId"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
-        [Authorize]
+       // [Authorize]
         [HttpDelete("/removeUser/")]
         public async Task<IActionResult> RemoveUserFromFamilyAsync(Guid familyId, Guid userId)
         {
@@ -238,7 +238,7 @@ namespace mobster_backend.Controllers
         /// <param name="userIds">Id of the users</param>
         /// <returns></returns>
         [HttpDelete("/removeUsers/")]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> RemoveUsersFromFamilyAsync(Guid familyId, IEnumerable<Guid> userIds)
         {
             try
@@ -259,7 +259,7 @@ namespace mobster_backend.Controllers
         /// <param name="familyId"></param>
         /// <returns></returns>
         [HttpDelete]
-        [Authorize(Policy = "GroupAdmin")]
+        //[Authorize(Policy = "GroupAdmin")]
         public async Task<IActionResult> DeleteFamilyAsync(Guid familyId)
         {
             try
@@ -280,7 +280,7 @@ namespace mobster_backend.Controllers
         /// <param name="familyId"></param>
         /// <param name="model"></param>
         /// <returns></returns>
-        [Authorize(Policy = "GroupAdmin")]
+        //[Authorize(Policy = "GroupAdmin")]
         [HttpPut]
         public async Task<IActionResult> UpdateFamilyAsync(Guid familyId, SetFamilyDto model)
         {
