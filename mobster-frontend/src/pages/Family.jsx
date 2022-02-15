@@ -108,10 +108,16 @@ const Family = () => {
   const toJoin = async () => {
     const token = await getAccessToken();
     const header = getAuthenticationHeader(token);
-    await axios
+    console.log(token);
+    axios
     .post(
-      `https://localhost:44304/addMember?familyId=${id}&userId=${user.userId}`, header
-      )
+      `https://localhost:44304/addMember?familyId=${id}&userId=${user.userId}`, 
+      {
+        headers: {
+          // 'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        }
+    })
       .then((res) => {
         setShowJoinModal(true);
         console.log("Success: ", res.data);

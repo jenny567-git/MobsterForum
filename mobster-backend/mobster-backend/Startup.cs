@@ -31,40 +31,12 @@ namespace mobster_backend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            string domain = $"https://{Configuration["Auth0:Domain"]}/";
-            services
-                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.Authority = domain;
-                    options.Audience = Configuration["Auth0:Audience"];
-                    // If the access token does not have a `sub` claim, `User.Identity.Name` will be `null`. Map it to a different claim by setting the NameClaimType below.
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        NameClaimType = ClaimTypes.NameIdentifier
-                    };
-                });
-
-            Auth0.Methods.GetBearerToken();
-
-            services.AddCors(options =>
-            {
-                options.AddDefaultPolicy(
-                    builder =>
-                    {
-                        builder.AllowAnyHeader()
-                        .AllowAnyMethod()
-                        .AllowAnyOrigin();
-                    });
-            });
-
-
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
             //in memory database for testing
-            //services.AddDbContext<MobsterContext>(opt => opt.UseInMemoryDatabase("Mobster.Test"));
+            services.AddDbContext<MobsterContext>(opt => opt.UseInMemoryDatabase("Mobster.Test"));
 
-            //real database
-            services.AddDbContext<MobsterContext>(options => options.UseSqlServer(connectionString));
+            ////real database
+            //services.AddDbContext<MobsterContext>(options => options.UseSqlServer(connectionString));
             services.AddTransient<IThreadService, ThreadService>();
             services.AddTransient<IPostService, PostService>();
             services.AddTransient<IFamilyService, FamilyService>();
@@ -114,6 +86,32 @@ namespace mobster_backend
             });
 
             services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
+
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowAnyOrigin();
+                    });
+            });
+            string domain = $"https://{Configuration["Auth0:Domain"]}/";
+            services
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.Authority = domain;
+                    options.Audience = Configuration["Auth0:Audience"];
+                    // If the access token does not have a `sub` claim, `User.Identity.Name` will be `null`. Map it to a different claim by setting the NameClaimType below.
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        NameClaimType = ClaimTypes.NameIdentifier
+                    };
+                });
+
+            Auth0.Methods.GetBearerToken();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -127,21 +125,17 @@ namespace mobster_backend
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "mobster_backend v1"));
             }
 
-            app.UseAuthentication();
-
             app.UseHttpsRedirection();
-
             app.UseRouting();
+            app.UseCors(x => x
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .SetIsOriginAllowed(origin => true) // allow any origin
+                .AllowCredentials());
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
-            app.UseCors(builder =>
-            {
-                builder
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader();
-            });
 
             app.UseEndpoints(endpoints =>
             {

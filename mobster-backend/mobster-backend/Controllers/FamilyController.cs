@@ -49,6 +49,7 @@ namespace mobster_backend.Controllers
         /// <param name="familyId"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
+        //[EnableCors]
         [Authorize]
         [HttpPost("/addMember/")]
         public async Task<IActionResult> AddFamilyMemberAsync(Guid familyId, Guid userId)
