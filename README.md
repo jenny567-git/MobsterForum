@@ -20,9 +20,8 @@ This project uses the following technologies:
 npm install # in frontend directory
 npm run dev # in frontend directory
 ```
-3. Seed the database with mock data by removing the outcommented method call ```seed.SeedDatabase().Wait();``` in Program.cs
+3. In the backend directory, Seed the database with mock data by removing the outcommented method call ```seed.SeedDatabase().Wait();``` in Program.cs
 4. Run the Web api once and comment out the method call above
-5. Change the connection string in HolidayMakerContext.cs to your own string
-7. Run the asp net backend server with your preferred choice (either in vs studio or via terminal). we used port 44304. 
-8. Default frontend can be found at localhost:3000
+5. Run the backend server with your preferred choice (either in vs studio or via terminal). We used port 44304. 
+6. Default frontend can be found at localhost:3000
 
